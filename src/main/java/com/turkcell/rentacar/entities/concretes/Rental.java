@@ -35,13 +35,14 @@ public class Rental {
     private OrderedAdditionalService orderedAdditionalServices;
 
     @OneToOne
-    @JoinColumn(name = "rented_city",referencedColumnName = "city_id")
+    @JoinColumn(name = "rented_city", referencedColumnName = "city_id")
     private City rentedCity;
 
     @OneToOne
-    @JoinColumn(name = "delivered_city",referencedColumnName = "city_id")
+    @JoinColumn(name = "delivered_city", referencedColumnName = "city_id")
     private City deliveredCity;
 
-    @OneToMany(mappedBy="rental")
-    private List<Invoice> invoices;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

@@ -4,17 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@PrimaryKeyJoinColumn(name = "corporate_customer_id", referencedColumnName = "customer_id")
 @Table(name = "corporate_customers")
-public class CorporateCustomer extends Customer{
+public class CorporateCustomer extends Customer {
+
+    @Column(name = "corporate_customer_id", insertable = false, updatable = false)
+    private int corporateCustomerId;
 
     @Column(name = "company_name")
     private String companyName;

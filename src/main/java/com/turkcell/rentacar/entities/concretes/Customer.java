@@ -14,9 +14,6 @@ import java.util.List;
 @Table(name = "customer")
 public class Customer extends User {
 
-    @Column(name = "customer_id", insertable = false, updatable = false)
-    private int customerId;
-
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
 

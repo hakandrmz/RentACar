@@ -1,7 +1,7 @@
 package com.turkcell.rentacar.business.abstracts;
 
-import com.turkcell.rentacar.business.dtos.customerDtos.IndividualCustomerByIdDto;
-import com.turkcell.rentacar.business.dtos.customerDtos.IndividualCustomerListDto;
+import com.turkcell.rentacar.business.dtos.customer.IndividualCustomerByIdDto;
+import com.turkcell.rentacar.business.dtos.customer.IndividualCustomerListDto;
 import com.turkcell.rentacar.business.requests.customer.individualCustomer.CreateIndividualCustomerRequest;
 import com.turkcell.rentacar.business.requests.customer.individualCustomer.UpdateIndividualCustomerRequest;
 import com.turkcell.rentacar.core.utilities.results.DataResult;

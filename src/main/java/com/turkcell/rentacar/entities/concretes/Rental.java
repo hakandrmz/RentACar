@@ -26,6 +26,12 @@ public class Rental {
     @Column(name = "end_date")
     private LocalDate endDate;
 
+    @Column(name = "start_kilometer")
+    private double startKilometer;
+
+    @Column(name = "return_kilometer")
+    private double returnKilometer;
+
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
@@ -42,7 +48,7 @@ public class Rental {
     @JoinColumn(name = "delivered_city", referencedColumnName = "city_id")
     private City deliveredCity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 }

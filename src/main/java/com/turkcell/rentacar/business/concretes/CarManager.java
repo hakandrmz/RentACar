@@ -119,4 +119,9 @@ public class CarManager implements CarService {
         }
     }
 
+    @Override
+    public Car getByCarId(int id) {
+        return null;
+    }
+
 }

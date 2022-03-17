@@ -24,5 +24,5 @@ public class UpdateCarMaintenanceRequest {
 	
 	@NotNull
 	@Positive
-	private int carCarId;
+	private int carId;
 }

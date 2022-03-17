@@ -67,12 +67,11 @@ public class RentalManager implements RentalService {
         CreateRentalRequest createRentalRequest = createRentalAndOrderedAdditionalModel.getCreateRentalRequest();
 
         checkIfCarIsAvailable(createRentalRequest.getCarId(), createRentalRequest.getStartDate());
-        checkIfStartDateBeforeThanEndDate(createRentalRequest.getStartDate(), createRentalRequest.getEndDate());
 
         UUID savedOrderedAdditionalModelUUID = saveOrderedAdditionalServiceAndReturnUUID(createRentalAndOrderedAdditionalModel.getCreateOrderedAdditionalServiceRequest());
 
         Rental rental = this.modelMapperService.forDto().map(createRentalRequest, Rental.class);
-
+        rental.setRentalId(0);
         rental.setOrderedAdditionalServices(OrderedAdditionalService.builder().orderedAdditionalServiceId(savedOrderedAdditionalModelUUID).build());
 
         this.rentalDao.save(rental);
@@ -87,7 +86,9 @@ public class RentalManager implements RentalService {
 
         Rental rental = this.rentalDao.getById(id);
 
+
         RentalDtoById rentalDtoById = this.modelMapperService.forDto().map(rental, RentalDtoById.class);
+
 
         return new SuccessDataResult<>(rentalDtoById, "Rent listed");
     }
@@ -96,8 +97,7 @@ public class RentalManager implements RentalService {
     public Result update(UpdateRentalRequest updateRentalRequest) {
 
         checkIfRentalExists(updateRentalRequest.getRentalId());
-        checkIfCarIsAvailable(updateRentalRequest.getCarCarId(), updateRentalRequest.getStartDate());
-        checkIfStartDateBeforeThanEndDate(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate());
+        checkIfCarIsAvailable(updateRentalRequest.getCarId(), updateRentalRequest.getStartDate());
 
         Rental rental = this.modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
 
@@ -115,19 +115,10 @@ public class RentalManager implements RentalService {
 
         this.carService.checkIfCarExists(carId);
 
-        DataResult<List<RentalListDto>> result = getAllByCarCarId(carId);
+        DataResult<List<RentalListDto>> result = getAllByCarId(carId);
 
-        List<Rental> response = result.getData().stream()
-                .map(rental -> this.modelMapperService.forDto()
-                        .map(rental, Rental.class))
-                .collect(Collectors.toList());
+        System.out.println(result);
 
-
-        for (Rental rental : response) {
-            if (!rental.getEndDate().isBefore(startDate)) {
-                throw new BusinessException("Car is already rented!");
-            }
-        }
     }
 
     private void checkIfCarIsInMaintenance(int carId, LocalDate startDate) {
@@ -152,7 +143,7 @@ public class RentalManager implements RentalService {
     }
 
     @Override
-    public DataResult<List<RentalListDto>> getAllByCarCarId(int id) {
+    public DataResult<List<RentalListDto>> getAllByCarId(int id) {
 
         this.carService.checkIfCarExists(id);
 
@@ -187,12 +178,6 @@ public class RentalManager implements RentalService {
             additionalPrice = 750;
         }
         return additionalPrice;
-    }
-
-    private void checkIfStartDateBeforeThanEndDate(LocalDate startDate, LocalDate endDate) {
-        if (endDate.isBefore(startDate)) {
-            throw new BusinessException("Invalid date format ");
-        }
     }
 
 

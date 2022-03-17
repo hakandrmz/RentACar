@@ -39,12 +39,15 @@ public class DataLoader implements CommandLineRunner {
             cityDao.save(City.builder().cityName("İstanbul").build());
             cityDao.save(City.builder().cityName("Adana").build());
 
+
+            additionalServiceDao.save(AdditionalService.builder().additionalServiceName("").dailyPrice(400).build());
             additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Bebek arabası").dailyPrice(300).build());
             additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Ek bagaj").dailyPrice(200).build());
-            additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Kaza sigortası").dailyPrice(200).build());
+            additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Kaza sigortası").dailyPrice(100).build());
 
             carDao.save(Car
                     .builder()
+                    .kilometer(54500)
                     .carDescription("2020 Model")
                     .modelYear(2020).dailyPrice(800)
                     .color(Color.builder().colorId(1).build())
@@ -52,6 +55,7 @@ public class DataLoader implements CommandLineRunner {
                     .build());
             carDao.save(Car
                     .builder()
+                    .kilometer(150000)
                     .carDescription("2019 Model")
                     .modelYear(2019).dailyPrice(700)
                     .color(Color.builder().colorId(2).build())
@@ -59,6 +63,7 @@ public class DataLoader implements CommandLineRunner {
                     .build());
             carDao.save(Car
                     .builder()
+                    .kilometer(5000)
                     .carDescription("2012 Model")
                     .modelYear(2012).dailyPrice(600)
                     .color(Color.builder().colorId(3).build())

@@ -29,7 +29,7 @@ public class RentalsController {
 
     @GetMapping("/getAllByCarId")
     DataResult<List<RentalListDto>> getAllByCarCarId(int id) {
-        return this.rentalService.getAllByCarCarId(id);
+        return this.rentalService.getAllByCarId(id);
     }
 
     @PostMapping("/add")

@@ -31,6 +31,9 @@ public class Car {
     @Column(name = "description")
     private String carDescription;
 
+    @Column(name = "kilometer")
+    private int kilometer;
+
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
@@ -39,12 +42,16 @@ public class Car {
     @JoinColumn(name = "color_id")
     private Color color;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "car",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private List<CarMaintenance> carMaintenances;
 
     @JsonIgnore
     @OneToMany(mappedBy = "car")
     private List<Rental> rentals;
 
+    @OneToMany(mappedBy = "car")
+    private List<CarDamage> carDamages;
 
 }

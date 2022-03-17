@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.business.dtos.customerDtos;
+package com.turkcell.rentacar.business.dtos.customer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CorporateCustomerListDto {
+public class IndividualCustomerByIdDto {
 
     private int userId;
 
@@ -15,8 +15,10 @@ public class CorporateCustomerListDto {
 
     private String password;
 
-    private String companyName;
+    private String firstName;
 
-    private String taxNumber;
+    private String lastName;
+
+    private String nationalIdentity;
 }
 

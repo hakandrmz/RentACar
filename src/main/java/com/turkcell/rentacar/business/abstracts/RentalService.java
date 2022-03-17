@@ -12,7 +12,7 @@ import java.util.List;
 public interface RentalService {
     DataResult<List<RentalListDto>> getAll();
 
-    DataResult<List<RentalListDto>> getAllByCarCarId(int id);
+    DataResult<List<RentalListDto>> getAllByCarId(int id);
 
     Result add(CreateRentalAndOrderedAdditionalModel createRentalRequest);
 

@@ -12,17 +12,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class RentalListDto {
 
-	private int rentalId;
-	private LocalDate startDate;
-	private LocalDate endDate;
-	private int carId;
-	private UUID orderedAdditionalServicesId;
-	private int rentedCityId;
-	private int deliveredCityId;
+    private int rentalId;
+
+    private LocalDate startDate;
+
+    private LocalDate endDate;
+
+    private double startKilometer;
+
+    private double returnKilometer;
+
+    private String brand;
+
+    private UUID orderedAdditionalServiceId;
+
+    private String rentedCity;
+
+    private String deliveredCity;
+
+    private int customerId;
 }

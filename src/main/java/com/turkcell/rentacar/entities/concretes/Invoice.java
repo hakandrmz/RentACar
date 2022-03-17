@@ -24,12 +24,21 @@ public class Invoice {
     @Column(name = "invoice_date")
     private LocalDate invoiceDate;
 
-    @ManyToOne
-    @JoinColumn(name="customer_id", nullable=false)
-    private Customer customer;
+    @Column(name = "invoice_price")
+    private double invoicePrice;
+
+    @Column(name = "start_date_rental")
+    private LocalDate startDateRental;
+
+    @Column(name = "end_date_rental")
+    private LocalDate endDateRental;
 
     @ManyToOne
-    @JoinColumn(name="rental_id", nullable=false)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @OneToOne
+    @JoinColumn(name = "rental_id")
     private Rental rental;
 
 }

@@ -13,6 +13,6 @@ public class CarMaintenanceListDto {
 	private int carMaintenanceId;
 	private String description;
 	private LocalDate returnDate;
-	private int carCarId;
+	private int carId;
 
 }

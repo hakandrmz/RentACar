@@ -48,12 +48,12 @@ public class CarMaintenanceManager implements CarMaintenanceService {
                 .map(carMaintenance -> this.modelMapperService.forDto().map(carMaintenance, CarMaintenanceListDto.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, "Maintenance are listed successfuly.");
+        return new SuccessDataResult<>(response, "Maintenance are listed successfuly.");
     }
 
     @Override
     public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) throws BusinessException {
-        checkIfCarIsAvailable(createCarMaintenanceRequest.getCarCarId());
+        checkIfCarIsAvailable(createCarMaintenanceRequest.getCarId());
         CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(createCarMaintenanceRequest, CarMaintenance.class);
         carMaintenance.setCarMaintenanceId(0);
         this.carMaintenanceDao.save(carMaintenance);
@@ -64,7 +64,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     @Override
     public Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException {
         checkIfCarMaintenanceExists(updateCarMaintenanceRequest.getCarMaintenanceId());
-        checkIfCarIsAvailable(updateCarMaintenanceRequest.getCarCarId());
+        checkIfCarIsAvailable(updateCarMaintenanceRequest.getCarId());
         CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(updateCarMaintenanceRequest, CarMaintenance.class);
         carMaintenance.setCarMaintenanceId(0);
         this.carMaintenanceDao.save(carMaintenance);
@@ -79,7 +79,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         CarMaintenanceByIdDto response = this.modelMapperService.forDto().map(carMaintenance, CarMaintenanceByIdDto.class);
 
-        return new SuccessDataResult<CarMaintenanceByIdDto>(response);
+        return new SuccessDataResult<>(response);
     }
 
     @Override
@@ -95,11 +95,11 @@ public class CarMaintenanceManager implements CarMaintenanceService {
         List<CarMaintenance> result = this.carMaintenanceDao.getByCarCarId(carId);
         List<CarMaintenanceListDto> response = result.stream()
                 .map(carMaintenance -> this.modelMapperService.forDto().map(carMaintenance, CarMaintenanceListDto.class)).collect(Collectors.toList());
-        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, "Car maintenances listed successfully.");
+        return new SuccessDataResult<>(response, "Car maintenances listed successfully.");
     }
 
     private void checkIfCarIsAvailable(int carId) throws BusinessException {
-        DataResult<List<RentalListDto>> result = this.rentalService.getAllByCarCarId(carId);
+        DataResult<List<RentalListDto>> result = this.rentalService.getAllByCarId(carId);
 
         List<Rental> response = result.getData().stream()
                 .map(rental -> this.modelMapperService.forDto().map(rental, Rental.class))
@@ -113,11 +113,10 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
 
-    private boolean checkIfCarMaintenanceExists(int id) throws BusinessException {
+    private void checkIfCarMaintenanceExists(int id) throws BusinessException {
         if (carMaintenanceDao.existsById(id) == false) {
             throw new BusinessException("Car maintenance does not exist by id:" + id);
         }
-        return true;
     }
 
 

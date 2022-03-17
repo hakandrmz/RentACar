@@ -6,6 +6,7 @@ import com.turkcell.rentacar.business.requests.car.CreateCarRequest;
 import com.turkcell.rentacar.business.requests.car.UpdateCarRequest;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
+import com.turkcell.rentacar.entities.concretes.Car;
 
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface CarService {
     DataResult<List<CarListDto>> getByDailyPriceIsLessThanEqual(double dailyPrice);
 
     void checkIfCarExists(int id);
+
+    Car getByCarId(int id);
 }

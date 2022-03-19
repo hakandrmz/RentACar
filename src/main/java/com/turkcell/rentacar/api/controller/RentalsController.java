@@ -46,7 +46,6 @@ public class RentalsController {
     @PutMapping("/update")
     Result update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest) {
         return this.rentalService.update(updateRentalRequest);
-
     }
 
     @DeleteMapping("/delete")

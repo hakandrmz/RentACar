@@ -6,6 +6,7 @@ import java.util.UUID;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.turkcell.rentacar.entities.concretes.Car;
 import com.turkcell.rentacar.entities.concretes.City;
+import com.turkcell.rentacar.entities.concretes.Customer;
 import com.turkcell.rentacar.entities.concretes.OrderedAdditionalService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,13 +31,13 @@ public class RentalListDto {
 
     private double returnKilometer;
 
-    private String brand;
+    private int carId;
 
-    private UUID orderedAdditionalServiceId;
+    private UUID orderedAdditionalServices;
 
-    private String rentedCity;
+    private int rentedCityId;
 
-    private String deliveredCity;
+    private int deliveredCityId;
 
     private int customerId;
 }

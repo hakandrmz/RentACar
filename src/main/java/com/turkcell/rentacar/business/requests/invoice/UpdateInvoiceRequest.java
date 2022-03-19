@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Data
@@ -17,8 +18,14 @@ public class UpdateInvoiceRequest {
 
     private LocalDate invoiceDate;
 
-    private Customer customer;
+    private double invoicePrice;
 
-    private Rental rental;
+    private LocalDate startDateRental;
+
+    private LocalDate endDateRental;
+
+    private int customerId;
+
+    private int rentalId;
 
 }

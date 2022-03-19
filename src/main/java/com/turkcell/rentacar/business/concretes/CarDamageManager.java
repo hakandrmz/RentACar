@@ -40,10 +40,10 @@ public class CarDamageManager implements CarDamageService {
         List<CarDamage> result = this.carDamageDao.findAll();
 
         List<CarDamageListDto> response = result.stream()
-                .map(brand -> this.modelMapperService.forDto().map(result, CarDamageListDto.class))
+                .map(carDamage -> this.modelMapperService.forDto().map(carDamage, CarDamageListDto.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarDamageListDto>>(response, "cars listed successfully.");
+        return new SuccessDataResult<List<CarDamageListDto>>(response, "");
 
     }
 

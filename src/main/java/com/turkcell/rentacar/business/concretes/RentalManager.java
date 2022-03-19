@@ -82,10 +82,10 @@ public class RentalManager implements RentalService {
 
     @Override
     public DataResult<RentalDtoById> getById(int id) {
+
         checkIfRentalExists(id);
 
         Rental rental = this.rentalDao.getById(id);
-
 
         RentalDtoById rentalDtoById = this.modelMapperService.forDto().map(rental, RentalDtoById.class);
 
@@ -162,7 +162,7 @@ public class RentalManager implements RentalService {
         return new SuccessResult("Rental is deleted.");
     }
 
-    private void checkIfRentalExists(int id) {
+    public void checkIfRentalExists(int id) {
         if (!rentalDao.existsById(id)) {
             throw new BusinessException("Rental does not exist by id:" + id);
         }
@@ -180,5 +180,9 @@ public class RentalManager implements RentalService {
         return additionalPrice;
     }
 
+    public Rental getByRentalId(int id) {
+        checkIfRentalExists(id);
+        return rentalDao.getById(id);
+    }
 
 }

@@ -34,9 +34,6 @@ public class CreateRentalRequest {
     private int carId;
 
     @NotNull
-    private UUID orderedAdditionalServiceId;
-
-    @NotNull
     @Positive
     private int rentedCityId;
 

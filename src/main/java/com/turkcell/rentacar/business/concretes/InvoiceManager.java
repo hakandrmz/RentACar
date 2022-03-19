@@ -18,8 +18,7 @@ import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.InvoiceDao;
-import com.turkcell.rentacar.entities.concretes.Color;
-import com.turkcell.rentacar.entities.concretes.Invoice;
+import com.turkcell.rentacar.entities.concretes.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -54,7 +53,14 @@ public class InvoiceManager implements InvoiceService {
 
     @Override
     public Result add(CreateInvoiceRequest createInvoiceRequest) {
-        return null;
+
+        this.rentalService.checkIfRentalExists(createInvoiceRequest.getRentalId());
+
+        Invoice invoice = this.createInvoiceForSave(createInvoiceRequest);
+
+        invoiceDao.save(invoice);
+
+        return new SuccessResult("Invoice is created.");
     }
 
     @Override
@@ -100,5 +106,19 @@ public class InvoiceManager implements InvoiceService {
 
     private void checkIfCustomerIsExist(int customerId) {
 
+    }
+
+    public Invoice createInvoiceForSave(CreateInvoiceRequest createInvoiceRequest) {
+
+        Rental rental = rentalService.getByRentalId(createInvoiceRequest.getRentalId());
+
+        Invoice invoice = new Invoice();
+        invoice.setRental(rental);
+        invoice.setInvoiceDate(LocalDate.now());
+        invoice.setStartDateRental(rental.getStartDate());
+        invoice.setEndDateRental(rental.getEndDate());
+        invoice.setCustomer(Customer.builder().customerId(rental.getCustomer().getCustomerId()).build());
+
+        return invoice;
     }
 }

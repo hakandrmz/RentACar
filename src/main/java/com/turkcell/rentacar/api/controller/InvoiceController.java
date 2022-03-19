@@ -29,7 +29,6 @@ public class InvoiceController {
 
     @PostMapping("/add")
     public Result add(@RequestBody @Valid CreateInvoiceRequest createInvoiceRequest) {
-
         return this.invoiceService.add(createInvoiceRequest);
     }
 
@@ -47,6 +46,5 @@ public class InvoiceController {
     public Result deleteById(@RequestParam int id) {
         return this.invoiceService.deleteById(id);
     }
-
 
 }

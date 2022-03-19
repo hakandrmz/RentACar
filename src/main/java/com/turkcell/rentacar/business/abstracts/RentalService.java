@@ -6,6 +6,7 @@ import com.turkcell.rentacar.business.dtos.rental.RentalListDto;
 import com.turkcell.rentacar.business.requests.rental.UpdateRentalRequest;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
+import com.turkcell.rentacar.entities.concretes.Rental;
 
 import java.util.List;
 
@@ -21,4 +22,8 @@ public interface RentalService {
     Result update(UpdateRentalRequest updateRentalRequest);
 
     Result delete(int rentalId);
+
+    Rental getByRentalId(int id);
+
+    void checkIfRentalExists(int id);
 }

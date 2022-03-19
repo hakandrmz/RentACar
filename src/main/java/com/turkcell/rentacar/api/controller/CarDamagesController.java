@@ -10,7 +10,7 @@ import com.turkcell.rentacar.business.requests.carDamage.UpdateCarDamageRequest;
 import com.turkcell.rentacar.business.requests.carmaintenance.UpdateCarMaintenanceRequest;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

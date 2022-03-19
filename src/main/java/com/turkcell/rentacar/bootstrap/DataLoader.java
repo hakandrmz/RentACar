@@ -39,8 +39,6 @@ public class DataLoader implements CommandLineRunner {
             cityDao.save(City.builder().cityName("İstanbul").build());
             cityDao.save(City.builder().cityName("Adana").build());
 
-
-            additionalServiceDao.save(AdditionalService.builder().additionalServiceName("").dailyPrice(400).build());
             additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Bebek arabası").dailyPrice(300).build());
             additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Ek bagaj").dailyPrice(200).build());
             additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Kaza sigortası").dailyPrice(100).build());

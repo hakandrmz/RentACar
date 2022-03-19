@@ -33,7 +33,7 @@ public class Invoice {
     @Column(name = "end_date_rental")
     private LocalDate endDateRental;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 

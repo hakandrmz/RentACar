@@ -6,6 +6,7 @@ import com.turkcell.rentacar.business.requests.invoice.CreateInvoiceRequest;
 import com.turkcell.rentacar.business.requests.invoice.UpdateInvoiceRequest;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
+import com.turkcell.rentacar.entities.concretes.Invoice;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,4 +26,5 @@ public interface InvoiceService {
 
     DataResult<List<InvoiceListDto>> getAllInvoicesBetweenTwoDates(LocalDate from, LocalDate to);
 
+    Invoice createInvoiceForSave(CreateInvoiceRequest createInvoiceRequest);
 }

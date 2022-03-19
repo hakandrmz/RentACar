@@ -1,7 +1,6 @@
 package com.turkcell.rentacar.business.concretes;
 
-import com.turkcell.rentacar.business.abstracts.InvoiceService;
-import com.turkcell.rentacar.business.abstracts.RentalService;
+import com.turkcell.rentacar.business.abstracts.*;
 import com.turkcell.rentacar.business.dtos.city.CityByIdDto;
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
 import com.turkcell.rentacar.business.dtos.color.ColorListDto;
@@ -19,6 +18,8 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.InvoiceDao;
 import com.turkcell.rentacar.entities.concretes.*;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -26,16 +27,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class InvoiceManager implements InvoiceService {
 
+    private final AdditionalServiceService additionalServiceService;
+    private final OrderedAdditionalServiceService orderedAdditionalService;
     private final ModelMapperService modelMapperService;
+    private final CustomerService customerService;
     private final RentalService rentalService;
     private final InvoiceDao invoiceDao;
 
-    public InvoiceManager(ModelMapperService modelMapperService, InvoiceDao invoiceDao, RentalService rentalService) {
+    public InvoiceManager(ModelMapperService modelMapperService, OrderedAdditionalServiceService orderedAdditionalService, InvoiceDao invoiceDao, RentalService rentalService, AdditionalServiceService additionalServiceService, CustomerService customerService) {
         this.modelMapperService = modelMapperService;
         this.invoiceDao = invoiceDao;
         this.rentalService = rentalService;
+        this.additionalServiceService = additionalServiceService;
+        this.customerService = customerService;
+        this.orderedAdditionalService = orderedAdditionalService;
     }
 
     @Override
@@ -104,10 +112,6 @@ public class InvoiceManager implements InvoiceService {
         }
     }
 
-    private void checkIfCustomerIsExist(int customerId) {
-
-    }
-
     public Invoice createInvoiceForSave(CreateInvoiceRequest createInvoiceRequest) {
 
         Rental rental = rentalService.getByRentalId(createInvoiceRequest.getRentalId());
@@ -118,7 +122,25 @@ public class InvoiceManager implements InvoiceService {
         invoice.setStartDateRental(rental.getStartDate());
         invoice.setEndDateRental(rental.getEndDate());
         invoice.setCustomer(Customer.builder().customerId(rental.getCustomer().getCustomerId()).build());
+        invoice.setInvoicePrice(calculateInvoicePrice(rental));
 
         return invoice;
+    }
+
+
+    private double calculateInvoicePrice(Rental rental) {
+
+        double calculatedPrice = 0;
+        if (checkIfStartCityIsDifferentFromDeliveredCity(rental.getRentedCity().getCityId(), rental.getDeliveredCity().getCityId())) {
+            calculatedPrice += 750;
+        }
+
+        List<OrderedAdditionalService> orderedAdditionalServices = orderedAdditionalService.getOrderedAdditionalServiceByOrderedAdditionalServiceId(rental.getOrderedAdditionalServices().getOrderedAdditionalServiceId());
+        log.info(orderedAdditionalServices.toString());
+        return 0;
+    }
+
+    private boolean checkIfStartCityIsDifferentFromDeliveredCity(int startCityId, int deliveredCityId) {
+        return startCityId != deliveredCityId;
     }
 }

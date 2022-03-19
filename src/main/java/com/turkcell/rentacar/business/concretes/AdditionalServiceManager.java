@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 
@@ -110,5 +111,9 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 
     public AdditionalService getAdditionalServiceById(int id) {
         return additionalServiceDao.findById(id).orElseThrow(() -> new BusinessException("Additional service does not exist by id:" + id));
+    }
+
+    public List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(UUID uuid) {
+        return additionalServiceDao.findByOrderedAdditionalServices(uuid);
     }
 }

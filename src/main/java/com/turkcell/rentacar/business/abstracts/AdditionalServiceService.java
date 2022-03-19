@@ -9,6 +9,7 @@ import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface AdditionalServiceService {
     DataResult<List<AdditionalServiceListDto>> getAll();
@@ -22,4 +23,6 @@ public interface AdditionalServiceService {
     Result deleteById(int additionalServicesId);
 
     AdditionalService getAdditionalServiceById(int id);
+
+    List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(UUID uuid);
 }

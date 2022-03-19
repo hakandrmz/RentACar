@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +11,9 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@PrimaryKeyJoinColumn(name = "individual_customer_id", referencedColumnName = "customer_id")
 @Table(name = "individual_customers")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class IndividualCustomer extends Customer {
-
-    @Column(name = "individual_customer_id", insertable = false, updatable = false)
-    private int individualCustomerId;
 
     @Column(name = "first_name")
     private String firstName;

@@ -104,6 +104,7 @@ public class OrderedAdditionalServiceManager implements OrderedAdditionalService
 
     @Override
     public DataResult saveDbFromModelAndGetUUID(CreateOrderedAdditionalServiceRequest createOrderedAdditionalServiceRequest) {
+
         UUID uuid = UUID.randomUUID();
 
         for (Integer additionalServiceId : createOrderedAdditionalServiceRequest.getAdditionalServiceId()
@@ -115,6 +116,10 @@ public class OrderedAdditionalServiceManager implements OrderedAdditionalService
         }
 
         return new SuccessDataResult(uuid);
+    }
+
+    public List<OrderedAdditionalService> getOrderedAdditionalServiceByOrderedAdditionalServiceId(UUID uuid) {
+        return this.orderedAdditionalServiceDao.getByOrderedAdditionalServiceId(uuid);
     }
 
 }

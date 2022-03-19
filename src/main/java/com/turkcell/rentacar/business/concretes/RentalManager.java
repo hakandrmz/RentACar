@@ -55,8 +55,11 @@ public class RentalManager implements RentalService {
 
     @Override
     public DataResult<List<RentalListDto>> getAll() {
+
         List<Rental> result = this.rentalDao.findAll();
+
         List<RentalListDto> response = result.stream().map(rental -> this.modelMapperService.forDto().map(rental, RentalListDto.class)).collect(Collectors.toList());
+
         return new SuccessDataResult<>(response, "Rents listed");
     }
 
@@ -139,6 +142,7 @@ public class RentalManager implements RentalService {
     public UUID saveOrderedAdditionalServiceAndReturnUUID(CreateOrderedAdditionalServiceRequest createOrderedAdditionalServiceRequest) {
 
         DataResult dataResult = orderedAdditionalServiceService.saveDbFromModelAndGetUUID(createOrderedAdditionalServiceRequest);
+
         return (UUID) dataResult.getData();
     }
 
@@ -166,18 +170,6 @@ public class RentalManager implements RentalService {
         if (!rentalDao.existsById(id)) {
             throw new BusinessException("Rental does not exist by id:" + id);
         }
-    }
-
-    private boolean checkIfRentalIsReturnDifferentCity(Rental rental) {
-        return rental.getRentedCity() != rental.getDeliveredCity();
-    }
-
-    private int calculateAdditionalPriceForReturnLocation(Rental rental) {
-        int additionalPrice = 0;
-        if (checkIfRentalIsReturnDifferentCity(rental)) {
-            additionalPrice = 750;
-        }
-        return additionalPrice;
     }
 
     public Rental getByRentalId(int id) {

@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface OrderedAdditionalServiceDao extends JpaRepository<OrderedAdditionalService, Integer> {
-    List<OrderedAdditionalService> getByOrderedAdditionalServiceId(UUID orderedAdditionalServiceId);
+    List<OrderedAdditionalService> getByOrderedAdditionalServiceId(String orderedAdditionalServiceId);
 }

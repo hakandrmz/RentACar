@@ -33,7 +33,7 @@ public class RentalListDto {
 
     private int carId;
 
-    private UUID orderedAdditionalServices;
+    private String orderedAdditionalServiceId;
 
     private int rentedCityId;
 

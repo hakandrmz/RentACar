@@ -22,10 +22,10 @@ public class RentalsController {
         this.rentalService = rentalService;
     }
 
-    @GetMapping("/getAll")
-    DataResult<List<RentalListDto>> getAll() {
-        return this.rentalService.getAll();
-    }
+    //@GetMapping("/getAll")
+    //DataResult<List<RentalListDto>> getAll() {
+    //    return this.rentalService.getAll();
+    //}
 
     @GetMapping("/getAllByCarId")
     DataResult<List<RentalListDto>> getAllByCarCarId(int id) {

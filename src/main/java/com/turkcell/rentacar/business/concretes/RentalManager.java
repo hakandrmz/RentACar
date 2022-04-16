@@ -1,10 +1,7 @@
 package com.turkcell.rentacar.business.concretes;
 
 import com.turkcell.rentacar.api.controller.models.CreateRentalAndOrderedAdditionalModel;
-import com.turkcell.rentacar.business.abstracts.CarMaintenanceService;
-import com.turkcell.rentacar.business.abstracts.CarService;
-import com.turkcell.rentacar.business.abstracts.OrderedAdditionalServiceService;
-import com.turkcell.rentacar.business.abstracts.RentalService;
+import com.turkcell.rentacar.business.abstracts.*;
 import com.turkcell.rentacar.business.dtos.carmaintenance.CarMaintenanceListDto;
 import com.turkcell.rentacar.business.dtos.rental.RentalDtoById;
 import com.turkcell.rentacar.business.dtos.rental.RentalListDto;
@@ -38,28 +35,31 @@ public class RentalManager implements RentalService {
     private final CarMaintenanceService carMaintenanceService;
     private final CarService carService;
     private final OrderedAdditionalServiceService orderedAdditionalServiceService;
+    private final CustomerService customerService;
 
 
     public RentalManager(RentalDao rentalDao,
                          ModelMapperService modelMapperService,
                          @Lazy CarMaintenanceService carMaintenanceService,
                          @Lazy CarService carService,
-                         @Lazy OrderedAdditionalServiceService orderedAdditionalServiceService) {
+                         @Lazy OrderedAdditionalServiceService orderedAdditionalServiceService,
+                         @Lazy CustomerService customerService) {
 
         this.rentalDao = rentalDao;
         this.modelMapperService = modelMapperService;
         this.carMaintenanceService = carMaintenanceService;
         this.carService = carService;
+        this.customerService = customerService;
         this.orderedAdditionalServiceService = orderedAdditionalServiceService;
     }
 
     @Override
     public DataResult<List<RentalListDto>> getAll() {
 
-        List<Rental> result = this.rentalDao.findAll();
+        List<Rental> rents = this.rentalDao.findAll();
 
-        List<RentalListDto> response = result.stream().map(rental -> this.modelMapperService.forDto().map(rental, RentalListDto.class)).collect(Collectors.toList());
-
+        List<RentalListDto> response = rents.stream().map(rent -> this.modelMapperService
+                .forDto().map(rent, RentalListDto.class)).collect(Collectors.toList());
         return new SuccessDataResult<>(response, "Rents listed");
     }
 
@@ -70,12 +70,13 @@ public class RentalManager implements RentalService {
         CreateRentalRequest createRentalRequest = createRentalAndOrderedAdditionalModel.getCreateRentalRequest();
 
         checkIfCarIsAvailable(createRentalRequest.getCarId(), createRentalRequest.getStartDate());
+        this.customerService.checkIfCustomerIsExist(createRentalRequest.getCustomerId());
 
         UUID savedOrderedAdditionalModelUUID = saveOrderedAdditionalServiceAndReturnUUID(createRentalAndOrderedAdditionalModel.getCreateOrderedAdditionalServiceRequest());
 
         Rental rental = this.modelMapperService.forDto().map(createRentalRequest, Rental.class);
         rental.setRentalId(0);
-        rental.setOrderedAdditionalServices(OrderedAdditionalService.builder().orderedAdditionalServiceId(savedOrderedAdditionalModelUUID).build());
+        rental.setOrderedAdditionalServices(OrderedAdditionalService.builder().orderedAdditionalServiceId(savedOrderedAdditionalModelUUID.toString()).build());
 
         this.rentalDao.save(rental);
 

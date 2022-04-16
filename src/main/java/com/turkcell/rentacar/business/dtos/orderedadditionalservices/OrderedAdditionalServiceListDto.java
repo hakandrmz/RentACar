@@ -12,6 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 public class OrderedAdditionalServiceListDto {
 	private int id;
-	private UUID orderedAdditionalServiceId;
-	private AdditionalService additionalService;
+    private String orderedAdditionalServiceId;
+    private AdditionalService additionalService;
 }

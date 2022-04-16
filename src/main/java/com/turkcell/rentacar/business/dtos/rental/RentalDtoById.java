@@ -30,7 +30,7 @@ public class RentalDtoById {
 
     private int carId;
 
-    private UUID orderedAdditionalServiceId;
+    private String orderedAdditionalServiceId;
 
     private String brand;
 

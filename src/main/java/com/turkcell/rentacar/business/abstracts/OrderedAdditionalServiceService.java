@@ -24,5 +24,5 @@ public interface OrderedAdditionalServiceService {
 
     DataResult saveDbFromModelAndGetUUID(CreateOrderedAdditionalServiceRequest createOrderedAdditionalServiceRequest);
 
-    List<OrderedAdditionalService> getOrderedAdditionalServiceByOrderedAdditionalServiceId(UUID uuid);
+    List<OrderedAdditionalService> getOrderedAdditionalServiceByOrderedAdditionalServiceId(String uuid);
 }

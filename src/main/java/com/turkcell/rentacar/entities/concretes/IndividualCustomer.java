@@ -13,6 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Table(name = "individual_customers")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Inheritance(strategy = InheritanceType.JOINED)
+@PrimaryKeyJoinColumn(name = "individual_customer_id", referencedColumnName = "customer_id")
 public class IndividualCustomer extends Customer {
 
     @Column(name = "first_name")

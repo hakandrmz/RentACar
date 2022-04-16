@@ -69,9 +69,9 @@ public class DataLoader implements CommandLineRunner {
                     .build());
 
             UUID uuid = UUID.randomUUID();
-            orderedAdditionalServiceDao.save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid).additionalService(AdditionalService.builder().additionalServiceId(1).build()).build());
-            orderedAdditionalServiceDao.save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid).additionalService(AdditionalService.builder().additionalServiceId(2).build()).build());
-            orderedAdditionalServiceDao.save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid).additionalService(AdditionalService.builder().additionalServiceId(3).build()).build());
+            orderedAdditionalServiceDao.save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid.toString()).additionalService(AdditionalService.builder().additionalServiceId(1).build()).build());
+            orderedAdditionalServiceDao.save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid.toString()).additionalService(AdditionalService.builder().additionalServiceId(2).build()).build());
+            orderedAdditionalServiceDao.save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid.toString()).additionalService(AdditionalService.builder().additionalServiceId(3).build()).build());
 
         }
     }

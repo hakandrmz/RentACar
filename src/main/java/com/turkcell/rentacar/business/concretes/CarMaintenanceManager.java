@@ -21,7 +21,9 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,8 +54,9 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) throws BusinessException {
+    public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) {
         checkIfCarIsAvailable(createCarMaintenanceRequest.getCarId());
+        checkIfCarIsUnderMaintenance(createCarMaintenanceRequest.getCarId());
         CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(createCarMaintenanceRequest, CarMaintenance.class);
         carMaintenance.setCarMaintenanceId(0);
         this.carMaintenanceDao.save(carMaintenance);
@@ -62,7 +65,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException {
+    public Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
         checkIfCarMaintenanceExists(updateCarMaintenanceRequest.getCarMaintenanceId());
         checkIfCarIsAvailable(updateCarMaintenanceRequest.getCarId());
         CarMaintenance carMaintenance = this.modelMapperService.forRequest().map(updateCarMaintenanceRequest, CarMaintenance.class);
@@ -73,7 +76,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public DataResult<CarMaintenanceByIdDto> getById(int carMaintenanceId) throws BusinessException {
+    public DataResult<CarMaintenanceByIdDto> getById(int carMaintenanceId) {
         checkIfCarMaintenanceExists(carMaintenanceId);
         CarMaintenance carMaintenance = this.carMaintenanceDao.getById(carMaintenanceId);
 
@@ -83,14 +86,14 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result deleteById(int carMaintenanceId) throws BusinessException {
+    public Result deleteById(int carMaintenanceId) {
         checkIfCarMaintenanceExists(carMaintenanceId);
         this.carMaintenanceDao.deleteById(carMaintenanceId);
         return new SuccessResult("Maintenance is deleted.");
     }
 
     @Override
-    public DataResult<List<CarMaintenanceListDto>> getByCarId(int carId) throws BusinessException {
+    public DataResult<List<CarMaintenanceListDto>> getByCarId(int carId) {
         carService.checkIfCarExists(carId);
         List<CarMaintenance> result = this.carMaintenanceDao.getByCarCarId(carId);
         List<CarMaintenanceListDto> response = result.stream()
@@ -98,24 +101,28 @@ public class CarMaintenanceManager implements CarMaintenanceService {
         return new SuccessDataResult<>(response, "Car maintenances listed successfully.");
     }
 
-    private void checkIfCarIsAvailable(int carId) throws BusinessException {
+    private void checkIfCarIsAvailable(int carId) {
         DataResult<List<RentalListDto>> result = this.rentalService.getAllByCarId(carId);
 
-        List<Rental> response = result.getData().stream()
-                .map(rental -> this.modelMapperService.forDto().map(rental, Rental.class))
-                .collect(Collectors.toList());
-
-        for (Rental rental : response) {
+        for (RentalListDto rental : result.getData()) {
             if (rental.getEndDate() == null || rental.getEndDate().isAfter(LocalDate.now())) {
                 throw new BusinessException("Car is not available until " + rental.getEndDate());
             }
         }
     }
 
-
-    private void checkIfCarMaintenanceExists(int id) throws BusinessException {
+    private void checkIfCarMaintenanceExists(int id) {
         if (carMaintenanceDao.existsById(id) == false) {
             throw new BusinessException("Car maintenance does not exist by id:" + id);
+        }
+    }
+
+    private void checkIfCarIsUnderMaintenance(int carId) {
+        Optional<CarMaintenance> carMaintenance = carMaintenanceDao.findTopByCarCarId(carId);
+        if (carMaintenance.isPresent()) {
+            if (LocalDate.now().isBefore(carMaintenance.get().getReturnDate())) {
+                throw new BusinessException("Car is under maintenance");
+            }
         }
     }
 

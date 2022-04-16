@@ -24,5 +24,5 @@ public interface AdditionalServiceService {
 
     AdditionalService getAdditionalServiceById(int id);
 
-    List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(UUID uuid);
+    List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(String uuid);
 }

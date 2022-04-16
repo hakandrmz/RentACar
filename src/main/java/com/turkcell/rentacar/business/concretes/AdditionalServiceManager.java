@@ -113,7 +113,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
         return additionalServiceDao.findById(id).orElseThrow(() -> new BusinessException("Additional service does not exist by id:" + id));
     }
 
-    public List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(UUID uuid) {
+    public List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(String uuid) {
         return additionalServiceDao.findByOrderedAdditionalServices(uuid);
     }
 }

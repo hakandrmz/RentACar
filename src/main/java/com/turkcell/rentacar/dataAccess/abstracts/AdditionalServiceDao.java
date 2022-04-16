@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AdditionalServiceDao extends JpaRepository<AdditionalService, Integer> {
-    List<AdditionalService> findByOrderedAdditionalServices(UUID uuid);
+    List<AdditionalService> findByOrderedAdditionalServices(String uuid);
 
 
 }

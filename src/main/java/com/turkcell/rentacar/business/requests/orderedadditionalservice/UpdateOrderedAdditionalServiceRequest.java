@@ -25,5 +25,5 @@ public class UpdateOrderedAdditionalServiceRequest {
 	
 	@NotNull
 	@Positive
-	private int rentalRentalId;
+	private int rentalId;
 }

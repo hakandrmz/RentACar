@@ -48,7 +48,7 @@ public class Rental {
     @JoinColumn(name = "delivered_city", referencedColumnName = "city_id")
     private City deliveredCity;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 }

@@ -17,8 +17,6 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public void checkIfCustomerIsExist(int id) {
-        if (customerDao.existsById(id)) {
-            throw new BusinessException("Customer not found id: " + id);
-        }
+        customerDao.findById(id).orElseThrow(() -> new BusinessException("Customer is not exist by id:" + id));
     }
 }

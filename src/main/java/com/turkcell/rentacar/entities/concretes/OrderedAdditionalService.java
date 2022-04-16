@@ -26,7 +26,7 @@ public class OrderedAdditionalService {
     private int id;
 
     @Column(name = "ordered_additional_service_uuid")
-    private UUID orderedAdditionalServiceId;
+    private String orderedAdditionalServiceId;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="additional_service_id")

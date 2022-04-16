@@ -60,7 +60,7 @@ public class OrderedAdditionalServiceManager implements OrderedAdditionalService
             AdditionalService additionalService = additionalServiceService.getAdditionalServiceById(additionalServiceId);
 
             orderedAdditionalServiceDao
-                    .save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid).additionalService(additionalService).build());
+                    .save(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid.toString()).additionalService(additionalService).build());
         }
 
         return new SuccessResult("Ordered Additional Service is added.");
@@ -112,14 +112,15 @@ public class OrderedAdditionalServiceManager implements OrderedAdditionalService
             AdditionalService additionalService = additionalServiceService.getAdditionalServiceById(additionalServiceId);
 
             orderedAdditionalServiceDao
-                    .saveAndFlush(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid).additionalService(additionalService).build());
+                    .saveAndFlush(OrderedAdditionalService.builder().orderedAdditionalServiceId(uuid.toString()).additionalService(additionalService).build());
         }
 
         return new SuccessDataResult(uuid);
     }
 
-    public List<OrderedAdditionalService> getOrderedAdditionalServiceByOrderedAdditionalServiceId(UUID uuid) {
-        return this.orderedAdditionalServiceDao.getByOrderedAdditionalServiceId(uuid);
+    @Override
+    public List<OrderedAdditionalService> getOrderedAdditionalServiceByOrderedAdditionalServiceId(String uuid) {
+        return null;
     }
 
 }

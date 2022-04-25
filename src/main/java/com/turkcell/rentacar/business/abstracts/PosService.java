@@ -1,0 +1,9 @@
+package com.turkcell.rentacar.business.abstracts;
+
+import com.turkcell.rentacar.business.requests.CreatePosRequest;
+
+public interface PosService {
+
+    boolean pay(CreatePosRequest createPosServiceRequest);
+}
+

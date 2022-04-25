@@ -1,8 +1,10 @@
 package com.turkcell.rentacar.dataAccess.abstracts;
 
-import com.turkcell.rentacar.entities.concretes.Customer;
-import io.swagger.models.auth.In;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CustomerDao extends JpaRepository<Customer, Integer> {
+import com.turkcell.rentacar.entities.concretes.Customer;
+
+@Repository
+public interface CustomerDao extends UserDao<Customer> {
+
 }

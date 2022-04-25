@@ -1,14 +1,15 @@
-package com.turkcell.rentacar.business.dtos.additionalservice;
+package com.turkcell.rentacar.business.dtos.additionalService;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class AdditionalServiceListDto {
-	private int additionalServiceId;
+
+    private int id;
     private String additionalServiceName;
     private double dailyPrice;
 }

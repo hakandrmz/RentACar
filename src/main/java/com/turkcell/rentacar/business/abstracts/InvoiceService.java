@@ -1,30 +1,47 @@
 package com.turkcell.rentacar.business.abstracts;
 
-import com.turkcell.rentacar.business.dtos.invoice.InvoiceByIdDto;
+import java.time.LocalDate;
+import java.util.List;
+
+import com.turkcell.rentacar.business.dtos.invoice.GetInvoiceDto;
 import com.turkcell.rentacar.business.dtos.invoice.InvoiceListDto;
-import com.turkcell.rentacar.business.requests.invoice.CreateInvoiceRequest;
-import com.turkcell.rentacar.business.requests.invoice.UpdateInvoiceRequest;
+import com.turkcell.rentacar.business.requests.Invoice.CreateInvoiceRequest;
+import com.turkcell.rentacar.business.requests.Invoice.DeleteInvoiceRequest;
+import com.turkcell.rentacar.business.requests.Invoice.UpdateInvoiceRequest;
+import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.entities.concretes.Invoice;
 
-import java.time.LocalDate;
-import java.util.List;
-
 public interface InvoiceService {
+
     DataResult<List<InvoiceListDto>> getAll();
 
-    Result add(CreateInvoiceRequest createInvoiceRequest);
+    DataResult<Invoice> addForIndividualCustomers(CreateInvoiceRequest createInvoiceRequest) throws BusinessException;
 
-    DataResult<InvoiceByIdDto> getById(int id);
+    DataResult<Invoice> addForCorporateCustomers(CreateInvoiceRequest createInvoiceRequest) throws BusinessException;
 
-    Result update(UpdateInvoiceRequest updateInvoiceRequest);
+    DataResult<Invoice> addExtraInvoice(int rentId, double totalPrice) throws BusinessException;
 
-    Result deleteById(int invoiceId);
+    DataResult<GetInvoiceDto> getById(Integer id) throws BusinessException;
 
-    DataResult<List<InvoiceListDto>> getAllInvoiceByCustomerId(int id);
+    Result update(UpdateInvoiceRequest updateInvoiceRequest) throws BusinessException;
 
-    DataResult<List<InvoiceListDto>> getAllInvoicesBetweenTwoDates(LocalDate from, LocalDate to);
+    Result delete(DeleteInvoiceRequest deleteInvoiceRequest) throws BusinessException;
 
-    Invoice createInvoiceForSave(CreateInvoiceRequest createInvoiceRequest);
+    DataResult<List<InvoiceListDto>> getByCustomerUserId(Integer id) throws BusinessException;
+
+    DataResult<List<InvoiceListDto>> getByRentId(Integer id) throws BusinessException;
+
+    DataResult<List<InvoiceListDto>> findByCreationDateBetween(LocalDate startDate, LocalDate endDate);
+
+    void checkIfInvoiceIdExists(Integer id) throws BusinessException;
+
+    double calculateTotalPriceForIndividualCustomers(int rentId) throws BusinessException;
+
+    double calculateTotalPriceForCorporateCustomers(int rentId) throws BusinessException;
+
+    void setInvoiceFields(int rentId, Invoice invoice) throws BusinessException;
+
+
 }

@@ -1,44 +1,60 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import java.time.LocalDate;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
-import java.time.LocalDate;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "invoices")
-@Builder
 public class Invoice {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "invoice_id")
-    private int invoiceId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "invoice_id")
+	private int invoiceId;
 
-    @Column(name = "invoice_date")
-    private LocalDate invoiceDate;
+	@Column(name = "invoice_number")
+	private String invoiceNumber;
 
-    @Column(name = "invoice_price")
-    private double invoicePrice;
+	@Column(name = "creation_date")
+	private LocalDate creationDate;
 
-    @Column(name = "start_date_rental")
-    private LocalDate startDateRental;
+	@Column(name = "rent_start_date")
+	private LocalDate rentStartDate;
 
-    @Column(name = "end_date_rental")
-    private LocalDate endDateRental;
+	@Column(name = "rent_return_date")
+	private LocalDate rentReturnDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", nullable = false)
-    private Customer customer;
+	@Column(name = "total_rent_day")
+	private int totalRentDay;
 
-    @OneToOne
-    @JoinColumn(name = "rental_id")
-    private Rental rental;
+	@Column(name = "total_price")
+	private Double totalPrice;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private Customer customer;
+
+	@ManyToOne
+	@JoinColumn(name = "rent_id")
+	private Rent rent;
+
+	@OneToOne(mappedBy = "invoice")
+	private Payment payment;
 
 }

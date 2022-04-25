@@ -1,34 +1,39 @@
 package com.turkcell.rentacar.entities.concretes;
 
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.time.LocalDate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "car_maintenances")
+@Builder
 public class CarMaintenance {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int carMaintenanceId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "maintenance_id")
+	private int maintenanceId;
 
-    @Column(name = "description")
-    private String description;
+	@Column(name = "maintenance_description")
+	private String maintenanceDescription;
 
-    @Column(name = "return_date")
-    private LocalDate returnDate;
+	@Column(name = "maintenance_returnDate")
+	private LocalDate returnDate;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
+	@ManyToOne
+	@JoinColumn(name = "car_id")
+	private Car car;
 
 
 }

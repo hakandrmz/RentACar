@@ -1,27 +1,39 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name = "user_card_informations")
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "credit_cards")
 public class CreditCard {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_card_information_id")
-    private int userCardInformationId;
+    @Column(name = "credit_card_id")
+    private int creditCardId;
 
-    @Column(name = "card_no", length = 16)
-    private String cardNo;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Customer customer;
 
-    @Column(name = "card_holder")
-    private String cardHolder;
+    @Column(name = "credit_card_no")
+    private String creditCardNo;
+
+    @Column(name = "credit_card_holder")
+    private String creditCardHolder;
 
     @Column(name = "expiration_month")
     private int expirationMonth;
@@ -30,9 +42,6 @@ public class CreditCard {
     private int expirationYear;
 
     @Column(name = "cvv")
-    private int cvv;
+    private String cvv;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
 }

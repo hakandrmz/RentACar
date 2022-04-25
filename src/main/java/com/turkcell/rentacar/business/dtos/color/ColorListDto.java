@@ -1,12 +1,14 @@
 package com.turkcell.rentacar.business.dtos.color;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class ColorListDto {
-    private int colorId;
+
+    private int id;
     private String colorName;
 }

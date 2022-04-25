@@ -1,11 +1,20 @@
 package com.turkcell.rentacar.business.concretes;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+
 import com.turkcell.rentacar.business.abstracts.IndividualCustomerService;
-import com.turkcell.rentacar.business.dtos.customer.IndividualCustomerByIdDto;
-import com.turkcell.rentacar.business.dtos.customer.IndividualCustomerListDto;
-import com.turkcell.rentacar.business.requests.customer.individualCustomer.CreateIndividualCustomerRequest;
-import com.turkcell.rentacar.business.requests.customer.individualCustomer.UpdateIndividualCustomerRequest;
+import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
+import com.turkcell.rentacar.business.dtos.individualCustomer.GetIndividualCustomerDto;
+import com.turkcell.rentacar.business.dtos.individualCustomer.IndividualCustomerListDto;
+import com.turkcell.rentacar.business.requests.individualCustomer.CreateIndividualCustomerRequest;
+import com.turkcell.rentacar.business.requests.individualCustomer.DeleteIndividualCustomerRequest;
+import com.turkcell.rentacar.business.requests.individualCustomer.UpdateIndividualCustomerRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
+import com.turkcell.rentacar.core.exceptions.individualCustomer.IndividualCustomerNotFoundException;
+import com.turkcell.rentacar.core.exceptions.individualCustomer.NationalIdentityNumberAlreadyExistsException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -13,10 +22,6 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.IndividualCustomerDao;
 import com.turkcell.rentacar.entities.concretes.IndividualCustomer;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class IndividualCustomerManager implements IndividualCustomerService {
@@ -35,75 +40,74 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         List<IndividualCustomer> result = this.individualCustomerDao.findAll();
 
-        List<IndividualCustomerListDto> response = result.stream().
-                map(individualCustomer -> this.modelMapperService.forDto()
-                        .map(individualCustomer, IndividualCustomerListDto.class))
-                .collect(Collectors.toList());
+        List<IndividualCustomerListDto> response = result.stream().map(individualCustomer -> this.modelMapperService
+                .forDto().map(individualCustomer, IndividualCustomerListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<IndividualCustomerListDto>>(response, "Individual customers listed.");
+        return new SuccessDataResult<List<IndividualCustomerListDto>>(response, BusinessMessages.INDIVIDUAL_CUSTOMERS_LISTED);
     }
 
     @Override
-    public Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest) {
+    public Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest) throws BusinessException {
 
-        this.checkIfCustomerAlreadyExist(createIndividualCustomerRequest);
+        checkIfNationalIdentityAlreadyExists(createIndividualCustomerRequest.getNationalIdentity());
 
         IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(createIndividualCustomerRequest, IndividualCustomer.class);
 
         this.individualCustomerDao.save(individualCustomer);
 
-        return new SuccessResult("Individual customer " + individualCustomer.getFirstName() + " " + individualCustomer.getLastName() + " is added.");
+        return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_ADDED);
     }
 
     @Override
-    public Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) {
+    public DataResult<GetIndividualCustomerDto> getByUserId(Integer id) throws BusinessException {
 
-        this.checkIfExistsByIndividualCustomerById(updateIndividualCustomerRequest.getUserId());
+        checkIfIndividualCustomerIdExists(id);
+
+        IndividualCustomer individualCustomer = this.individualCustomerDao.getById(id);
+
+        GetIndividualCustomerDto response = this.modelMapperService.forDto().map(individualCustomer, GetIndividualCustomerDto.class);
+
+        return new SuccessDataResult<GetIndividualCustomerDto>(response, BusinessMessages.INDIVIDUAL_CUSTOMER_FOUND_BY_ID);
+    }
+
+    @Override
+    public Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) throws BusinessException {
+
+        checkIfIndividualCustomerIdExists(updateIndividualCustomerRequest.getUserId());
+        checkIfNationalIdentityAlreadyExists(updateIndividualCustomerRequest.getNationalIdentity());
 
         IndividualCustomer individualCustomer = this.modelMapperService.forRequest().map(updateIndividualCustomerRequest, IndividualCustomer.class);
 
         this.individualCustomerDao.save(individualCustomer);
 
-        return new SuccessResult("Individual customer " + individualCustomer.getFirstName() + " " + individualCustomer.getLastName() + " is updated.");
+        return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_UPDATED);
     }
 
     @Override
-    public Result delete(int individualCustomerId) {
+    public Result delete(DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) throws BusinessException {
 
-        this.checkIfExistsByIndividualCustomerById(individualCustomerId);
+        checkIfIndividualCustomerIdExists(deleteIndividualCustomerRequest.getUserId());
 
-        this.individualCustomerDao.deleteById(individualCustomerId);
+        this.individualCustomerDao.deleteById(deleteIndividualCustomerRequest.getUserId());
 
-        return new SuccessResult("Individual customer is deleted.");
+        return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_DELETED);
     }
 
     @Override
-    public DataResult<IndividualCustomerByIdDto> getIndividualCustomerByIdDtoByUserId(int userId) {
+    public void checkIfIndividualCustomerIdExists(Integer id) throws BusinessException {
 
-        IndividualCustomer individualCustomer = this.individualCustomerDao.getById(userId);
+        if (!this.individualCustomerDao.existsById(id)) {
 
-        IndividualCustomerByIdDto response = this.modelMapperService.forDto().map(individualCustomer, IndividualCustomerByIdDto.class);
-
-        return new SuccessDataResult<IndividualCustomerByIdDto>(response, "Individual customer found by given id : " + userId);
-    }
-
-    private void checkIfExistsByIndividualCustomerById(int userId) {
-        if (!individualCustomerDao.existsById(userId)) {
-            throw new BusinessException("Individual customer is not exist by id: " + userId);
+            throw new IndividualCustomerNotFoundException(BusinessMessages.INDIVIDUAL_CUSTOMER_NOT_FOUND);
         }
     }
 
-    private void checkIfCustomerAlreadyExist(CreateIndividualCustomerRequest individualCustomer) {
-        if (
-                individualCustomerDao
-                        .existsByNationalIdentity(individualCustomer.getNationalIdentity())
-                        ||
-                        individualCustomerDao
-                                .existsIndividualCustomerByEmail(individualCustomer.getEmail())
-        ) {
-            throw new BusinessException("Individual customer is already exist: ");
+    @Override
+    public void checkIfNationalIdentityAlreadyExists(String nationalIdentity) throws BusinessException {
+
+        if (this.individualCustomerDao.existsIndividualCustomerByNationalIdentity(nationalIdentity)) {
+
+            throw new NationalIdentityNumberAlreadyExistsException(BusinessMessages.NATIONAL_IDENTITY_EXISTS);
         }
     }
-
 }
-

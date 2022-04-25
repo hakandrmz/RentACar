@@ -1,11 +1,22 @@
 package com.turkcell.rentacar.business.concretes;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.turkcell.rentacar.business.abstracts.BrandService;
-import com.turkcell.rentacar.business.dtos.brand.BrandByIdDto;
+import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.brand.BrandListDto;
+import com.turkcell.rentacar.business.dtos.brand.GetBrandDto;
 import com.turkcell.rentacar.business.requests.brand.CreateBrandRequest;
+import com.turkcell.rentacar.business.requests.brand.DeleteBrandRequest;
 import com.turkcell.rentacar.business.requests.brand.UpdateBrandRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
+import com.turkcell.rentacar.core.exceptions.brand.BrandAlreadyExistsException;
+import com.turkcell.rentacar.core.exceptions.brand.BrandNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -13,10 +24,6 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.BrandDao;
 import com.turkcell.rentacar.entities.concretes.Brand;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BrandManager implements BrandService {
@@ -24,72 +31,87 @@ public class BrandManager implements BrandService {
     private final BrandDao brandDao;
     private final ModelMapperService modelMapperService;
 
+    @Autowired
     public BrandManager(BrandDao brandDao, ModelMapperService modelMapperService) {
+
         this.brandDao = brandDao;
         this.modelMapperService = modelMapperService;
     }
 
     @Override
     public DataResult<List<BrandListDto>> getAll() {
-        List<Brand> result = this.brandDao.findAll();
-        List<BrandListDto> response = result.stream()
-                .map(brand -> this.modelMapperService.forDto().map(brand, BrandListDto.class))
-                .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<BrandListDto>>(response, "Brand are listed successfully.");
+        List<Brand> result = this.brandDao.findAll();
+
+        List<BrandListDto> response = result.stream().map(brand -> this.modelMapperService
+                .forDto().map(brand, BrandListDto.class)).collect(Collectors.toList());
+
+        return new SuccessDataResult<List<BrandListDto>>(response, BusinessMessages.BRANDS_LISTED);
     }
 
     @Override
     public Result add(CreateBrandRequest createBrandRequest) throws BusinessException {
-        Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
-        checkIfBrandNameIsUnique(brand.getBrandName());
-        this.brandDao.save(brand);
-        return new SuccessResult("Brand is added.");
-    }
 
+        checkIfBrandNameExists(createBrandRequest.getBrandName());
+
+        Brand brand = this.modelMapperService.forRequest().map(createBrandRequest, Brand.class);
+
+        this.brandDao.save(brand);
+
+        return new SuccessResult(BusinessMessages.BRAND_ADDED);
+    }
 
     @Override
-    public DataResult<BrandByIdDto> getById(int brandId) throws BusinessException {
-        checkIfBrandExists(brandId);
-        Brand brand = this.brandDao.getById(brandId);
-        BrandByIdDto response = this.modelMapperService.forDto().map(brand, BrandByIdDto.class);
-        return new SuccessDataResult<BrandByIdDto>(response, "Brand is found by id.");
-    }
+    public DataResult<GetBrandDto> getByBrandId(Integer id) throws BusinessException {
 
+        checkIfBrandIdExists(id);
+
+        Brand foundBrand = brandDao.getById(id);
+
+        GetBrandDto response = this.modelMapperService.forDto().map(foundBrand, GetBrandDto.class);
+
+        return new SuccessDataResult<GetBrandDto>(response, BusinessMessages.BRAND_FOUND_BY_ID);
+    }
 
     @Override
     public Result update(UpdateBrandRequest updateBrandRequest) throws BusinessException {
-        checkIfBrandExists(updateBrandRequest.getBrandId());
+
+        checkIfBrandIdExists(updateBrandRequest.getBrandId());
+        checkIfBrandNameExists(updateBrandRequest.getBrandName());
+
         Brand brand = this.modelMapperService.forRequest().map(updateBrandRequest, Brand.class);
-        checkIfBrandNameIsUnique(brand.getBrandName());
+
         this.brandDao.save(brand);
-        return new SuccessResult("Brand is updated successfuly.");
+
+        return new SuccessResult(BusinessMessages.BRAND_UPDATED);
     }
 
     @Override
-    public Result deleteById(int brandId) throws BusinessException {
-        checkIfBrandExists(brandId);
-        this.brandDao.deleteById(brandId);
-        return new SuccessResult("Brand is deleted successfully.");
+    public Result delete(DeleteBrandRequest deleteBrandRequest) throws BusinessException {
 
+        checkIfBrandIdExists(deleteBrandRequest.getBrandId());
+
+        this.brandDao.deleteById(deleteBrandRequest.getBrandId());
+
+        return new SuccessResult(BusinessMessages.BRAND_DELETED);
     }
 
-    private boolean checkIfBrandNameIsUnique(String brandName) throws BusinessException {
-        for (BrandListDto brandElement : this.getAll().getData()) {
-            if (brandElement.getBrandName().equalsIgnoreCase(brandName)) {
-                throw new BusinessException("There can not be more than one brand with the same name.");
-            }
+    @Override
+    public void checkIfBrandNameExists(String brandName) throws BusinessException {
+
+        if (this.brandDao.existsBrandByBrandNameIgnoreCase(brandName)) {
+
+            throw new BrandAlreadyExistsException(BusinessMessages.BRAND_NAME_EXISTS);
         }
-        return true;
-
     }
 
-    private boolean checkIfBrandExists(int id) throws BusinessException {
-        if (brandDao.existsById(id) == false) {
-            throw new BusinessException("Brand does not exist by id:" + id);
+    @Override
+    public void checkIfBrandIdExists(Integer id) throws BusinessException {
+
+        if (!this.brandDao.existsById(id)) {
+
+            throw new BrandNotFoundException(BusinessMessages.BRAND_NOT_FOUND);
+
         }
-        return true;
     }
-
-
 }

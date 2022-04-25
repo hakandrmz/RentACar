@@ -1,30 +1,27 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Entity
 @Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@EqualsAndHashCode
 @Table(name = "brands")
+@Builder
 public class Brand {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "brand_id")
-    private int brandId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "brand_id")
+	private int id;
 
-    @Column(name = "name")
-    private String brandName;
+	@Column(name = "brand_name")
+	private String brandName;
 
-    @OneToMany(mappedBy = "brand")
-    private List<Car> cars;
+	@OneToMany(mappedBy = "brand")
+	private List<Car> cars;
 }
-

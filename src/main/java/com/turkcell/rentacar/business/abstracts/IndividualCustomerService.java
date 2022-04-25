@@ -1,24 +1,29 @@
 package com.turkcell.rentacar.business.abstracts;
 
-import com.turkcell.rentacar.business.dtos.customer.IndividualCustomerByIdDto;
-import com.turkcell.rentacar.business.dtos.customer.IndividualCustomerListDto;
-import com.turkcell.rentacar.business.requests.customer.individualCustomer.CreateIndividualCustomerRequest;
-import com.turkcell.rentacar.business.requests.customer.individualCustomer.UpdateIndividualCustomerRequest;
+import java.util.List;
+
+import com.turkcell.rentacar.business.dtos.individualCustomer.GetIndividualCustomerDto;
+import com.turkcell.rentacar.business.dtos.individualCustomer.IndividualCustomerListDto;
+import com.turkcell.rentacar.business.requests.individualCustomer.CreateIndividualCustomerRequest;
+import com.turkcell.rentacar.business.requests.individualCustomer.DeleteIndividualCustomerRequest;
+import com.turkcell.rentacar.business.requests.individualCustomer.UpdateIndividualCustomerRequest;
+import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
-
-import java.util.List;
 
 public interface IndividualCustomerService {
 
     DataResult<List<IndividualCustomerListDto>> getAll();
 
-    Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest);
+    Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest) throws BusinessException;
 
-    Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest);
+    DataResult<GetIndividualCustomerDto> getByUserId(Integer id) throws BusinessException;
 
-    Result delete(int individualCustomerId);
+    Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) throws BusinessException;
 
-    DataResult<IndividualCustomerByIdDto> getIndividualCustomerByIdDtoByUserId(int userId);
+    Result delete(DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) throws BusinessException;
+
+    void checkIfIndividualCustomerIdExists(Integer id) throws BusinessException;
+
+    void checkIfNationalIdentityAlreadyExists(String nationalIdentity) throws BusinessException;
 }
-

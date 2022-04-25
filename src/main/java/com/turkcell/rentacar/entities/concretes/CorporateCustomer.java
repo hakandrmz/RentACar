@@ -1,25 +1,25 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "corporate_customers")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Builder
 public class CorporateCustomer extends Customer {
 
-    @Column(name = "company_name")
-    private String companyName;
+	@Column(name = "company_name")
+	private String companyName;
 
-    @Column(name = "tax_number")
-    private String taxNumber;
+	@Column(name = "tax_number", length = 11)
+	private String taxNumber;
+
 
 }
-

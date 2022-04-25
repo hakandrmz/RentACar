@@ -1,29 +1,28 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-import javax.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "individual_customers")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@Inheritance(strategy = InheritanceType.JOINED)
-@PrimaryKeyJoinColumn(name = "individual_customer_id", referencedColumnName = "customer_id")
+@Builder
 public class IndividualCustomer extends Customer {
 
-    @Column(name = "first_name")
-    private String firstName;
+	@Column(name = "first_name")
+	private String firstName;
 
-    @Column(name = "last_name")
-    private String lastName;
+	@Column(name = "last_name")
+	private String lastName;
 
-    @Column(name = "national_identity")
-    private String nationalIdentity;
+	@Column(name = "national_identity", length = 11)
+	private String nationalIdentity;
+
 
 }

@@ -4,10 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class BrandListDto {
-    private int brandId;
+
+    private int id;
     private String brandName;
 }

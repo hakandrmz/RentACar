@@ -1,11 +1,21 @@
 package com.turkcell.rentacar.business.concretes;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.turkcell.rentacar.business.abstracts.CityService;
-import com.turkcell.rentacar.business.dtos.city.CityByIdDto;
+import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
+import com.turkcell.rentacar.business.dtos.city.GetCityDto;
 import com.turkcell.rentacar.business.requests.city.CreateCityRequest;
+import com.turkcell.rentacar.business.requests.city.DeleteCityRequest;
 import com.turkcell.rentacar.business.requests.city.UpdateCityRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
+import com.turkcell.rentacar.core.exceptions.city.CityNameAlreadyExistsException;
+import com.turkcell.rentacar.core.exceptions.city.CityNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -13,12 +23,6 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CityDao;
 import com.turkcell.rentacar.entities.concretes.City;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.stream.Collectors;
-
 
 @Service
 public class CityManager implements CityService {
@@ -28,6 +32,7 @@ public class CityManager implements CityService {
 
     @Autowired
     public CityManager(CityDao cityDao, ModelMapperService modelMapperService) {
+
         this.cityDao = cityDao;
         this.modelMapperService = modelMapperService;
     }
@@ -36,65 +41,75 @@ public class CityManager implements CityService {
     public DataResult<List<CityListDto>> getAll() {
 
         List<City> result = this.cityDao.findAll();
-        List<CityListDto> response = result.stream()
-                .map(city -> this.modelMapperService.forDto().map(city, CityListDto.class))
-                .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CityListDto>>(response, "Cities are listed successfully.");
+        List<CityListDto> response = result.stream().map(city -> this.modelMapperService
+                .forDto().map(city, CityListDto.class)).collect(Collectors.toList());
+
+        return new SuccessDataResult<List<CityListDto>>(response, BusinessMessages.CITIES_LISTED);
     }
 
     @Override
     public Result add(CreateCityRequest createCityRequest) throws BusinessException {
+
+        checkIfCityNameExists(createCityRequest.getCityName());
+
         City city = this.modelMapperService.forRequest().map(createCityRequest, City.class);
-        checkIfCityNameIsUnique(createCityRequest.getCityName());
+
         this.cityDao.save(city);
-        return new SuccessResult("City is added: " + createCityRequest.getCityName());
+
+        return new SuccessResult(BusinessMessages.CITY_ADDED);
     }
 
     @Override
-    public DataResult<CityByIdDto> getById(int id) throws BusinessException {
-        checkIfCityExists(id);
-        City city = this.cityDao.getById(id);
-        CityByIdDto response = this.modelMapperService.forDto().map(city, CityByIdDto.class);
+    public DataResult<GetCityDto> getById(Integer id) throws BusinessException {
 
-        return new SuccessDataResult<CityByIdDto>(response);
+        checkIfCityIdExists(id);
+
+        City city = this.cityDao.getById(id);
+
+        GetCityDto response = this.modelMapperService.forDto().map(city, GetCityDto.class);
+
+        return new SuccessDataResult<GetCityDto>(response, BusinessMessages.CITY_FOUND_BY_ID);
     }
 
     @Override
     public Result update(UpdateCityRequest updateCityRequest) throws BusinessException {
-        checkIfCityExists(updateCityRequest.getCityId());
+
+        checkIfCityIdExists(updateCityRequest.getCityId());
+        checkIfCityNameExists(updateCityRequest.getCityName());
+
         City city = this.modelMapperService.forRequest().map(updateCityRequest, City.class);
-        checkIfCityNameIsUnique(updateCityRequest.getCityName());
 
         this.cityDao.save(city);
 
-        return new SuccessResult("City is updated.");
+        return new SuccessResult(BusinessMessages.CITY_UPDATED);
     }
 
     @Override
-    public Result deleteById(int cityId) throws BusinessException {
-        checkIfCityExists(cityId);
-        this.cityDao.deleteById(cityId);
-        return new SuccessResult("City is deleted.");
+    public Result delete(DeleteCityRequest deleteCityRequest) throws BusinessException {
+
+        checkIfCityIdExists(deleteCityRequest.getCityId());
+
+        this.cityDao.deleteById(deleteCityRequest.getCityId());
+
+        return new SuccessResult(BusinessMessages.CITY_DELETED);
     }
 
-    private boolean checkIfCityExists(int id) throws BusinessException {
-        if (cityDao.existsById(id) == false) {
-            throw new BusinessException("City does not exist by id:" + id);
+    @Override
+    public void checkIfCityNameExists(String cityName) throws BusinessException {
+
+        if (this.cityDao.existsCityByCityNameIgnoreCase(cityName)) {
+
+            throw new CityNameAlreadyExistsException(BusinessMessages.CITY_NAME_EXISTS);
         }
-        return true;
     }
 
-    private boolean checkIfCityNameIsUnique(String cityName) throws BusinessException {
+    @Override
+    public void checkIfCityIdExists(Integer id) throws BusinessException {
 
-        for (CityListDto cityElement : this.getAll().getData()) {
-            if (cityElement.getCityName().equalsIgnoreCase(cityName)) {
-                throw new BusinessException("There can not be more than one city with the same name.");
-            }
+        if (!this.cityDao.existsById(id)) {
+
+            throw new CityNotFoundException(BusinessMessages.CITY_NOT_FOUND);
         }
-
-        return true;
-
     }
-
 }

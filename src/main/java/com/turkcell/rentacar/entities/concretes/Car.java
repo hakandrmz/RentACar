@@ -1,26 +1,26 @@
 package com.turkcell.rentacar.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Data
+import javax.persistence.*;
+
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Table(name = "cars")
+@Builder
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "car_id")
-    private int carId;
+    private int id;
 
     @Column(name = "daily_price")
     private double dailyPrice;
@@ -29,10 +29,10 @@ public class Car {
     private int modelYear;
 
     @Column(name = "description")
-    private String carDescription;
+    private String description;
 
     @Column(name = "kilometer")
-    private int kilometer;
+    private Double kilometer;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
@@ -42,16 +42,23 @@ public class Car {
     @JoinColumn(name = "color_id")
     private Color color;
 
-    @OneToMany(mappedBy = "car",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City baseCity;
+
+    @Column(name = "rent_status")
+    private boolean rentStatus;
+
+    @Column(name = "maintenance_status")
+    private boolean maintenanceStatus;
+
+    @OneToMany(mappedBy = "car")
     private List<CarMaintenance> carMaintenances;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "car")
-    private List<Rental> rentals;
+    private List<Rent> rents;
 
     @OneToMany(mappedBy = "car")
-    private List<CarDamage> crashDamages;
+    private List<Damage> damages;
 
 }

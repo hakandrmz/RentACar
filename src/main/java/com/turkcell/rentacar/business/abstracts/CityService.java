@@ -1,22 +1,30 @@
 package com.turkcell.rentacar.business.abstracts;
 
-import com.turkcell.rentacar.business.dtos.city.CityByIdDto;
+import java.util.List;
+
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
+import com.turkcell.rentacar.business.dtos.city.GetCityDto;
 import com.turkcell.rentacar.business.requests.city.CreateCityRequest;
+import com.turkcell.rentacar.business.requests.city.DeleteCityRequest;
 import com.turkcell.rentacar.business.requests.city.UpdateCityRequest;
+import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 
-import java.util.List;
-
 public interface CityService {
+
     DataResult<List<CityListDto>> getAll();
 
-    Result add(CreateCityRequest createCityRequest);
+    Result add(CreateCityRequest createCityRequest) throws BusinessException;
 
-    DataResult<CityByIdDto> getById(int id);
+    DataResult<GetCityDto> getById(Integer id) throws BusinessException;
 
-    Result update(UpdateCityRequest updateCityRequest);
+    Result update(UpdateCityRequest updateCityRequest) throws BusinessException;
 
-    Result deleteById(int cityId);
+    Result delete(DeleteCityRequest deleteCityRequest) throws BusinessException;
+
+    void checkIfCityNameExists(String cityName) throws BusinessException;
+
+    void checkIfCityIdExists(Integer id) throws BusinessException;
+
 }

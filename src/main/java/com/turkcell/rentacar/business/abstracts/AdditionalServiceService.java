@@ -1,28 +1,35 @@
 package com.turkcell.rentacar.business.abstracts;
 
-import com.turkcell.rentacar.business.dtos.additionalservice.AdditionalServiceByIdDto;
-import com.turkcell.rentacar.business.dtos.additionalservice.AdditionalServiceListDto;
-import com.turkcell.rentacar.business.requests.additionalservice.CreateAdditionalServiceRequest;
-import com.turkcell.rentacar.business.requests.additionalservice.UpdateAdditionalServiceRequest;
+import java.util.List;
+
+import com.turkcell.rentacar.business.dtos.additionalService.AdditionalServiceListDto;
+import com.turkcell.rentacar.business.dtos.additionalService.GetAdditionalServiceDto;
+import com.turkcell.rentacar.business.requests.additionalService.CreateAdditionalServiceRequest;
+import com.turkcell.rentacar.business.requests.additionalService.DeleteAdditionalServiceRequest;
+import com.turkcell.rentacar.business.requests.additionalService.UpdateAdditionalServiceRequest;
+import com.turkcell.rentacar.business.requests.orderedService.CreateOrderedServiceRequest;
+import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
 
-import java.util.List;
-import java.util.UUID;
-
 public interface AdditionalServiceService {
+
     DataResult<List<AdditionalServiceListDto>> getAll();
 
-    Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest);
+    Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest) throws BusinessException;
 
-    DataResult<AdditionalServiceByIdDto> getById(int id);
+    DataResult<GetAdditionalServiceDto> getByAdditionalServiceId(Integer id) throws BusinessException;
 
-    Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest);
+    Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) throws BusinessException;
 
-    Result deleteById(int additionalServicesId);
+    Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException;
 
-    AdditionalService getAdditionalServiceById(int id);
+    void checkIfAdditionalServiceNameExists(String additionalServiceName) throws BusinessException;
 
-    List<AdditionalService> getByAdditionalServicesByOrderedAdditionalServiceId(String uuid);
+    void checkIfAdditionalServiceIdExists(Integer id) throws BusinessException;
+
+    AdditionalService getById(int id);
+
+    void checkIfAdditionalServiceIdExistsOnOrderedServiceList(List<CreateOrderedServiceRequest> list) throws BusinessException;
 }

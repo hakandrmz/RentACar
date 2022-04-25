@@ -1,24 +1,32 @@
 package com.turkcell.rentacar.business.abstracts;
 
-import com.turkcell.rentacar.business.dtos.carmaintenance.CarMaintenanceByIdDto;
-import com.turkcell.rentacar.business.dtos.carmaintenance.CarMaintenanceListDto;
-import com.turkcell.rentacar.business.requests.carmaintenance.CreateCarMaintenanceRequest;
-import com.turkcell.rentacar.business.requests.carmaintenance.UpdateCarMaintenanceRequest;
-import com.turkcell.rentacar.core.utilities.results.DataResult;
-import com.turkcell.rentacar.core.utilities.results.Result;
 
 import java.util.List;
 
+import com.turkcell.rentacar.business.dtos.carMaintenance.CarMaintenanceListDto;
+import com.turkcell.rentacar.business.dtos.carMaintenance.GetCarMaintenanceDto;
+import com.turkcell.rentacar.business.requests.carMaintenance.CreateCarMaintenanceRequest;
+import com.turkcell.rentacar.business.requests.carMaintenance.DeleteCarMaintenanceRequest;
+import com.turkcell.rentacar.business.requests.carMaintenance.UpdateCarMaintenanceRequest;
+import com.turkcell.rentacar.core.exceptions.BusinessException;
+import com.turkcell.rentacar.core.utilities.results.DataResult;
+import com.turkcell.rentacar.core.utilities.results.Result;
+
 public interface CarMaintenanceService {
+
     DataResult<List<CarMaintenanceListDto>> getAll();
 
-    Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest);
+    Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) throws BusinessException;
 
-    Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest);
+    DataResult<List<CarMaintenanceListDto>> getByCarId(Integer id) throws BusinessException;
 
-    DataResult<CarMaintenanceByIdDto> getById(int carMaintenanceId);
+    Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException;
 
-    Result deleteById(int id);
+    Result delete(DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) throws BusinessException;
 
-    DataResult<List<CarMaintenanceListDto>> getByCarId(int carId);
+    DataResult<GetCarMaintenanceDto> getByCarMaintenanceId(Integer id) throws BusinessException;
+
+    void checkIfCarIsInMaintenance(int id) throws BusinessException;
+
+    void checkIfCarMaintenanceIdExists(Integer id) throws BusinessException;
 }

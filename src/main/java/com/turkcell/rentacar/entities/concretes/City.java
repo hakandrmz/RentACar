@@ -1,35 +1,42 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
-
-@Entity
 @Data
-@AllArgsConstructor
+@Entity
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 @Table(name = "cities")
+@Builder
 public class City {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "city_id")
-    private int cityId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "city_id")
+	private int id;
 
-    @Column(name = "city_name")
-    private String cityName;
+	@Column(name = "city_name")
+	private String cityName;
 
-    @OneToOne(mappedBy = "rentedCity")
-    private Rental rentCity;
+	@OneToMany(mappedBy = "baseCity")
+	private List<Car> cars;
 
-    @OneToOne(mappedBy = "deliveredCity")
-    private Rental rentalDeliveredCity;
+	@OneToMany(mappedBy = "rentCity")
+	private List<Rent> rentCity;
 
-
+	@OneToMany(mappedBy = "returnCity")
+	private List<Rent> returnCity;
 }

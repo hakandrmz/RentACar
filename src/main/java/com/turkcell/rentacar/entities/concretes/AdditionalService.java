@@ -1,36 +1,41 @@
 package com.turkcell.rentacar.entities.concretes;
 
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.List;
-
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@AllArgsConstructor
 @Table(name = "additional_services")
+@Builder
 public class AdditionalService {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "additional_service_id")
-    private int additionalServiceId;
 
-    @Column(name = "name")
-    private String additionalServiceName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "additional_service_id")
+	private int id;
 
-    @Column(name = "daily_price")
-    private double dailyPrice;
+	@Column(name = "additional_service_name")
+	private String additionalServiceName;
 
-    @OneToMany(mappedBy = "additionalService",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    @JsonIgnore
-    private List<OrderedAdditionalService> orderedAdditionalServices;
+	@Column(name = "additional_service_dailyPrice")
+	private double dailyPrice;
+
+	@OneToMany(mappedBy = "additionalService")
+	private List<OrderedService> orderedServices;
+
+
 }

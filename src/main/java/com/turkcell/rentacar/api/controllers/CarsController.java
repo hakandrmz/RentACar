@@ -54,9 +54,9 @@ public class CarsController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteCarRequest deleteCarRequest) throws BusinessException {
+    public Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.carService.delete(deleteCarRequest);
+        return this.carService.delete(id);
     }
 
     @GetMapping("/getAllPaged/{pageNumber}/{pageSize}")

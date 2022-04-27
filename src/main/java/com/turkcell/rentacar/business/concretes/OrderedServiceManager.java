@@ -17,7 +17,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.OrderedServiceDao;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
 import com.turkcell.rentacar.entities.concretes.OrderedService;
-import com.turkcell.rentacar.entities.concretes.Rent;
+import com.turkcell.rentacar.entities.concretes.Rental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,7 +67,7 @@ public class OrderedServiceManager implements OrderedServiceService {
     }
 
     @Override
-    public DataResult<GetOrderedServiceDto> getByOrderedServiceId(Integer id) throws BusinessException {
+    public DataResult<GetOrderedServiceDto> getByOrderedServiceId(Integer id) {
 
         checkIfOrderedServiceIdExists(id);
 
@@ -79,11 +79,11 @@ public class OrderedServiceManager implements OrderedServiceService {
     }
 
     @Override
-    public DataResult<List<OrderedServiceListDto>> getByRentId(Integer id) throws BusinessException {
+    public DataResult<List<OrderedServiceListDto>> getByRentId(Integer id) {
 
         this.rentService.checkIfRentIdExists(id);
 
-        List<OrderedService> result = this.orderedServiceDao.findOrderedServicesByRent_RentId(id);
+        List<OrderedService> result = this.orderedServiceDao.findOrderedServicesByRental_RentalId(id);
 
         List<OrderedServiceListDto> response = result.stream().map(orderedService -> this.modelMapperService
                 .forDto().map(orderedService, OrderedServiceListDto.class)).collect(Collectors.toList());
@@ -92,7 +92,7 @@ public class OrderedServiceManager implements OrderedServiceService {
     }
 
     @Override
-    public void checkIfOrderedServiceIdExists(Integer id) throws BusinessException {
+    public void checkIfOrderedServiceIdExists(Integer id) {
 
         if (!this.orderedServiceDao.existsById(id)) {
 
@@ -101,9 +101,9 @@ public class OrderedServiceManager implements OrderedServiceService {
     }
 
     @Override
-    public double calculateOrderedServicePrice(int rentId) throws BusinessException {
+    public double calculateOrderedServicePrice(int rentId) {
 
-        List<OrderedService> result = this.orderedServiceDao.findOrderedServicesByRent_RentId(rentId);
+        List<OrderedService> result = this.orderedServiceDao.findOrderedServicesByRental_RentalId(rentId);
 
         double totalPrice = 0;
 
@@ -114,9 +114,9 @@ public class OrderedServiceManager implements OrderedServiceService {
             totalPrice += orderedService.getOrderedServiceAmount() * additionalService.getDailyPrice();
         }
 
-        Rent rent = this.rentService.bringRentById(rentId);
+        Rental rental = this.rentService.bringRentById(rentId);
 
-        long daysBetween = (ChronoUnit.DAYS.between(rent.getRentStartDate(), rent.getRentReturnDate()) + 1);
+        long daysBetween = (ChronoUnit.DAYS.between(rental.getRentStartDate(), rental.getRentalReturnDate()) + 1);
 
         return totalPrice * daysBetween;
     }

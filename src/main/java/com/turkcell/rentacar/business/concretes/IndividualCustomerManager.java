@@ -46,7 +46,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
-    public Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest) throws BusinessException {
+    public Result add(CreateIndividualCustomerRequest createIndividualCustomerRequest) {
 
         checkIfNationalIdentityAlreadyExists(createIndividualCustomerRequest.getNationalIdentity());
 
@@ -58,7 +58,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
-    public DataResult<GetIndividualCustomerDto> getByUserId(Integer id) throws BusinessException {
+    public DataResult<GetIndividualCustomerDto> getByUserId(Integer id) {
 
         checkIfIndividualCustomerIdExists(id);
 
@@ -70,7 +70,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
-    public Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) throws BusinessException {
+    public Result update(UpdateIndividualCustomerRequest updateIndividualCustomerRequest) {
 
         checkIfIndividualCustomerIdExists(updateIndividualCustomerRequest.getUserId());
         checkIfNationalIdentityAlreadyExists(updateIndividualCustomerRequest.getNationalIdentity());
@@ -83,17 +83,17 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
-    public Result delete(DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) throws BusinessException {
+    public Result delete(int individualCustomerId) {
 
-        checkIfIndividualCustomerIdExists(deleteIndividualCustomerRequest.getUserId());
+        checkIfIndividualCustomerIdExists(individualCustomerId);
 
-        this.individualCustomerDao.deleteById(deleteIndividualCustomerRequest.getUserId());
+        this.individualCustomerDao.deleteById(individualCustomerId);
 
         return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_DELETED);
     }
 
     @Override
-    public void checkIfIndividualCustomerIdExists(Integer id) throws BusinessException {
+    public void checkIfIndividualCustomerIdExists(Integer id) {
 
         if (!this.individualCustomerDao.existsById(id)) {
 
@@ -102,7 +102,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
     }
 
     @Override
-    public void checkIfNationalIdentityAlreadyExists(String nationalIdentity) throws BusinessException {
+    public void checkIfNationalIdentityAlreadyExists(String nationalIdentity) {
 
         if (this.individualCustomerDao.existsIndividualCustomerByNationalIdentity(nationalIdentity)) {
 

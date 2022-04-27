@@ -57,7 +57,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) throws BusinessException {
+    public Result add(CreateCarMaintenanceRequest createCarMaintenanceRequest) {
 
         this.carService.checkIfCarIdExists(createCarMaintenanceRequest.getCarId());
         this.rentService.checkIfCarIsRented(createCarMaintenanceRequest.getCarId());
@@ -75,7 +75,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public DataResult<List<CarMaintenanceListDto>> getByCarId(Integer id) throws BusinessException {
+    public DataResult<List<CarMaintenanceListDto>> getByCarId(Integer id) {
 
         this.carService.checkIfCarIdExists(id);
 
@@ -88,7 +88,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public DataResult<GetCarMaintenanceDto> getByCarMaintenanceId(Integer id) throws BusinessException {
+    public DataResult<GetCarMaintenanceDto> getByCarMaintenanceId(Integer id) {
 
         checkIfCarMaintenanceIdExists(id);
 
@@ -100,7 +100,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException {
+    public Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) {
 
         checkIfCarMaintenanceIdExists(updateCarMaintenanceRequest.getMaintenanceId());
 
@@ -117,21 +117,21 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result delete(DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) throws BusinessException {
+    public Result delete(int deleteCarMaintenanceId) {
 
-        checkIfCarMaintenanceIdExists(deleteCarMaintenanceRequest.getMaintenanceId());
+        checkIfCarMaintenanceIdExists(deleteCarMaintenanceId);
 
-        CarMaintenance carMaintenance = this.carMaintenanceDao.getById(deleteCarMaintenanceRequest.getMaintenanceId());
+        CarMaintenance carMaintenance = this.carMaintenanceDao.getById(deleteCarMaintenanceId);
 
         this.carService.updateMaintenanceStatus(carMaintenance.getCar().getId(), false);
 
-        this.carMaintenanceDao.deleteById(deleteCarMaintenanceRequest.getMaintenanceId());
+        this.carMaintenanceDao.deleteById(deleteCarMaintenanceId);
 
         return new SuccessResult(BusinessMessages.CAR_MAINTENANCE_DELETED);
     }
 
     @Override
-    public void checkIfCarIsInMaintenance(int id) throws BusinessException {
+    public void checkIfCarIsInMaintenance(int id) {
 
         Car car = this.carService.getCarByCarId(id);
 
@@ -142,7 +142,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public void checkIfCarMaintenanceIdExists(Integer id) throws BusinessException {
+    public void checkIfCarMaintenanceIdExists(Integer id) {
 
         if (!this.carMaintenanceDao.existsById(id)) {
 

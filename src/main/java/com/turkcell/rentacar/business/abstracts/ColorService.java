@@ -21,7 +21,7 @@ public interface ColorService {
 
     Result update(UpdateColorRequest updateColorRequest) throws BusinessException;
 
-    Result delete(DeleteColorRequest deleteColorRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfColorNameExists(String colorName) throws BusinessException;
 

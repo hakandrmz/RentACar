@@ -77,4 +77,11 @@ public class GlobalExceptionHandler {
         return errorDataResult;
     }
 
+    @ExceptionHandler({RuntimeException.class})
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorDataResult<Object> handleDataException(RuntimeException runtimeException) {
+
+        ErrorDataResult<Object> errorDataResult = new ErrorDataResult<Object>(runtimeException.getMessage(), "Unexpected Error");
+        return errorDataResult;
+    }
 }

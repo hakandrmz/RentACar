@@ -7,7 +7,6 @@ import com.turkcell.rentacar.business.dtos.creditCard.CreditCardListDto;
 import com.turkcell.rentacar.business.dtos.creditCard.GetCreditCardDto;
 import com.turkcell.rentacar.business.requests.creditCard.CreateCreditCardRequest;
 import com.turkcell.rentacar.business.requests.creditCard.DeleteCreditCardRequest;
-import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.exceptions.creditCard.CreditCardNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -61,7 +60,7 @@ public class CreditCardManager implements CreditCardService {
     }
 
     @Override
-    public DataResult<GetCreditCardDto> getById(Integer id) throws BusinessException {
+    public DataResult<GetCreditCardDto> getById(Integer id) {
 
         checkIfCreditCardIdExists(id);
 
@@ -73,17 +72,17 @@ public class CreditCardManager implements CreditCardService {
     }
 
     @Override
-    public Result delete(DeleteCreditCardRequest deleteCreditCardRequest) throws BusinessException {
+    public Result delete(int creditCardId) {
 
-        checkIfCreditCardIdExists(deleteCreditCardRequest.getCreditCardId());
+        checkIfCreditCardIdExists(creditCardId);
 
-        this.creditCardDao.deleteById(deleteCreditCardRequest.getCreditCardId());
+        this.creditCardDao.deleteById(creditCardId);
 
         return new SuccessResult(BusinessMessages.CREDIT_CARD_DELETED);
     }
 
     @Override
-    public DataResult<List<CreditCardListDto>> getByCustomerUserId(int customerUserId) throws BusinessException {
+    public DataResult<List<CreditCardListDto>> getByCustomerUserId(int customerUserId) {
 
         this.customerService.checkIfCustomerIdExists(customerUserId);
 
@@ -92,11 +91,11 @@ public class CreditCardManager implements CreditCardService {
         List<CreditCardListDto> response = result.stream().map(creditCard -> this.modelMapperService.forDto()
                 .map(creditCard, CreditCardListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CreditCardListDto>>(response, BusinessMessages.CREDIT_CARDS_LISTED_BY_CUSTOMER_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.CREDIT_CARDS_LISTED_BY_CUSTOMER_ID);
     }
 
     @Override
-    public void checkIfCreditCardIdExists(int creditCardId) throws BusinessException {
+    public void checkIfCreditCardIdExists(int creditCardId) {
 
         if (!this.creditCardDao.existsById(creditCardId)) {
 

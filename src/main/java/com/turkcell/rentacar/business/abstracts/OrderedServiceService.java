@@ -15,11 +15,11 @@ public interface OrderedServiceService {
 
     Result add(CreateOrderedServiceRequest createOrderedServiceRequest);
 
-    DataResult<GetOrderedServiceDto> getByOrderedServiceId(Integer id) throws BusinessException;
+    DataResult<GetOrderedServiceDto> getByOrderedServiceId(Integer id);
 
-    DataResult<List<OrderedServiceListDto>> getByRentId(Integer id) throws BusinessException;
+    DataResult<List<OrderedServiceListDto>> getByRentId(Integer id);
 
-    void checkIfOrderedServiceIdExists(Integer id) throws BusinessException;
+    void checkIfOrderedServiceIdExists(Integer id);
 
-    double calculateOrderedServicePrice(int rentId) throws BusinessException;
+    double calculateOrderedServicePrice(int rentId);
 }

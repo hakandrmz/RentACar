@@ -44,7 +44,7 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public Result add(CreatePaymentRequest createPaymentRequest) throws BusinessException {
+    public Result add(CreatePaymentRequest createPaymentRequest) {
 
         makePayment(createPaymentRequest.getCreatePosRequest(), createPaymentRequest.getPaymentAmount());
 
@@ -67,7 +67,7 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public DataResult<GetPaymentDto> getByPaymentId(int paymentId) throws BusinessException {
+    public DataResult<GetPaymentDto> getByPaymentId(int paymentId) {
 
         checkIfPaymentIdExists(paymentId);
 
@@ -79,7 +79,7 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public DataResult<List<PaymentListDto>> getByCustomerUserId(int userId) throws BusinessException {
+    public DataResult<List<PaymentListDto>> getByCustomerUserId(int userId) {
 
         this.customerService.checkIfCustomerIdExists(userId);
 
@@ -92,7 +92,7 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public DataResult<GetPaymentDto> getByInvoiceId(int invoiceId) throws BusinessException {
+    public DataResult<GetPaymentDto> getByInvoiceId(int invoiceId) {
 
         this.invoiceService.checkIfInvoiceIdExists(invoiceId);
 
@@ -104,11 +104,11 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public DataResult<List<PaymentListDto>> getByRentId(int rentId) throws BusinessException {
+    public DataResult<List<PaymentListDto>> getByRentId(int rentId) {
 
         this.rentService.checkIfRentIdExists(rentId);
 
-        List<Payment> result = this.paymentDao.findByRentRentId(rentId);
+        List<Payment> result = this.paymentDao.findByRentalRentalId(rentId);
 
         List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
@@ -117,7 +117,7 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public void makePayment(CreatePosRequest createPosRequest, double paymentAmount) throws BusinessException {
+    public void makePayment(CreatePosRequest createPosRequest, double paymentAmount) {
 
         PosService posService = new IsBankPosAdapter();
 
@@ -128,7 +128,7 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
-    public void checkIfPaymentIdExists(int paymentId) throws BusinessException {
+    public void checkIfPaymentIdExists(int paymentId) {
 
         if (!this.paymentDao.existsById(paymentId)) {
 

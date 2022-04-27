@@ -50,7 +50,7 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public Result add(CreateCarRequest createCarRequest) throws BusinessException {
+    public Result add(CreateCarRequest createCarRequest) {
 
         this.brandService.checkIfBrandIdExists(createCarRequest.getBrandId());
         this.colorService.checkIfColorIdExists(createCarRequest.getColorId());
@@ -78,7 +78,7 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public DataResult<GetCarDto> getByCarId(int id) throws BusinessException {
+    public DataResult<GetCarDto> getByCarId(int id) {
 
         checkIfCarIdExists(id);
 
@@ -90,7 +90,7 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public Result update(UpdateCarRequest updateCarRequest) throws BusinessException {
+    public Result update(UpdateCarRequest updateCarRequest) {
 
         checkIfCarIdExists(updateCarRequest.getId());
         this.brandService.checkIfBrandIdExists(updateCarRequest.getBrandId());
@@ -111,17 +111,17 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public Result delete(DeleteCarRequest deleteCarRequest) throws BusinessException {
+    public Result delete(int carId) {
 
-        checkIfCarIdExists(deleteCarRequest.getId());
+        checkIfCarIdExists(carId);
 
-        this.carDao.deleteById(deleteCarRequest.getId());
+        this.carDao.deleteById(carId);
 
         return new SuccessResult(BusinessMessages.CAR_DELETED);
     }
 
     @Override
-    public DataResult<List<CarListDto>> getAllPaged(int pageNo, int pageSize) throws BusinessException {
+    public DataResult<List<CarListDto>> getAllPaged(int pageNo, int pageSize) {
 
         if (pageNo < 1 || pageSize < 1) {
 
@@ -139,7 +139,7 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public DataResult<List<CarListDto>> getAllSorted(String param) throws BusinessException {
+    public DataResult<List<CarListDto>> getAllSorted(String param) {
 
         Sort sort;
 
@@ -199,7 +199,7 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public void checkIfCarIdExists(Integer id) throws BusinessException {
+    public void checkIfCarIdExists(Integer id) {
 
         if (!this.carDao.existsById(id)) {
 

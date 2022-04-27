@@ -12,20 +12,20 @@ import com.turkcell.rentacar.core.utilities.results.Result;
 
 public interface PaymentService {
 
-    Result add(CreatePaymentRequest createPaymentRequest) throws BusinessException;
+    Result add(CreatePaymentRequest createPaymentRequest);
 
     DataResult<List<PaymentListDto>> getAll();
 
-    DataResult<GetPaymentDto> getByPaymentId(int paymentId) throws BusinessException;
+    DataResult<GetPaymentDto> getByPaymentId(int paymentId);
 
-    DataResult<List<PaymentListDto>> getByCustomerUserId(int userId) throws BusinessException;
+    DataResult<List<PaymentListDto>> getByCustomerUserId(int userId);
 
-    DataResult<GetPaymentDto> getByInvoiceId(int invoiceId) throws BusinessException;
+    DataResult<GetPaymentDto> getByInvoiceId(int invoiceId);
 
-    DataResult<List<PaymentListDto>> getByRentId(int rentId) throws BusinessException;
+    DataResult<List<PaymentListDto>> getByRentId(int rentId);
 
-    void makePayment(CreatePosRequest createPosRequest, double paymentAmount) throws BusinessException;
+    void makePayment(CreatePosRequest createPosRequest, double paymentAmount);
 
-    void checkIfPaymentIdExists(int paymentId) throws BusinessException;
+    void checkIfPaymentIdExists(int paymentId);
 
 }

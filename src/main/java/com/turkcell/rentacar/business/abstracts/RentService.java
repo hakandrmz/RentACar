@@ -12,40 +12,40 @@ import com.turkcell.rentacar.business.requests.rent.UpdateRentRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
-import com.turkcell.rentacar.entities.concretes.Rent;
+import com.turkcell.rentacar.entities.concretes.Rental;
 
 public interface RentService {
 
     DataResult<List<RentListDto>> getAll();
 
-    DataResult<Rent> add(CreateRentRequest createRentRequest) throws BusinessException;
+    DataResult<Rental> add(CreateRentRequest createRentRequest);
 
-    Result update(UpdateRentRequest updateRentRequest) throws BusinessException;
+    Result update(UpdateRentRequest updateRentRequest);
 
-    Result delete(DeleteRentRequest deleteRentRequest) throws BusinessException;
+    Result delete(int id);
 
-    DataResult<List<RentListDto>> getByCarId(int id) throws BusinessException;
+    DataResult<List<RentListDto>> getByCarId(int id);
 
-    DataResult<GetRentDto> getByRentId(int id) throws BusinessException;
+    DataResult<GetRentDto> getByRentId(int id);
 
-    Result endRent(EndRentRequest endRentRequest) throws BusinessException;
+    Result endRent(EndRentRequest endRentRequest);
 
-    void checkIfCarIsRented(int id) throws BusinessException;
+    void checkIfCarIsRented(int id);
 
-    void checkIfRentIdExists(Integer id) throws BusinessException;
+    void checkIfRentIdExists(Integer id);
 
     double calculateRentPrice(int rentId);
 
-    Rent bringRentById(int rentId) throws BusinessException;
+    Rental bringRentById(int rentId);
 
-    void checkIfReturnDateDelayed(Rent rent) throws BusinessException;
+    void checkIfReturnDateDelayed(Rental rental);
 
-    double calculateExtraDaysPrice(int rentId, LocalDate date) throws BusinessException;
+    double calculateExtraDaysPrice(int rentId, LocalDate date);
 
-    void checkIfRentAlreadyEnded(Rent rent) throws BusinessException;
+    void checkIfRentAlreadyEnded(Rental rental);
 
-    void checkIfDatesAreCorrect(LocalDate rentDate, LocalDate returnDate, int key) throws BusinessException;
+    void checkIfDatesAreCorrect(LocalDate rentDate, LocalDate returnDate, int key);
 
-    void checkIfEndKilometerIsCorrect(double startKilometer, double endKilometer) throws BusinessException;
+    void checkIfEndKilometerIsCorrect(double startKilometer, double endKilometer);
 
 }

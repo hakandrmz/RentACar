@@ -18,7 +18,7 @@ public interface CreditCardService {
 
     DataResult<GetCreditCardDto> getById(Integer id) throws BusinessException;
 
-    Result delete(DeleteCreditCardRequest deleteCreditCardRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     DataResult<List<CreditCardListDto>> getByCustomerUserId(int customerUserId) throws BusinessException;
 

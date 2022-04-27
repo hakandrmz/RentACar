@@ -34,8 +34,8 @@ public class OrderedService {
     private AdditionalService additionalService;
 
     @ManyToOne
-    @JoinColumn(name = "rent_id")
-    private Rent rent;
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
 
 
 }

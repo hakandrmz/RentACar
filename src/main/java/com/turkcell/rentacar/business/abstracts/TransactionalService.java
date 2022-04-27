@@ -5,14 +5,13 @@ import java.util.List;
 import com.turkcell.rentacar.api.models.CreateRentModelForCorporateCustomers;
 import com.turkcell.rentacar.api.models.CreateRentModelForIndividualCustomers;
 import com.turkcell.rentacar.api.models.EndRentWithExtraPaymentModel;
-import com.turkcell.rentacar.api.models.EnumSaveCreditCard;
 import com.turkcell.rentacar.api.models.UpdateRentModel;
 import com.turkcell.rentacar.business.requests.orderedService.CreateOrderedServiceRequest;
 import com.turkcell.rentacar.business.requests.payment.CreatePaymentRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.entities.concretes.Invoice;
-import com.turkcell.rentacar.entities.concretes.Rent;
+import com.turkcell.rentacar.entities.concretes.Rental;
 
 public interface TransactionalService {
 
@@ -26,11 +25,11 @@ public interface TransactionalService {
 
     void addOrderedServicesToRent(List<CreateOrderedServiceRequest> createOrderedServiceRequests, int rentId);
 
-    void checkIfUserWantsToSaveCreditCard(EnumSaveCreditCard enumSaveCreditCard, CreatePaymentRequest createPaymentRequest) throws BusinessException;
+    void checkIfUserWantsToSaveCreditCard(String enumSaveCreditCard, CreatePaymentRequest createPaymentRequest) throws BusinessException;
 
     void checkIfExtraPaymentNeeded(double price) throws BusinessException;
 
-    void setCreatePaymentRequestFields(CreatePaymentRequest createPaymentRequest, Rent rent, Invoice invoice);
+    void setCreatePaymentRequestFields(CreatePaymentRequest createPaymentRequest, Rental rental, Invoice invoice);
 
 
 }

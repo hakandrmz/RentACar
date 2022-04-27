@@ -21,7 +21,7 @@ public interface DamageService {
 
     Result update(UpdateDamageRequest updateDamageRequest) throws BusinessException;
 
-    Result delete(DeleteDamageRequest deleteDamageRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     DataResult<List<DamageListDto>> getByCarId(Integer carId) throws BusinessException;
 

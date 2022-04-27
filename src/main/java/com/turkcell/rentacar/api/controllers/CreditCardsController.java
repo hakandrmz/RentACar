@@ -48,19 +48,19 @@ public class CreditCardsController {
     }
 
     @GetMapping("/getById/{id}")
-    DataResult<GetCreditCardDto> getById(@RequestParam("id") Integer id) throws BusinessException {
+    DataResult<GetCreditCardDto> getById(@RequestParam("id") Integer id) {
 
         return this.creditCardService.getById(id);
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteCreditCardRequest deleteCreditCardRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) {
 
-        return this.creditCardService.delete(deleteCreditCardRequest);
+        return this.creditCardService.delete(id);
     }
 
     @GetMapping("/getByCustomerUserId/{customerUserId}")
-    DataResult<List<CreditCardListDto>> getByCustomerUserId(@RequestParam("customerUserId") int customerUserId) throws BusinessException {
+    DataResult<List<CreditCardListDto>> getByCustomerUserId(@RequestParam("customerUserId") int customerUserId) {
 
         return this.creditCardService.getByCustomerUserId(customerUserId);
     }

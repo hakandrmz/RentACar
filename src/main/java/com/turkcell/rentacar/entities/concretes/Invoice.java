@@ -34,13 +34,13 @@ public class Invoice {
 	@Column(name = "creation_date")
 	private LocalDate creationDate;
 
-	@Column(name = "rent_start_date")
-	private LocalDate rentStartDate;
+	@Column(name = "rental_start_date")
+	private LocalDate rentalStartDate;
 
-	@Column(name = "rent_return_date")
-	private LocalDate rentReturnDate;
+	@Column(name = "rental_return_date")
+	private LocalDate rentalReturnDate;
 
-	@Column(name = "total_rent_day")
+	@Column(name = "total_rental_day")
 	private int totalRentDay;
 
 	@Column(name = "total_price")
@@ -51,8 +51,8 @@ public class Invoice {
 	private Customer customer;
 
 	@ManyToOne
-	@JoinColumn(name = "rent_id")
-	private Rent rent;
+	@JoinColumn(name = "rental_id")
+	private Rental rental;
 
 	@OneToOne(mappedBy = "invoice")
 	private Payment payment;

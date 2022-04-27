@@ -50,7 +50,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest) throws BusinessException {
+    public Result add(CreateAdditionalServiceRequest createAdditionalServiceRequest) {
 
         checkIfAdditionalServiceNameExists(createAdditionalServiceRequest.getAdditionalServiceName());
 
@@ -64,7 +64,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public DataResult<GetAdditionalServiceDto> getByAdditionalServiceId(Integer id) throws BusinessException {
+    public DataResult<GetAdditionalServiceDto> getByAdditionalServiceId(Integer id) {
 
         checkIfAdditionalServiceIdExists(id);
 
@@ -76,7 +76,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) throws BusinessException {
+    public Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) {
 
         checkIfAdditionalServiceIdExists(updateAdditionalServiceRequest.getAdditionalServiceId());
 
@@ -88,17 +88,17 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException {
+    public Result delete(int additionalServiceId) {
 
-        checkIfAdditionalServiceIdExists(deleteAdditionalServiceRequest.getAdditionalServiceId());
+        checkIfAdditionalServiceIdExists(additionalServiceId);
 
-        this.additionalServiceDao.deleteById(deleteAdditionalServiceRequest.getAdditionalServiceId());
+        this.additionalServiceDao.deleteById(additionalServiceId);
 
         return new SuccessResult(BusinessMessages.ADDITIONAL_SERVICE_DELETED);
     }
 
     @Override
-    public void checkIfAdditionalServiceNameExists(String additionalServiceName) throws BusinessException {
+    public void checkIfAdditionalServiceNameExists(String additionalServiceName) {
 
         if (this.additionalServiceDao.existsAdditionalServiceByAdditionalServiceNameIgnoreCase(additionalServiceName)) {
 
@@ -107,7 +107,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public void checkIfAdditionalServiceIdExists(Integer id) throws BusinessException {
+    public void checkIfAdditionalServiceIdExists(Integer id) {
 
         if (!this.additionalServiceDao.existsById(id)) {
 
@@ -116,8 +116,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public void checkIfAdditionalServiceIdExistsOnOrderedServiceList(List<CreateOrderedServiceRequest> listOfCreateOrderedServiceRequests)
-            throws BusinessException {
+    public void checkIfAdditionalServiceIdExistsOnOrderedServiceList(List<CreateOrderedServiceRequest> listOfCreateOrderedServiceRequests) {
 
         if (listOfCreateOrderedServiceRequests == null) {
 

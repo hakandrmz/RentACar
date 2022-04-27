@@ -33,6 +33,6 @@ public class CreateRentModelForIndividualCustomers {
     private CreatePaymentRequest createPaymentRequest;
 
     @NotNull
-    private EnumSaveCreditCard enumSaveCreditCard;
+    private String creditCardSaveOption;
 
 }

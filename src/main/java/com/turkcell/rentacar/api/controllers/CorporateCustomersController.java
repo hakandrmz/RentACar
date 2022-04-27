@@ -62,8 +62,8 @@ public class CorporateCustomersController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) throws BusinessException {
+    Result delete(@RequestBody int id) throws BusinessException {
 
-        return this.corporateCustomerService.delete(deleteCorporateCustomerRequest);
+        return this.corporateCustomerService.delete(id);
     }
 }

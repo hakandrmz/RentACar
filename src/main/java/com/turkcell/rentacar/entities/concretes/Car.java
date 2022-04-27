@@ -46,7 +46,7 @@ public class Car {
     @JoinColumn(name = "city_id")
     private City baseCity;
 
-    @Column(name = "rent_status")
+    @Column(name = "rental_status")
     private boolean rentStatus;
 
     @Column(name = "maintenance_status")
@@ -56,7 +56,7 @@ public class Car {
     private List<CarMaintenance> carMaintenances;
 
     @OneToMany(mappedBy = "car")
-    private List<Rent> rents;
+    private List<Rental> rentals;
 
     @OneToMany(mappedBy = "car")
     private List<Damage> damages;

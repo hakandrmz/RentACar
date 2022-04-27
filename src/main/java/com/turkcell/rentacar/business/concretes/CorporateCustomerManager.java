@@ -85,11 +85,11 @@ public class CorporateCustomerManager implements CorporateCustomerService {
     }
 
     @Override
-    public Result delete(DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) throws BusinessException {
+    public Result delete(int corporateCustomerId) throws BusinessException {
 
-        checkIfCorporateCustomerIdExists(deleteCorporateCustomerRequest.getUserId());
+        checkIfCorporateCustomerIdExists(corporateCustomerId);
 
-        this.corporateCustomerDao.deleteById(deleteCorporateCustomerRequest.getUserId());
+        this.corporateCustomerDao.deleteById(corporateCustomerId);
 
         return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_DELETED);
     }

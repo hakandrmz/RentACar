@@ -61,8 +61,8 @@ public class CitiesController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteCityRequest deleteCityRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.cityService.delete(deleteCityRequest);
+        return this.cityService.delete(id);
     }
 }

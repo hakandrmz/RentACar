@@ -21,7 +21,7 @@ public interface CorporateCustomerService {
 
     Result update(UpdateCorporateCustomerRequest updateCorporateCustomerRequest) throws BusinessException;
 
-    Result delete(DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfCorporateCustomerIdExists(Integer id) throws BusinessException;
 

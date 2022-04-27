@@ -24,19 +24,19 @@ import lombok.NoArgsConstructor;
 public class City {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "city_id")
-	private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "city_id")
+    private int id;
 
-	@Column(name = "city_name")
-	private String cityName;
+    @Column(name = "city_name")
+    private String cityName;
 
-	@OneToMany(mappedBy = "baseCity")
-	private List<Car> cars;
+    @OneToMany(mappedBy = "baseCity")
+    private List<Car> cars;
 
-	@OneToMany(mappedBy = "rentCity")
-	private List<Rent> rentCity;
+    @OneToMany(mappedBy = "rentalCity")
+    private List<Rental> rentalCity;
 
-	@OneToMany(mappedBy = "returnCity")
-	private List<Rent> returnCity;
+    @OneToMany(mappedBy = "returnCity")
+    private List<Rental> returnCity;
 }

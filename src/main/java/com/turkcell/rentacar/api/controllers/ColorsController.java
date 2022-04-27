@@ -54,8 +54,8 @@ public class ColorsController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteColorRequest deleteColorRequest) throws BusinessException {
+    public Result delete(@RequestBody int id) throws BusinessException {
 
-        return this.colorService.delete(deleteColorRequest);
+        return this.colorService.delete(id);
     }
 }

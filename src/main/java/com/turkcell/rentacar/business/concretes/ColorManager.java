@@ -48,7 +48,7 @@ public class ColorManager implements ColorService {
     }
 
     @Override
-    public Result add(CreateColorRequest createColorRequest) throws BusinessException {
+    public Result add(CreateColorRequest createColorRequest) {
 
         checkIfColorNameExists(createColorRequest.getColorName());
 
@@ -60,7 +60,7 @@ public class ColorManager implements ColorService {
     }
 
     @Override
-    public DataResult<GetColorDto> getById(Integer id) throws BusinessException {
+    public DataResult<GetColorDto> getById(Integer id) {
 
         checkIfColorIdExists(id);
 
@@ -72,7 +72,7 @@ public class ColorManager implements ColorService {
     }
 
     @Override
-    public Result update(UpdateColorRequest updateColorRequest) throws BusinessException {
+    public Result update(UpdateColorRequest updateColorRequest) {
 
         checkIfColorIdExists(updateColorRequest.getColorId());
         checkIfColorNameExists(updateColorRequest.getColorName());
@@ -85,17 +85,17 @@ public class ColorManager implements ColorService {
     }
 
     @Override
-    public Result delete(DeleteColorRequest deleteColorRequest) throws BusinessException {
+    public Result delete(int colorId) {
 
-        checkIfColorIdExists(deleteColorRequest.getColorId());
+        checkIfColorIdExists(colorId);
 
-        this.colorDao.deleteById(deleteColorRequest.getColorId());
+        this.colorDao.deleteById(colorId);
 
         return new SuccessResult(BusinessMessages.COLOR_DELETED);
     }
 
     @Override
-    public void checkIfColorNameExists(String colorName) throws BusinessException {
+    public void checkIfColorNameExists(String colorName) {
 
         if (this.colorDao.existsByColorNameIgnoreCase(colorName)) {
             throw new ColorAlreadyExistsException(BusinessMessages.COLOR_NAME_EXISTS);
@@ -103,7 +103,7 @@ public class ColorManager implements ColorService {
     }
 
     @Override
-    public void checkIfColorIdExists(Integer id) throws BusinessException {
+    public void checkIfColorIdExists(Integer id) {
 
         if (!this.colorDao.existsById(id)) {
 

@@ -92,11 +92,11 @@ public class DamageManager implements DamageService {
     }
 
     @Override
-    public Result delete(DeleteDamageRequest deleteDamageRequest) throws BusinessException {
+    public Result delete(int damageId) throws BusinessException {
 
-        checkIfDamageIdExists(deleteDamageRequest.getDamageId());
+        checkIfDamageIdExists(damageId);
 
-        this.damageDao.deleteById(deleteDamageRequest.getDamageId());
+        this.damageDao.deleteById(damageId);
 
         return new SuccessResult(BusinessMessages.DAMAGE_DELETED);
     }

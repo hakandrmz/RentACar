@@ -27,8 +27,8 @@ public class Payment {
     private int paymentId;
 
     @ManyToOne
-    @JoinColumn(name = "rent_id")
-    private Rent rent;
+    @JoinColumn(name = "rental_id")
+    private Rental rental;
 
     @OneToOne
     @JoinColumn(name = "invoice_id")

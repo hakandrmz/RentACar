@@ -40,9 +40,9 @@ public class RentsController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteRentRequest deleteRentRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.rentService.delete(deleteRentRequest);
+        return this.rentService.delete(id);
     }
 
     @GetMapping("/getByCarId")

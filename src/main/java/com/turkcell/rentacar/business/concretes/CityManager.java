@@ -85,11 +85,11 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result delete(DeleteCityRequest deleteCityRequest) {
+    public Result delete(int cityId) {
 
-        checkIfCityIdExists(deleteCityRequest.getCityId());
+        checkIfCityIdExists(cityId);
 
-        this.cityDao.deleteById(deleteCityRequest.getCityId());
+        this.cityDao.deleteById(cityId);
 
         return new SuccessResult(BusinessMessages.CITY_DELETED);
     }
@@ -97,7 +97,7 @@ public class CityManager implements CityService {
     @Override
     public void checkIfCityNameExists(String cityName) {
 
-        if (this.cityDao.existsCityByCityNameIgnoreCase(cityName)) {
+        if (this.cityDao.existsCityByCityName(cityName)) {
 
             throw new CityNameAlreadyExistsException(BusinessMessages.CITY_NAME_EXISTS);
         }

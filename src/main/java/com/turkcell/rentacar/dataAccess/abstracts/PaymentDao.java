@@ -14,5 +14,5 @@ public interface PaymentDao extends JpaRepository<Payment, Integer> {
 
     Payment findByInvoiceInvoiceId(int invoiceId);
 
-    List<Payment> findByRentRentId(int rentId);
+    List<Payment> findByRentalRentalId(int rentId);
 }

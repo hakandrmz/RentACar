@@ -22,7 +22,7 @@ public interface CarMaintenanceService {
 
     Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException;
 
-    Result delete(DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     DataResult<GetCarMaintenanceDto> getByCarMaintenanceId(Integer id) throws BusinessException;
 

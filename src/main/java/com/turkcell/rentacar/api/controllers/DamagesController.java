@@ -61,9 +61,9 @@ public class DamagesController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteDamageRequest deleteDamageRequest) throws BusinessException {
+    Result delete(@RequestBody int id) throws BusinessException {
 
-        return this.damageService.delete(deleteDamageRequest);
+        return this.damageService.delete(id);
     }
 
     @GetMapping("/getByCarId/{carId}")

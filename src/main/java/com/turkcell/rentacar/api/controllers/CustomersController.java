@@ -32,7 +32,7 @@ public class CustomersController {
     }
 
     @GetMapping("getByUserId/{userId}")
-    DataResult<GetCustomerDto> getByUserId(@RequestParam("userId") Integer id) throws BusinessException {
+    DataResult<GetCustomerDto> getByUserId(@RequestParam("userId") int id) {
 
         return this.customerService.getByUserId(id);
     }

@@ -23,7 +23,7 @@ public interface AdditionalServiceService {
 
     Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) throws BusinessException;
 
-    Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfAdditionalServiceNameExists(String additionalServiceName) throws BusinessException;
 

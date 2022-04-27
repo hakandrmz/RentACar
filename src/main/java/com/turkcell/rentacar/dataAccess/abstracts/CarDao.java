@@ -15,8 +15,4 @@ public interface CarDao extends JpaRepository<Car, Integer> {
     List<Car> findByDailyPriceGreaterThan(double requestedPrice);
 
     List<Car> findByDailyPriceBetween(double maxValue, double minValue);
-
-    boolean existsByBrandId(int brandId);
-
-    boolean existsByColorId(int colorId);
 }

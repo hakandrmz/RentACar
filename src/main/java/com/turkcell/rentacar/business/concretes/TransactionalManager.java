@@ -11,7 +11,7 @@ import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.entities.concretes.Invoice;
-import com.turkcell.rentacar.entities.concretes.Rent;
+import com.turkcell.rentacar.entities.concretes.Rental;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,21 +62,21 @@ public class TransactionalManager implements TransactionalService {
         this.individualCustomerService.checkIfIndividualCustomerIdExists(createRentModelForIndividualCustomers.getCreateRentRequest().getCustomerUserId());
         this.additionalServiceService.checkIfAdditionalServiceIdExistsOnOrderedServiceList(createRentModelForIndividualCustomers.getCreateOrderedServiceRequests());
 
-        Rent rent = this.rentService.add(createRentModelForIndividualCustomers.getCreateRentRequest()).getData();
+        Rental rental = this.rentService.add(createRentModelForIndividualCustomers.getCreateRentRequest()).getData();
 
-        addOrderedServicesToRent(createRentModelForIndividualCustomers.getCreateOrderedServiceRequests(), rent.getRentId());
+        addOrderedServicesToRent(createRentModelForIndividualCustomers.getCreateOrderedServiceRequests(), rental.getRentalId());
 
         CreateInvoiceRequest createInvoiceRequest = new CreateInvoiceRequest();
 
-        createInvoiceRequest.setRentRentId(rent.getRentId());
+        createInvoiceRequest.setRentRentId(rental.getRentalId());
 
         Invoice invoice = this.invoiceService.addForIndividualCustomers(createInvoiceRequest).getData();
 
-        setCreatePaymentRequestFields(createRentModelForIndividualCustomers.getCreatePaymentRequest(), rent, invoice);
+        setCreatePaymentRequestFields(createRentModelForIndividualCustomers.getCreatePaymentRequest(), rental, invoice);
 
         this.paymentService.add(createRentModelForIndividualCustomers.getCreatePaymentRequest());
 
-        checkIfUserWantsToSaveCreditCard(createRentModelForIndividualCustomers.getEnumSaveCreditCard(),
+        checkIfUserWantsToSaveCreditCard(createRentModelForIndividualCustomers.getCreditCardSaveOption(),
                 createRentModelForIndividualCustomers.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_MODEL_SUCCESSFULL + invoice.getTotalPrice());
@@ -93,21 +93,21 @@ public class TransactionalManager implements TransactionalService {
         this.corporateCustomerService.checkIfCorporateCustomerIdExists(createRentModelForCorporateCustomers.getCreateRentRequest().getCustomerUserId());
         this.additionalServiceService.checkIfAdditionalServiceIdExistsOnOrderedServiceList(createRentModelForCorporateCustomers.getCreateOrderedServiceRequests());
 
-        Rent rent = this.rentService.add(createRentModelForCorporateCustomers.getCreateRentRequest()).getData();
+        Rental rental = this.rentService.add(createRentModelForCorporateCustomers.getCreateRentRequest()).getData();
 
-        addOrderedServicesToRent(createRentModelForCorporateCustomers.getCreateOrderedServiceRequests(), rent.getRentId());
+        addOrderedServicesToRent(createRentModelForCorporateCustomers.getCreateOrderedServiceRequests(), rental.getRentalId());
 
         CreateInvoiceRequest createInvoiceRequest = new CreateInvoiceRequest();
 
-        createInvoiceRequest.setRentRentId(rent.getRentId());
+        createInvoiceRequest.setRentRentId(rental.getRentalId());
 
         Invoice invoice = this.invoiceService.addForCorporateCustomers(createInvoiceRequest).getData();
 
-        setCreatePaymentRequestFields(createRentModelForCorporateCustomers.getCreatePaymentRequest(), rent, invoice);
+        setCreatePaymentRequestFields(createRentModelForCorporateCustomers.getCreatePaymentRequest(), rental, invoice);
 
         this.paymentService.add(createRentModelForCorporateCustomers.getCreatePaymentRequest());
 
-        checkIfUserWantsToSaveCreditCard(createRentModelForCorporateCustomers.getEnumSaveCreditCard(),
+        checkIfUserWantsToSaveCreditCard(createRentModelForCorporateCustomers.getCreditCardSaveOption(),
                 createRentModelForCorporateCustomers.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_MODEL_SUCCESSFULL + invoice.getTotalPrice());
@@ -119,25 +119,25 @@ public class TransactionalManager implements TransactionalService {
 
         this.rentService.checkIfRentIdExists(endRentWithExtraPaymentModel.getEndRentRequest().getRentId());
 
-        Rent rent = this.rentService.bringRentById(endRentWithExtraPaymentModel.getEndRentRequest().getRentId());
+        Rental rental = this.rentService.bringRentById(endRentWithExtraPaymentModel.getEndRentRequest().getRentId());
 
-        this.rentService.checkIfRentAlreadyEnded(rent);
+        this.rentService.checkIfRentAlreadyEnded(rental);
 
-        double totalPrice = this.rentService.calculateExtraDaysPrice(rent.getRentId(), LocalDate.now());
+        double totalPrice = this.rentService.calculateExtraDaysPrice(rental.getRentalId(), LocalDate.now());
 
         checkIfExtraPaymentNeeded(totalPrice);
 
-        rent.setRentReturnDate(LocalDate.now());
+        rental.setRentalReturnDate(LocalDate.now());
 
-        Invoice invoice = this.invoiceService.addExtraInvoice(rent.getRentId(), totalPrice).getData();
+        Invoice invoice = this.invoiceService.addExtraInvoice(rental.getRentalId(), totalPrice).getData();
 
-        setCreatePaymentRequestFields(endRentWithExtraPaymentModel.getCreatePaymentRequest(), rent, invoice);
+        setCreatePaymentRequestFields(endRentWithExtraPaymentModel.getCreatePaymentRequest(), rental, invoice);
 
         this.paymentService.add(endRentWithExtraPaymentModel.getCreatePaymentRequest());
 
         this.rentService.endRent(endRentWithExtraPaymentModel.getEndRentRequest());
 
-        checkIfUserWantsToSaveCreditCard(endRentWithExtraPaymentModel.getEnumSaveCreditCard(),
+        checkIfUserWantsToSaveCreditCard(endRentWithExtraPaymentModel.getCreditCardSaveOption(),
                 endRentWithExtraPaymentModel.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_ENDED_WITH_PAYMENT + totalPrice);
@@ -149,24 +149,24 @@ public class TransactionalManager implements TransactionalService {
 
         this.rentService.checkIfRentIdExists(updateRentModel.getUpdateRentRequest().getRentId());
 
-        Rent rent = this.rentService.bringRentById(updateRentModel.getUpdateRentRequest().getRentId());
+        Rental rental = this.rentService.bringRentById(updateRentModel.getUpdateRentRequest().getRentId());
 
-        this.rentService.checkIfRentAlreadyEnded(rent);
+        this.rentService.checkIfRentAlreadyEnded(rental);
 
-        addOrderedServicesToRent(updateRentModel.getCreateOrderedServiceRequests(), rent.getRentId());
+        addOrderedServicesToRent(updateRentModel.getCreateOrderedServiceRequests(), rental.getRentalId());
 
         double totalPrice = this.rentService.calculateExtraDaysPrice(
-                rent.getRentId(), updateRentModel.getUpdateRentRequest().getRentReturnDate());
+                rental.getRentalId(), updateRentModel.getUpdateRentRequest().getRentReturnDate());
 
         this.rentService.update(updateRentModel.getUpdateRentRequest());
 
-        Invoice invoice = this.invoiceService.addExtraInvoice(rent.getRentId(), totalPrice).getData();
+        Invoice invoice = this.invoiceService.addExtraInvoice(rental.getRentalId(), totalPrice).getData();
 
-        setCreatePaymentRequestFields(updateRentModel.getCreatePaymentRequest(), rent, invoice);
+        setCreatePaymentRequestFields(updateRentModel.getCreatePaymentRequest(), rental, invoice);
 
         this.paymentService.add(updateRentModel.getCreatePaymentRequest());
 
-        checkIfUserWantsToSaveCreditCard(updateRentModel.getEnumSaveCreditCard(), updateRentModel.getCreatePaymentRequest());
+        checkIfUserWantsToSaveCreditCard(updateRentModel.getCreditCardSaveOption(), updateRentModel.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_UPDATED + totalPrice);
     }
@@ -188,9 +188,9 @@ public class TransactionalManager implements TransactionalService {
     }
 
     @Override
-    public void checkIfUserWantsToSaveCreditCard(EnumSaveCreditCard enumSaveCreditCard, CreatePaymentRequest createPaymentRequest) throws BusinessException {
+    public void checkIfUserWantsToSaveCreditCard(String enumSaveCreditCard, CreatePaymentRequest createPaymentRequest) throws BusinessException {
 
-        if (enumSaveCreditCard == EnumSaveCreditCard.YES || enumSaveCreditCard == EnumSaveCreditCard.yes) {
+        if (enumSaveCreditCard.equalsIgnoreCase("yes")) {
 
             CreateCreditCardRequest createCreditCardRequest = new CreateCreditCardRequest();
 
@@ -215,11 +215,11 @@ public class TransactionalManager implements TransactionalService {
     }
 
     @Override
-    public void setCreatePaymentRequestFields(CreatePaymentRequest createPaymentRequest, Rent rent, Invoice invoice) {
+    public void setCreatePaymentRequestFields(CreatePaymentRequest createPaymentRequest, Rental rental, Invoice invoice) {
 
-        createPaymentRequest.setRentId(rent.getRentId());
+        createPaymentRequest.setRentId(rental.getRentalId());
         createPaymentRequest.setInvoiceId(invoice.getInvoiceId());
-        createPaymentRequest.setCustomerUserId(rent.getCustomer().getUserId());
+        createPaymentRequest.setCustomerUserId(rental.getCustomer().getUserId());
         createPaymentRequest.setPaymentAmount(invoice.getTotalPrice());
     }
 

@@ -42,7 +42,7 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public DataResult<GetCustomerDto> getByUserId(Integer id) throws BusinessException {
+    public DataResult<GetCustomerDto> getByUserId(Integer id) {
 
         checkIfCustomerIdExists(id);
 
@@ -54,7 +54,7 @@ public class CustomerManager implements CustomerService {
     }
 
     @Override
-    public void checkIfCustomerIdExists(Integer id) throws BusinessException {
+    public void checkIfCustomerIdExists(Integer id) {
 
         if (!this.customerDao.existsById(id)) {
 

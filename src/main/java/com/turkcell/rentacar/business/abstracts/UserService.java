@@ -11,8 +11,8 @@ public interface UserService {
 
     DataResult<List<UserListDto>> getAll();
 
-    DataResult<GetUserDto> getByUserId(Integer id) throws BusinessException;
+    DataResult<GetUserDto> getByUserId(Integer id);
 
-    void checkIfUserIdExists(Integer id) throws BusinessException;
+    void checkIfUserIdExists(Integer id);
 
 }

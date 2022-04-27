@@ -54,8 +54,8 @@ public class BrandsController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteBrandRequest deleteBrandRequest) throws BusinessException {
+    public Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.brandService.delete(deleteBrandRequest);
+        return this.brandService.delete(id);
     }
 }

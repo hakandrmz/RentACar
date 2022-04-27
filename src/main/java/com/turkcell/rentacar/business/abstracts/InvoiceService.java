@@ -17,31 +17,31 @@ public interface InvoiceService {
 
     DataResult<List<InvoiceListDto>> getAll();
 
-    DataResult<Invoice> addForIndividualCustomers(CreateInvoiceRequest createInvoiceRequest) throws BusinessException;
+    DataResult<Invoice> addForIndividualCustomers(CreateInvoiceRequest createInvoiceRequest);
 
-    DataResult<Invoice> addForCorporateCustomers(CreateInvoiceRequest createInvoiceRequest) throws BusinessException;
+    DataResult<Invoice> addForCorporateCustomers(CreateInvoiceRequest createInvoiceRequest);
 
-    DataResult<Invoice> addExtraInvoice(int rentId, double totalPrice) throws BusinessException;
+    DataResult<Invoice> addExtraInvoice(int rentId, double totalPrice);
 
-    DataResult<GetInvoiceDto> getById(Integer id) throws BusinessException;
+    DataResult<GetInvoiceDto> getById(Integer id);
 
-    Result update(UpdateInvoiceRequest updateInvoiceRequest) throws BusinessException;
+    Result update(UpdateInvoiceRequest updateInvoiceRequest);
 
-    Result delete(DeleteInvoiceRequest deleteInvoiceRequest) throws BusinessException;
+    Result delete(int id);
 
-    DataResult<List<InvoiceListDto>> getByCustomerUserId(Integer id) throws BusinessException;
+    DataResult<List<InvoiceListDto>> getByCustomerUserId(Integer id);
 
-    DataResult<List<InvoiceListDto>> getByRentId(Integer id) throws BusinessException;
+    DataResult<List<InvoiceListDto>> getByRentId(Integer id);
 
     DataResult<List<InvoiceListDto>> findByCreationDateBetween(LocalDate startDate, LocalDate endDate);
 
-    void checkIfInvoiceIdExists(Integer id) throws BusinessException;
+    void checkIfInvoiceIdExists(Integer id);
 
-    double calculateTotalPriceForIndividualCustomers(int rentId) throws BusinessException;
+    double calculateTotalPriceForIndividualCustomers(int rentId);
 
-    double calculateTotalPriceForCorporateCustomers(int rentId) throws BusinessException;
+    double calculateTotalPriceForCorporateCustomers(int rentId);
 
-    void setInvoiceFields(int rentId, Invoice invoice) throws BusinessException;
+    void setInvoiceFields(int rentId, Invoice invoice);
 
 
 }

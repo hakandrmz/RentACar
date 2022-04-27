@@ -10,5 +10,5 @@ import com.turkcell.rentacar.entities.concretes.OrderedService;
 @Repository
 public interface OrderedServiceDao extends JpaRepository<OrderedService, Integer> {
 
-    List<OrderedService> findOrderedServicesByRent_RentId(int rentId);
+    List<OrderedService> findOrderedServicesByRental_RentalId(int rentId);
 }

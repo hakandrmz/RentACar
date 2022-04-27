@@ -48,9 +48,9 @@ public class InvoicesController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteInvoiceRequest deleteInvoiceRequest) throws BusinessException {
+    Result delete(@RequestBody int id) throws BusinessException {
 
-        return this.invoiceService.delete(deleteInvoiceRequest);
+        return this.invoiceService.delete(id);
     }
 
     @GetMapping("/getByCustomerUserId/{customerUserId}")

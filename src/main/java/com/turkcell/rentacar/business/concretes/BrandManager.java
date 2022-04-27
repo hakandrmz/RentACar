@@ -48,7 +48,7 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public Result add(CreateBrandRequest createBrandRequest) throws BusinessException {
+    public Result add(CreateBrandRequest createBrandRequest) {
 
         checkIfBrandNameExists(createBrandRequest.getBrandName());
 
@@ -60,7 +60,7 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public DataResult<GetBrandDto> getByBrandId(Integer id) throws BusinessException {
+    public DataResult<GetBrandDto> getByBrandId(Integer id) {
 
         checkIfBrandIdExists(id);
 
@@ -72,7 +72,7 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public Result update(UpdateBrandRequest updateBrandRequest) throws BusinessException {
+    public Result update(UpdateBrandRequest updateBrandRequest) {
 
         checkIfBrandIdExists(updateBrandRequest.getBrandId());
         checkIfBrandNameExists(updateBrandRequest.getBrandName());
@@ -85,26 +85,26 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public Result delete(DeleteBrandRequest deleteBrandRequest) throws BusinessException {
+    public Result delete(int brandId) {
 
-        checkIfBrandIdExists(deleteBrandRequest.getBrandId());
+        checkIfBrandIdExists(brandId);
 
-        this.brandDao.deleteById(deleteBrandRequest.getBrandId());
+        this.brandDao.deleteById(brandId);
 
         return new SuccessResult(BusinessMessages.BRAND_DELETED);
     }
 
     @Override
-    public void checkIfBrandNameExists(String brandName) throws BusinessException {
+    public void checkIfBrandNameExists(String brandName) {
 
-        if (this.brandDao.existsBrandByBrandNameIgnoreCase(brandName)) {
+        if (this.brandDao.existsBrandByBrandName(brandName)) {
 
             throw new BrandAlreadyExistsException(BusinessMessages.BRAND_NAME_EXISTS);
         }
     }
 
     @Override
-    public void checkIfBrandIdExists(Integer id) throws BusinessException {
+    public void checkIfBrandIdExists(Integer id) {
 
         if (!this.brandDao.existsById(id)) {
 

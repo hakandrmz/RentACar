@@ -23,19 +23,19 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Table(name = "rents")
-public class Rent {
+@Table(name = "rentals")
+public class Rental {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rent_id")
-    private int rentId;
+    @Column(name = "rental_id")
+    private int rentalId;
 
     @Column(name = "start_date")
     private LocalDate rentStartDate;
 
     @Column(name = "return_date")
-    private LocalDate rentReturnDate;
+    private LocalDate rentalReturnDate;
 
     @Column(name = "start_kilometer")
     private Double startKilometer;
@@ -44,8 +44,8 @@ public class Rent {
     private Double endKilometer;
 
     @ManyToOne
-    @JoinColumn(name = "rent_city_id")
-    private City rentCity;
+    @JoinColumn(name = "rental_city_id")
+    private City rentalCity;
 
     @ManyToOne
     @JoinColumn(name = "return_city_id")
@@ -55,16 +55,16 @@ public class Rent {
     @JoinColumn(name = "car_id")
     private Car car;
 
-    @OneToMany(mappedBy = "rent")
+    @OneToMany(mappedBy = "rental")
     private List<OrderedService> orderedServices;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "rent")
+    @OneToMany(mappedBy = "rental")
     private List<Invoice> invoice;
 
-    @OneToMany(mappedBy = "rent")
+    @OneToMany(mappedBy = "rental")
     private List<Payment> payments;
 }

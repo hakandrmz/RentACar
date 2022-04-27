@@ -37,5 +37,4 @@ public class AdditionalService {
 	@OneToMany(mappedBy = "additionalService")
 	private List<OrderedService> orderedServices;
 
-
 }

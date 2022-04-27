@@ -1,11 +1,5 @@
 package com.turkcell.rentacar.business.concretes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.turkcell.rentacar.business.abstracts.UserService;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.user.GetUserDto;
@@ -17,6 +11,11 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.dataAccess.abstracts.UserDao;
 import com.turkcell.rentacar.entities.concretes.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserManager implements UserService {

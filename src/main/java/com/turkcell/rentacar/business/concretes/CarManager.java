@@ -1,14 +1,5 @@
 package com.turkcell.rentacar.business.concretes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import com.turkcell.rentacar.business.abstracts.BrandService;
 import com.turkcell.rentacar.business.abstracts.CarService;
 import com.turkcell.rentacar.business.abstracts.CityService;
@@ -28,6 +19,14 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CarDao;
 import com.turkcell.rentacar.entities.concretes.Car;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarManager implements CarService {

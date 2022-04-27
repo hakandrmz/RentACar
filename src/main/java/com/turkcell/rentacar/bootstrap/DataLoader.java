@@ -20,6 +20,7 @@ public class DataLoader implements CommandLineRunner {
     private final AdditionalServiceDao additionalServiceDao;
     private final IndividualCustomerDao individualCustomerDao;
     private final CorporateCustomerDao corporateCustomerDao;
+    private final DamageDao damageDao;
 
     @Override
     public void run(String... args) throws BusinessException {
@@ -77,6 +78,10 @@ public class DataLoader implements CommandLineRunner {
             corporateCustomerDao.save(CorporateCustomer.builder().companyName("Atmosware").taxNumber("123123124").build());
             corporateCustomerDao.save(CorporateCustomer.builder().companyName("Eregli Demir Çelik").taxNumber("123123125").build());
 
+            damageDao.save(Damage.builder().description("First damage of car id:1").car(Car.builder().id(1).build()).build());
+            damageDao.save(Damage.builder().description("Second damage of car id:1").car(Car.builder().id(1).build()).build());
+            damageDao.save(Damage.builder().description("First damage of car id:2").car(Car.builder().id(2).build()).build());
+            damageDao.save(Damage.builder().description("Second damage of car id:2").car(Car.builder().id(2).build()).build());
         }
     }
 }

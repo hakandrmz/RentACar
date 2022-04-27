@@ -1,11 +1,5 @@
 package com.turkcell.rentacar.business.concretes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.turkcell.rentacar.business.abstracts.CityService;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
@@ -23,6 +17,11 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CityDao;
 import com.turkcell.rentacar.entities.concretes.City;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CityManager implements CityService {
@@ -49,7 +48,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result add(CreateCityRequest createCityRequest) throws BusinessException {
+    public Result add(CreateCityRequest createCityRequest) {
 
         checkIfCityNameExists(createCityRequest.getCityName());
 
@@ -61,7 +60,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public DataResult<GetCityDto> getById(Integer id) throws BusinessException {
+    public DataResult<GetCityDto> getById(Integer id) {
 
         checkIfCityIdExists(id);
 
@@ -73,7 +72,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result update(UpdateCityRequest updateCityRequest) throws BusinessException {
+    public Result update(UpdateCityRequest updateCityRequest) {
 
         checkIfCityIdExists(updateCityRequest.getCityId());
         checkIfCityNameExists(updateCityRequest.getCityName());
@@ -86,7 +85,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result delete(DeleteCityRequest deleteCityRequest) throws BusinessException {
+    public Result delete(DeleteCityRequest deleteCityRequest) {
 
         checkIfCityIdExists(deleteCityRequest.getCityId());
 
@@ -96,7 +95,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public void checkIfCityNameExists(String cityName) throws BusinessException {
+    public void checkIfCityNameExists(String cityName) {
 
         if (this.cityDao.existsCityByCityNameIgnoreCase(cityName)) {
 
@@ -105,7 +104,7 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public void checkIfCityIdExists(Integer id) throws BusinessException {
+    public void checkIfCityIdExists(Integer id) {
 
         if (!this.cityDao.existsById(id)) {
 

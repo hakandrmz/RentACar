@@ -1,16 +1,6 @@
 package com.turkcell.rentacar.business.concretes;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.turkcell.rentacar.business.abstracts.CustomerService;
-import com.turkcell.rentacar.business.abstracts.InvoiceService;
-import com.turkcell.rentacar.business.abstracts.PaymentService;
-import com.turkcell.rentacar.business.abstracts.PosService;
-import com.turkcell.rentacar.business.abstracts.RentService;
+import com.turkcell.rentacar.business.abstracts.*;
 import com.turkcell.rentacar.business.adapters.posAdapters.IsBankPosAdapter;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.payment.GetPaymentDto;
@@ -27,6 +17,11 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.PaymentDao;
 import com.turkcell.rentacar.entities.concretes.Payment;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PaymentManager implements PaymentService {
@@ -36,7 +31,6 @@ public class PaymentManager implements PaymentService {
     private final RentService rentService;
     private final CustomerService customerService;
     private final InvoiceService invoiceService;
-
 
     @Autowired
     public PaymentManager(PaymentDao paymentDao, ModelMapperService modelMapperService, RentService rentService,

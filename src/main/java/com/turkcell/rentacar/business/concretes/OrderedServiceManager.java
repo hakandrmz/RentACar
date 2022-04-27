@@ -1,12 +1,5 @@
 package com.turkcell.rentacar.business.concretes;
 
-import java.time.temporal.ChronoUnit;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.turkcell.rentacar.business.abstracts.AdditionalServiceService;
 import com.turkcell.rentacar.business.abstracts.OrderedServiceService;
 import com.turkcell.rentacar.business.abstracts.RentService;
@@ -25,6 +18,12 @@ import com.turkcell.rentacar.dataAccess.abstracts.OrderedServiceDao;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
 import com.turkcell.rentacar.entities.concretes.OrderedService;
 import com.turkcell.rentacar.entities.concretes.Rent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderedServiceManager implements OrderedServiceService {

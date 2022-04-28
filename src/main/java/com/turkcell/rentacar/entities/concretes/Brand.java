@@ -9,7 +9,6 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Table(name = "brands")
 @Builder
 public class Brand {

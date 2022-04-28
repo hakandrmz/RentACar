@@ -18,7 +18,6 @@ import com.turkcell.rentacar.business.abstracts.DamageService;
 import com.turkcell.rentacar.business.dtos.damage.DamageListDto;
 import com.turkcell.rentacar.business.dtos.damage.GetDamageDto;
 import com.turkcell.rentacar.business.requests.damage.CreateDamageRequest;
-import com.turkcell.rentacar.business.requests.damage.DeleteDamageRequest;
 import com.turkcell.rentacar.business.requests.damage.UpdateDamageRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -60,15 +59,15 @@ public class DamagesController {
         return this.damageService.update(updateDamageRequest);
     }
 
-    @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteDamageRequest deleteDamageRequest) throws BusinessException {
-
-        return this.damageService.delete(deleteDamageRequest);
-    }
-
     @GetMapping("/getByCarId/{carId}")
     DataResult<List<DamageListDto>> getByCarId(@RequestParam("carId") Integer carId) throws BusinessException {
 
         return this.damageService.getByCarId(carId);
+    }
+
+    @DeleteMapping("/delete")
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
+
+        return this.damageService.delete(id);
     }
 }

@@ -5,11 +5,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.corporateCustomer.CorporateCustomerListDto;
 import com.turkcell.rentacar.business.dtos.corporateCustomer.GetCorporateCustomerDto;
 import com.turkcell.rentacar.business.requests.corporateCustomer.CreateCorporateCustomerRequest;
-import com.turkcell.rentacar.business.requests.corporateCustomer.DeleteCorporateCustomerRequest;
 import com.turkcell.rentacar.business.requests.corporateCustomer.UpdateCorporateCustomerRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.corporateCustomer.CorporateCustomerNotFoundException;
-import com.turkcell.rentacar.core.exceptions.corporateCustomer.TaxNumberAlreadyExistsException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -85,11 +82,11 @@ public class CorporateCustomerManager implements CorporateCustomerService {
     }
 
     @Override
-    public Result delete(DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) throws BusinessException {
+    public Result delete(int corporateCustomerId) throws BusinessException {
 
-        checkIfCorporateCustomerIdExists(deleteCorporateCustomerRequest.getUserId());
+        checkIfCorporateCustomerIdExists(corporateCustomerId);
 
-        this.corporateCustomerDao.deleteById(deleteCorporateCustomerRequest.getUserId());
+        this.corporateCustomerDao.deleteById(corporateCustomerId);
 
         return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_DELETED);
     }
@@ -99,7 +96,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         if (!this.corporateCustomerDao.existsById(id)) {
 
-            throw new CorporateCustomerNotFoundException(BusinessMessages.CORPORATE_CUSTOMER_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.CORPORATE_CUSTOMER_NOT_FOUND);
         }
     }
 
@@ -108,7 +105,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         if (this.corporateCustomerDao.existsCorporateCustomerByTaxNumber(taxNumber)) {
 
-            throw new TaxNumberAlreadyExistsException(BusinessMessages.TAX_NUMBER_EXISTS);
+            throw new BusinessException(BusinessMessages.TAX_NUMBER_EXISTS);
         }
     }
 }

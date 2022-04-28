@@ -17,7 +17,6 @@ import com.turkcell.rentacar.business.abstracts.CreditCardService;
 import com.turkcell.rentacar.business.dtos.creditCard.CreditCardListDto;
 import com.turkcell.rentacar.business.dtos.creditCard.GetCreditCardDto;
 import com.turkcell.rentacar.business.requests.creditCard.CreateCreditCardRequest;
-import com.turkcell.rentacar.business.requests.creditCard.DeleteCreditCardRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -51,12 +50,6 @@ public class CreditCardsController {
     DataResult<GetCreditCardDto> getById(@RequestParam("id") Integer id) throws BusinessException {
 
         return this.creditCardService.getById(id);
-    }
-
-    @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteCreditCardRequest deleteCreditCardRequest) throws BusinessException {
-
-        return this.creditCardService.delete(deleteCreditCardRequest);
     }
 
     @GetMapping("/getByCustomerUserId/{customerUserId}")

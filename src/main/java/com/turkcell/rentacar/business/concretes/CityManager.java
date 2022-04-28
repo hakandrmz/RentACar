@@ -5,11 +5,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
 import com.turkcell.rentacar.business.dtos.city.GetCityDto;
 import com.turkcell.rentacar.business.requests.city.CreateCityRequest;
-import com.turkcell.rentacar.business.requests.city.DeleteCityRequest;
 import com.turkcell.rentacar.business.requests.city.UpdateCityRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.city.CityNameAlreadyExistsException;
-import com.turkcell.rentacar.core.exceptions.city.CityNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -17,6 +14,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CityDao;
 import com.turkcell.rentacar.entities.concretes.City;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +22,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CityManager implements CityService {
 
     private final CityDao cityDao;
     private final ModelMapperService modelMapperService;
-
-    @Autowired
-    public CityManager(CityDao cityDao, ModelMapperService modelMapperService) {
-
-        this.cityDao = cityDao;
-        this.modelMapperService = modelMapperService;
-    }
 
     @Override
     public DataResult<List<CityListDto>> getAll() {
@@ -85,11 +77,11 @@ public class CityManager implements CityService {
     }
 
     @Override
-    public Result delete(DeleteCityRequest deleteCityRequest) {
+    public Result delete(int cityId) {
 
-        checkIfCityIdExists(deleteCityRequest.getCityId());
+        checkIfCityIdExists(cityId);
 
-        this.cityDao.deleteById(deleteCityRequest.getCityId());
+        this.cityDao.deleteById(cityId);
 
         return new SuccessResult(BusinessMessages.CITY_DELETED);
     }
@@ -99,7 +91,7 @@ public class CityManager implements CityService {
 
         if (this.cityDao.existsCityByCityNameIgnoreCase(cityName)) {
 
-            throw new CityNameAlreadyExistsException(BusinessMessages.CITY_NAME_EXISTS);
+            throw new BusinessException(BusinessMessages.CITY_NAME_EXISTS);
         }
     }
 
@@ -108,7 +100,7 @@ public class CityManager implements CityService {
 
         if (!this.cityDao.existsById(id)) {
 
-            throw new CityNotFoundException(BusinessMessages.CITY_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.CITY_NOT_FOUND);
         }
     }
 }

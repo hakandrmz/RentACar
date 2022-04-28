@@ -1,5 +1,6 @@
 package com.turkcell.rentacar.business.concretes;
 
+import com.fasterxml.jackson.databind.ser.Serializers;
 import com.turkcell.rentacar.api.models.*;
 import com.turkcell.rentacar.business.abstracts.*;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
@@ -12,6 +13,7 @@ import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.entities.concretes.Invoice;
 import com.turkcell.rentacar.entities.concretes.Rent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +22,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class TransactionalManager implements TransactionalService {
+public class BookingManager implements BookingService {
 
     private final RentService rentService;
     private final OrderedServiceService orderedServiceService;
@@ -34,10 +36,10 @@ public class TransactionalManager implements TransactionalService {
     private final CorporateCustomerService corporateCustomerService;
 
     @Autowired
-    public TransactionalManager(RentService rentService, OrderedServiceService orderedServiceService,
-                                InvoiceService invoiceService, PaymentService paymentService, CreditCardService creditCardService,
-                                CarService carService, CityService cityService, AdditionalServiceService additionalServiceService,
-                                IndividualCustomerService individualCustomerService, CorporateCustomerService corporateCustomerService) {
+    public BookingManager(RentService rentService, OrderedServiceService orderedServiceService,
+                          InvoiceService invoiceService, PaymentService paymentService, CreditCardService creditCardService,
+                          CarService carService, CityService cityService, AdditionalServiceService additionalServiceService,
+                          IndividualCustomerService individualCustomerService, CorporateCustomerService corporateCustomerService) {
 
         this.rentService = rentService;
         this.orderedServiceService = orderedServiceService;
@@ -52,7 +54,7 @@ public class TransactionalManager implements TransactionalService {
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = BusinessException.class)
     public Result createRentForIndividualCustomers(CreateRentModelForIndividualCustomers createRentModelForIndividualCustomers)
             throws BusinessException {
 
@@ -76,22 +78,16 @@ public class TransactionalManager implements TransactionalService {
 
         this.paymentService.add(createRentModelForIndividualCustomers.getCreatePaymentRequest());
 
-        checkIfUserWantsToSaveCreditCard(createRentModelForIndividualCustomers.getEnumSaveCreditCard(),
+        userWantsToSaveCreditCard(createRentModelForIndividualCustomers.getSaveCardOption(),
                 createRentModelForIndividualCustomers.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_MODEL_SUCCESSFULL + invoice.getTotalPrice());
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = BusinessException.class)
     public Result createRentForCorporateCustomers(CreateRentModelForCorporateCustomers createRentModelForCorporateCustomers)
             throws BusinessException {
-
-        this.carService.checkIfCarIdExists(createRentModelForCorporateCustomers.getCreateRentRequest().getCarId());
-        this.cityService.checkIfCityIdExists(createRentModelForCorporateCustomers.getCreateRentRequest().getRentCityId());
-        this.cityService.checkIfCityIdExists(createRentModelForCorporateCustomers.getCreateRentRequest().getReturnCityId());
-        this.corporateCustomerService.checkIfCorporateCustomerIdExists(createRentModelForCorporateCustomers.getCreateRentRequest().getCustomerUserId());
-        this.additionalServiceService.checkIfAdditionalServiceIdExistsOnOrderedServiceList(createRentModelForCorporateCustomers.getCreateOrderedServiceRequests());
 
         Rent rent = this.rentService.add(createRentModelForCorporateCustomers.getCreateRentRequest()).getData();
 
@@ -107,14 +103,14 @@ public class TransactionalManager implements TransactionalService {
 
         this.paymentService.add(createRentModelForCorporateCustomers.getCreatePaymentRequest());
 
-        checkIfUserWantsToSaveCreditCard(createRentModelForCorporateCustomers.getEnumSaveCreditCard(),
+        userWantsToSaveCreditCard(createRentModelForCorporateCustomers.getSaveCardOption(),
                 createRentModelForCorporateCustomers.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_MODEL_SUCCESSFULL + invoice.getTotalPrice());
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = BusinessException.class)
     public Result endRentWithExtraPayment(EndRentWithExtraPaymentModel endRentWithExtraPaymentModel) throws BusinessException {
 
         this.rentService.checkIfRentIdExists(endRentWithExtraPaymentModel.getEndRentRequest().getRentId());
@@ -137,38 +133,10 @@ public class TransactionalManager implements TransactionalService {
 
         this.rentService.endRent(endRentWithExtraPaymentModel.getEndRentRequest());
 
-        checkIfUserWantsToSaveCreditCard(endRentWithExtraPaymentModel.getEnumSaveCreditCard(),
+        userWantsToSaveCreditCard(endRentWithExtraPaymentModel.getCardSaveOption(),
                 endRentWithExtraPaymentModel.getCreatePaymentRequest());
 
         return new SuccessResult(BusinessMessages.RENT_ENDED_WITH_PAYMENT + totalPrice);
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Result updateRent(UpdateRentModel updateRentModel) throws BusinessException {
-
-        this.rentService.checkIfRentIdExists(updateRentModel.getUpdateRentRequest().getRentId());
-
-        Rent rent = this.rentService.bringRentById(updateRentModel.getUpdateRentRequest().getRentId());
-
-        this.rentService.checkIfRentAlreadyEnded(rent);
-
-        addOrderedServicesToRent(updateRentModel.getCreateOrderedServiceRequests(), rent.getRentId());
-
-        double totalPrice = this.rentService.calculateExtraDaysPrice(
-                rent.getRentId(), updateRentModel.getUpdateRentRequest().getRentReturnDate());
-
-        this.rentService.update(updateRentModel.getUpdateRentRequest());
-
-        Invoice invoice = this.invoiceService.addExtraInvoice(rent.getRentId(), totalPrice).getData();
-
-        setCreatePaymentRequestFields(updateRentModel.getCreatePaymentRequest(), rent, invoice);
-
-        this.paymentService.add(updateRentModel.getCreatePaymentRequest());
-
-        checkIfUserWantsToSaveCreditCard(updateRentModel.getEnumSaveCreditCard(), updateRentModel.getCreatePaymentRequest());
-
-        return new SuccessResult(BusinessMessages.RENT_UPDATED + totalPrice);
     }
 
     @Override
@@ -188,9 +156,9 @@ public class TransactionalManager implements TransactionalService {
     }
 
     @Override
-    public void checkIfUserWantsToSaveCreditCard(EnumSaveCreditCard enumSaveCreditCard, CreatePaymentRequest createPaymentRequest) throws BusinessException {
+    public void userWantsToSaveCreditCard(String saveCardOption, CreatePaymentRequest createPaymentRequest) throws BusinessException {
 
-        if (enumSaveCreditCard == EnumSaveCreditCard.YES || enumSaveCreditCard == EnumSaveCreditCard.yes) {
+        if (saveCardOption.equalsIgnoreCase("yes")) {
 
             CreateCreditCardRequest createCreditCardRequest = new CreateCreditCardRequest();
 

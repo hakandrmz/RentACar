@@ -8,8 +8,6 @@ import com.turkcell.rentacar.business.dtos.payment.PaymentListDto;
 import com.turkcell.rentacar.business.requests.payment.CreatePaymentRequest;
 import com.turkcell.rentacar.business.requests.pos.CreatePosRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.payment.PaymentNotFoundException;
-import com.turkcell.rentacar.core.exceptions.payment.PaymentUnsuccessfullException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -17,6 +15,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.PaymentDao;
 import com.turkcell.rentacar.entities.concretes.Payment;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class PaymentManager implements PaymentService {
 
     private final PaymentDao paymentDao;
@@ -31,17 +31,6 @@ public class PaymentManager implements PaymentService {
     private final RentService rentService;
     private final CustomerService customerService;
     private final InvoiceService invoiceService;
-
-    @Autowired
-    public PaymentManager(PaymentDao paymentDao, ModelMapperService modelMapperService, RentService rentService,
-                          CustomerService customerService, InvoiceService invoiceService) {
-
-        this.paymentDao = paymentDao;
-        this.modelMapperService = modelMapperService;
-        this.rentService = rentService;
-        this.customerService = customerService;
-        this.invoiceService = invoiceService;
-    }
 
     @Override
     public Result add(CreatePaymentRequest createPaymentRequest) throws BusinessException {
@@ -60,10 +49,10 @@ public class PaymentManager implements PaymentService {
 
         List<Payment> result = this.paymentDao.findAll();
 
-        List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
+        var response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<PaymentListDto>>(response, BusinessMessages.PAYMENTS_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.PAYMENTS_LISTED);
     }
 
     @Override
@@ -73,7 +62,7 @@ public class PaymentManager implements PaymentService {
 
         Payment result = this.paymentDao.getById(paymentId);
 
-        GetPaymentDto response = this.modelMapperService.forDto().map(result, GetPaymentDto.class);
+        var response = this.modelMapperService.forDto().map(result, GetPaymentDto.class);
 
         return new SuccessDataResult<GetPaymentDto>(response, BusinessMessages.PAYMENT_FOUND_BY_ID);
     }
@@ -85,7 +74,7 @@ public class PaymentManager implements PaymentService {
 
         List<Payment> result = this.paymentDao.findByCustomerUserId(userId);
 
-        List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
+        var response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<PaymentListDto>>(response, BusinessMessages.PAYMENTS_LISTED_BY_CUSTOMER_ID);
@@ -110,7 +99,7 @@ public class PaymentManager implements PaymentService {
 
         List<Payment> result = this.paymentDao.findByRentRentId(rentId);
 
-        List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
+        var response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<PaymentListDto>>(response, BusinessMessages.PAYMENT_FOUND_BY_RENT_ID);
@@ -123,17 +112,13 @@ public class PaymentManager implements PaymentService {
 
         if (!posService.pay(createPosRequest, paymentAmount)) {
 
-            throw new PaymentUnsuccessfullException(BusinessMessages.PAYMENT_UNSUCCESSFULL);
+            throw new BusinessException(BusinessMessages.PAYMENT_UNSUCCESSFULL);
         }
     }
 
     @Override
     public void checkIfPaymentIdExists(int paymentId) throws BusinessException {
-
-        if (!this.paymentDao.existsById(paymentId)) {
-
-            throw new PaymentNotFoundException(BusinessMessages.PAYMENT_NOT_FOUND);
-        }
+        paymentDao.findById(paymentId).orElseThrow(() -> new BusinessException("Payment not found with id: " + paymentId));
     }
 }
 

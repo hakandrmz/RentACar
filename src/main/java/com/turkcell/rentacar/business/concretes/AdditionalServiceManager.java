@@ -5,12 +5,9 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.additionalService.AdditionalServiceListDto;
 import com.turkcell.rentacar.business.dtos.additionalService.GetAdditionalServiceDto;
 import com.turkcell.rentacar.business.requests.additionalService.CreateAdditionalServiceRequest;
-import com.turkcell.rentacar.business.requests.additionalService.DeleteAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.additionalService.UpdateAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.orderedService.CreateOrderedServiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.additionalService.AdditionalServiceNameAlreadyExistsException;
-import com.turkcell.rentacar.core.exceptions.additionalService.AdditionalServiceNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -18,6 +15,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.AdditionalServiceDao;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,17 +23,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class AdditionalServiceManager implements AdditionalServiceService {
 
     private final AdditionalServiceDao additionalServiceDao;
     private final ModelMapperService modelMapperService;
-
-    @Autowired
-    public AdditionalServiceManager(AdditionalServiceDao additionalServiceDao, ModelMapperService modelMapperService) {
-
-        this.additionalServiceDao = additionalServiceDao;
-        this.modelMapperService = modelMapperService;
-    }
 
     @Override
     public DataResult<List<AdditionalServiceListDto>> getAll() {
@@ -88,11 +80,12 @@ public class AdditionalServiceManager implements AdditionalServiceService {
     }
 
     @Override
-    public Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException {
+    public Result delete(int additionalServiceId) throws BusinessException {
 
-        checkIfAdditionalServiceIdExists(deleteAdditionalServiceRequest.getAdditionalServiceId());
 
-        this.additionalServiceDao.deleteById(deleteAdditionalServiceRequest.getAdditionalServiceId());
+        checkIfAdditionalServiceIdExists(additionalServiceId);
+
+        this.additionalServiceDao.deleteById(additionalServiceId);
 
         return new SuccessResult(BusinessMessages.ADDITIONAL_SERVICE_DELETED);
     }
@@ -102,7 +95,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 
         if (this.additionalServiceDao.existsAdditionalServiceByAdditionalServiceNameIgnoreCase(additionalServiceName)) {
 
-            throw new AdditionalServiceNameAlreadyExistsException(BusinessMessages.ADDITIONAL_SERVICE_NAME_EXISTS);
+            throw new BusinessException(BusinessMessages.ADDITIONAL_SERVICE_NAME_EXISTS);
         }
     }
 
@@ -111,7 +104,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 
         if (!this.additionalServiceDao.existsById(id)) {
 
-            throw new AdditionalServiceNotFoundException(BusinessMessages.ADDITIONAL_SERVICE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.ADDITIONAL_SERVICE_NOT_FOUND);
         }
     }
 
@@ -128,7 +121,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 
             if (!this.additionalServiceDao.existsById(createOrderedServiceRequest.getAdditionalServiceId())) {
 
-                throw new AdditionalServiceNotFoundException(BusinessMessages.ADDITIONAL_SERVICE_NOT_FOUND);
+                throw new BusinessException(BusinessMessages.ADDITIONAL_SERVICE_NOT_FOUND);
             }
         }
     }

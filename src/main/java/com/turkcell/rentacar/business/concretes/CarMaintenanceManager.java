@@ -7,11 +7,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.carMaintenance.CarMaintenanceListDto;
 import com.turkcell.rentacar.business.dtos.carMaintenance.GetCarMaintenanceDto;
 import com.turkcell.rentacar.business.requests.carMaintenance.CreateCarMaintenanceRequest;
-import com.turkcell.rentacar.business.requests.carMaintenance.DeleteCarMaintenanceRequest;
 import com.turkcell.rentacar.business.requests.carMaintenance.UpdateCarMaintenanceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.carMaintenance.CarIsUnderMaintenanceException;
-import com.turkcell.rentacar.core.exceptions.carMaintenance.CarMaintenanceNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -20,6 +17,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CarMaintenanceDao;
 import com.turkcell.rentacar.entities.concretes.Car;
 import com.turkcell.rentacar.entities.concretes.CarMaintenance;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -32,6 +30,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
     private final CarMaintenanceDao carMaintenanceDao;
     private final ModelMapperService modelMapperService;
+
     private final RentService rentService;
     private final CarService carService;
 
@@ -117,15 +116,15 @@ public class CarMaintenanceManager implements CarMaintenanceService {
     }
 
     @Override
-    public Result delete(DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) throws BusinessException {
+    public Result delete(int carMaintenanceId) throws BusinessException {
 
-        checkIfCarMaintenanceIdExists(deleteCarMaintenanceRequest.getMaintenanceId());
+        checkIfCarMaintenanceIdExists(carMaintenanceId);
 
-        CarMaintenance carMaintenance = this.carMaintenanceDao.getById(deleteCarMaintenanceRequest.getMaintenanceId());
+        CarMaintenance carMaintenance = this.carMaintenanceDao.getById(carMaintenanceId);
 
         this.carService.updateMaintenanceStatus(carMaintenance.getCar().getId(), false);
 
-        this.carMaintenanceDao.deleteById(deleteCarMaintenanceRequest.getMaintenanceId());
+        this.carMaintenanceDao.deleteById(carMaintenanceId);
 
         return new SuccessResult(BusinessMessages.CAR_MAINTENANCE_DELETED);
     }
@@ -137,7 +136,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         if (car.isMaintenanceStatus()) {
 
-            throw new CarIsUnderMaintenanceException(BusinessMessages.CAR_IS_UNDER_MAINTENANCE);
+            throw new BusinessException(BusinessMessages.CAR_IS_UNDER_MAINTENANCE);
         }
     }
 
@@ -146,7 +145,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         if (!this.carMaintenanceDao.existsById(id)) {
 
-            throw new CarMaintenanceNotFoundException(BusinessMessages.CAR_MAINTENANCE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.CAR_MAINTENANCE_NOT_FOUND);
         }
     }
 }

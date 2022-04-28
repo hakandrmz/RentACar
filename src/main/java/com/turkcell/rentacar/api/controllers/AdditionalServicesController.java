@@ -18,7 +18,6 @@ import com.turkcell.rentacar.business.abstracts.AdditionalServiceService;
 import com.turkcell.rentacar.business.dtos.additionalService.AdditionalServiceListDto;
 import com.turkcell.rentacar.business.dtos.additionalService.GetAdditionalServiceDto;
 import com.turkcell.rentacar.business.requests.additionalService.CreateAdditionalServiceRequest;
-import com.turkcell.rentacar.business.requests.additionalService.DeleteAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.additionalService.UpdateAdditionalServiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -48,7 +47,7 @@ public class AdditionalServicesController {
         return this.additionalServiceService.add(createAdditionalServiceRequest);
     }
 
-    @GetMapping("/getByAdditionalServiceId/{additionalServiceId}")
+    @GetMapping("/getById/{additionalServiceId}")
     DataResult<GetAdditionalServiceDto> getByAdditionalServiceId(@RequestParam("additionalServiceId") Integer id) throws BusinessException {
 
         return this.additionalServiceService.getByAdditionalServiceId(id);
@@ -61,8 +60,8 @@ public class AdditionalServicesController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.additionalServiceService.delete(deleteAdditionalServiceRequest);
+        return this.additionalServiceService.delete(id);
     }
 }

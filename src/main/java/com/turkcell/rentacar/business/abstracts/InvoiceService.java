@@ -6,7 +6,6 @@ import java.util.List;
 import com.turkcell.rentacar.business.dtos.invoice.GetInvoiceDto;
 import com.turkcell.rentacar.business.dtos.invoice.InvoiceListDto;
 import com.turkcell.rentacar.business.requests.Invoice.CreateInvoiceRequest;
-import com.turkcell.rentacar.business.requests.Invoice.DeleteInvoiceRequest;
 import com.turkcell.rentacar.business.requests.Invoice.UpdateInvoiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -27,7 +26,7 @@ public interface InvoiceService {
 
     Result update(UpdateInvoiceRequest updateInvoiceRequest) throws BusinessException;
 
-    Result delete(DeleteInvoiceRequest deleteInvoiceRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     DataResult<List<InvoiceListDto>> getByCustomerUserId(Integer id) throws BusinessException;
 

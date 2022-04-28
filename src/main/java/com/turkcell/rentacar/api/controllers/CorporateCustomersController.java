@@ -18,7 +18,6 @@ import com.turkcell.rentacar.business.abstracts.CorporateCustomerService;
 import com.turkcell.rentacar.business.dtos.corporateCustomer.CorporateCustomerListDto;
 import com.turkcell.rentacar.business.dtos.corporateCustomer.GetCorporateCustomerDto;
 import com.turkcell.rentacar.business.requests.corporateCustomer.CreateCorporateCustomerRequest;
-import com.turkcell.rentacar.business.requests.corporateCustomer.DeleteCorporateCustomerRequest;
 import com.turkcell.rentacar.business.requests.corporateCustomer.UpdateCorporateCustomerRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -62,8 +61,8 @@ public class CorporateCustomersController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteCorporateCustomerRequest deleteCorporateCustomerRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.corporateCustomerService.delete(deleteCorporateCustomerRequest);
+        return this.corporateCustomerService.delete(id);
     }
 }

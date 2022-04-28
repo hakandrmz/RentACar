@@ -4,8 +4,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.turkcell.rentacar.business.constants.messages.ValidationMessages;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,15 +14,15 @@ import lombok.NoArgsConstructor;
 public class UpdateInvoiceRequest {
 
     @NotNull
-    @Min(value = 1, message = ValidationMessages.INVOICE_ID_RULE)
+    @Min(value = 1)
     private int invoiceId;
 
     @NotNull
-    @Size(min = 2, max = 50, message = ValidationMessages.INVOICE_NUMBER_RULE)
+    @Size(min = 2, max = 50)
     private String invoiceNumber;
 
     @NotNull
-    @Min(value = 1, message = ValidationMessages.INVOICE_RENT_ID_RULE)
+    @Min(value = 1)
     private int rentRentId;
 
 }

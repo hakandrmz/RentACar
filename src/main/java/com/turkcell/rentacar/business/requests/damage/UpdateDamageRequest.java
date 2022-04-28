@@ -4,8 +4,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.turkcell.rentacar.business.constants.messages.ValidationMessages;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,11 +14,11 @@ import lombok.NoArgsConstructor;
 public class UpdateDamageRequest {
 
     @NotNull
-    @Min(value = 1, message = ValidationMessages.DAMAGE_ID_RULE)
+    @Min(value = 1)
     private int damageId;
 
     @NotNull
-    @Size(min = 4, message = ValidationMessages.DAMAGE_DESCRIPTION_RULE)
+    @Size(min = 4)
     private String description;
 
 

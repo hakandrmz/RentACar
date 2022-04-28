@@ -8,10 +8,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.car.CarListDto;
 import com.turkcell.rentacar.business.dtos.car.GetCarDto;
 import com.turkcell.rentacar.business.requests.car.CreateCarRequest;
-import com.turkcell.rentacar.business.requests.car.DeleteCarRequest;
 import com.turkcell.rentacar.business.requests.car.UpdateCarRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.car.CarNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -19,6 +17,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CarDao;
 import com.turkcell.rentacar.entities.concretes.Car;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CarManager implements CarService {
 
     private final CarDao carDao;
@@ -36,18 +36,6 @@ public class CarManager implements CarService {
     private final BrandService brandService;
     private final ColorService colorService;
     private final CityService cityService;
-
-
-    @Autowired
-    public CarManager(CarDao carDao, ModelMapperService modelMapperService, BrandService brandService,
-                      ColorService colorService, CityService cityService) {
-
-        this.carDao = carDao;
-        this.modelMapperService = modelMapperService;
-        this.brandService = brandService;
-        this.colorService = colorService;
-        this.cityService = cityService;
-    }
 
     @Override
     public Result add(CreateCarRequest createCarRequest) throws BusinessException {
@@ -111,11 +99,11 @@ public class CarManager implements CarService {
     }
 
     @Override
-    public Result delete(DeleteCarRequest deleteCarRequest) throws BusinessException {
+    public Result delete(int carId) throws BusinessException {
 
-        checkIfCarIdExists(deleteCarRequest.getId());
+        checkIfCarIdExists(carId);
 
-        this.carDao.deleteById(deleteCarRequest.getId());
+        this.carDao.deleteById(carId);
 
         return new SuccessResult(BusinessMessages.CAR_DELETED);
     }
@@ -203,7 +191,7 @@ public class CarManager implements CarService {
 
         if (!this.carDao.existsById(id)) {
 
-            throw new CarNotFoundException(BusinessMessages.CAR_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.CAR_NOT_FOUND);
         }
     }
 

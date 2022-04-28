@@ -8,8 +8,6 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 
-import com.turkcell.rentacar.business.constants.messages.ValidationMessages;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,30 +18,30 @@ import lombok.NoArgsConstructor;
 public class CreateCreditCardRequest {
 
     @NotNull
-    @Min(value = 1, message = ValidationMessages.CREDIT_CARD_CUSTOMER_ID_RULE)
+    @Min(value = 1)
     private int customerUserId;
 
     @NotNull
-    @CreditCardNumber(message = ValidationMessages.CREDIT_CARD_NUMBER_RULE)
+    @CreditCardNumber
     private String creditCardNo;
 
     @NotNull
-    @Size(min = 5, max = 50, message = ValidationMessages.CREDIT_CARD_HOLDER_NAME_RULE)
+    @Size(min = 5, max = 50)
     private String creditCardHolder;
 
     @NotNull
-    @Min(value = 1, message = ValidationMessages.CREDIT_CARD_MONTH_RULE)
-    @Max(value = 12, message = ValidationMessages.CREDIT_CARD_MONTH_RULE)
+    @Min(value = 1)
+    @Max(value = 12)
     private int expirationMonth;
 
     @NotNull
-    @Min(value = 2022, message = ValidationMessages.CREDIT_CARD_YEAR_RULE)
-    @Max(value = 2100, message = ValidationMessages.CREDIT_CARD_YEAR_RULE)
+    @Min(value = 2022)
+    @Max(value = 2100)
     private int expirationYear;
 
     @NotNull
     @Size(min = 3, max = 3)
-    @Pattern(regexp = "[0-9\\d]{3}", message = ValidationMessages.CREDIT_CARD_CVV_RULE)
+    @Pattern(regexp = "[0-9\\d]{3}")
     private String cvv;
 
 

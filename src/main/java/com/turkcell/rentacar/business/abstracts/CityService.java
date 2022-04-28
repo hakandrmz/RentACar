@@ -5,7 +5,6 @@ import java.util.List;
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
 import com.turkcell.rentacar.business.dtos.city.GetCityDto;
 import com.turkcell.rentacar.business.requests.city.CreateCityRequest;
-import com.turkcell.rentacar.business.requests.city.DeleteCityRequest;
 import com.turkcell.rentacar.business.requests.city.UpdateCityRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -21,7 +20,7 @@ public interface CityService {
 
     Result update(UpdateCityRequest updateCityRequest) throws BusinessException;
 
-    Result delete(DeleteCityRequest deleteCityRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfCityNameExists(String cityName) throws BusinessException;
 

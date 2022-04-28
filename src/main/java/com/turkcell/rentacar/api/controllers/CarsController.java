@@ -4,7 +4,6 @@ import com.turkcell.rentacar.business.abstracts.CarService;
 import com.turkcell.rentacar.business.dtos.car.CarListDto;
 import com.turkcell.rentacar.business.dtos.car.GetCarDto;
 import com.turkcell.rentacar.business.requests.car.CreateCarRequest;
-import com.turkcell.rentacar.business.requests.car.DeleteCarRequest;
 import com.turkcell.rentacar.business.requests.car.UpdateCarRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -53,11 +52,7 @@ public class CarsController {
         return this.carService.update(updateCarRequest);
     }
 
-    @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteCarRequest deleteCarRequest) throws BusinessException {
 
-        return this.carService.delete(deleteCarRequest);
-    }
 
     @GetMapping("/getAllPaged/{pageNumber}/{pageSize}")
     public DataResult<List<CarListDto>> getAllPaged(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize)
@@ -89,6 +84,12 @@ public class CarsController {
                                                                 @PathVariable("maxValue") double maxValue) {
 
         return this.carService.findByDailyPriceBetween(minValue, maxValue);
+    }
+
+    @DeleteMapping("/delete")
+    public Result delete(@RequestBody @Valid int id) throws BusinessException {
+
+        return this.carService.delete(id);
     }
 
 }

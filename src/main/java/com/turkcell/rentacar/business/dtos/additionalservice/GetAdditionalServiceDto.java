@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetAdditionalServiceDto {
-
     private int id;
     private String additionalServiceName;
     private double dailyPrice;

@@ -3,7 +3,6 @@ package com.turkcell.rentacar.business.abstracts;
 import com.turkcell.rentacar.business.dtos.brand.BrandListDto;
 import com.turkcell.rentacar.business.dtos.brand.GetBrandDto;
 import com.turkcell.rentacar.business.requests.brand.CreateBrandRequest;
-import com.turkcell.rentacar.business.requests.brand.DeleteBrandRequest;
 import com.turkcell.rentacar.business.requests.brand.UpdateBrandRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -21,7 +20,7 @@ public interface BrandService {
 
     Result update(UpdateBrandRequest updateBrandRequest) throws BusinessException;
 
-    Result delete(DeleteBrandRequest deleteBrandRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfBrandNameExists(String brandName) throws BusinessException;
 

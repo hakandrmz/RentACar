@@ -5,11 +5,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.brand.BrandListDto;
 import com.turkcell.rentacar.business.dtos.brand.GetBrandDto;
 import com.turkcell.rentacar.business.requests.brand.CreateBrandRequest;
-import com.turkcell.rentacar.business.requests.brand.DeleteBrandRequest;
 import com.turkcell.rentacar.business.requests.brand.UpdateBrandRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.brand.BrandAlreadyExistsException;
-import com.turkcell.rentacar.core.exceptions.brand.BrandNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -17,6 +14,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.BrandDao;
 import com.turkcell.rentacar.entities.concretes.Brand;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,17 +22,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BrandManager implements BrandService {
 
     private final BrandDao brandDao;
     private final ModelMapperService modelMapperService;
-
-    @Autowired
-    public BrandManager(BrandDao brandDao, ModelMapperService modelMapperService) {
-
-        this.brandDao = brandDao;
-        this.modelMapperService = modelMapperService;
-    }
 
     @Override
     public DataResult<List<BrandListDto>> getAll() {
@@ -85,11 +77,11 @@ public class BrandManager implements BrandService {
     }
 
     @Override
-    public Result delete(DeleteBrandRequest deleteBrandRequest) throws BusinessException {
+    public Result delete(int brandId) throws BusinessException {
 
-        checkIfBrandIdExists(deleteBrandRequest.getBrandId());
+        checkIfBrandIdExists(brandId);
 
-        this.brandDao.deleteById(deleteBrandRequest.getBrandId());
+        this.brandDao.deleteById(brandId);
 
         return new SuccessResult(BusinessMessages.BRAND_DELETED);
     }
@@ -99,7 +91,7 @@ public class BrandManager implements BrandService {
 
         if (this.brandDao.existsBrandByBrandNameIgnoreCase(brandName)) {
 
-            throw new BrandAlreadyExistsException(BusinessMessages.BRAND_NAME_EXISTS);
+            throw new BusinessException(BusinessMessages.BRAND_NAME_EXISTS);
         }
     }
 
@@ -108,7 +100,7 @@ public class BrandManager implements BrandService {
 
         if (!this.brandDao.existsById(id)) {
 
-            throw new BrandNotFoundException(BusinessMessages.BRAND_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.BRAND_NOT_FOUND);
 
         }
     }

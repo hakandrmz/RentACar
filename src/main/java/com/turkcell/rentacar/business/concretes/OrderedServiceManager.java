@@ -8,7 +8,6 @@ import com.turkcell.rentacar.business.dtos.orderedService.GetOrderedServiceDto;
 import com.turkcell.rentacar.business.dtos.orderedService.OrderedServiceListDto;
 import com.turkcell.rentacar.business.requests.orderedService.CreateOrderedServiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.orderedService.OrderedServiceNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -96,7 +95,7 @@ public class OrderedServiceManager implements OrderedServiceService {
 
         if (!this.orderedServiceDao.existsById(id)) {
 
-            throw new OrderedServiceNotFoundException(BusinessMessages.ORDERED_SERVICE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.ORDERED_SERVICE_NOT_FOUND);
         }
     }
 

@@ -5,7 +5,6 @@ import java.util.List;
 import com.turkcell.rentacar.business.dtos.additionalService.AdditionalServiceListDto;
 import com.turkcell.rentacar.business.dtos.additionalService.GetAdditionalServiceDto;
 import com.turkcell.rentacar.business.requests.additionalService.CreateAdditionalServiceRequest;
-import com.turkcell.rentacar.business.requests.additionalService.DeleteAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.additionalService.UpdateAdditionalServiceRequest;
 import com.turkcell.rentacar.business.requests.orderedService.CreateOrderedServiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
@@ -23,7 +22,7 @@ public interface AdditionalServiceService {
 
     Result update(UpdateAdditionalServiceRequest updateAdditionalServiceRequest) throws BusinessException;
 
-    Result delete(DeleteAdditionalServiceRequest deleteAdditionalServiceRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfAdditionalServiceNameExists(String additionalServiceName) throws BusinessException;
 

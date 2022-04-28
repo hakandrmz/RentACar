@@ -33,5 +33,5 @@ public class CreateRentModelForCorporateCustomers {
     private CreatePaymentRequest createPaymentRequest;
 
     @NotNull
-    private EnumSaveCreditCard enumSaveCreditCard;
+    private String saveCardOption;
 }

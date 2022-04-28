@@ -4,7 +4,6 @@ import com.turkcell.rentacar.business.abstracts.BrandService;
 import com.turkcell.rentacar.business.dtos.brand.BrandListDto;
 import com.turkcell.rentacar.business.dtos.brand.GetBrandDto;
 import com.turkcell.rentacar.business.requests.brand.CreateBrandRequest;
-import com.turkcell.rentacar.business.requests.brand.DeleteBrandRequest;
 import com.turkcell.rentacar.business.requests.brand.UpdateBrandRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -54,8 +53,8 @@ public class BrandsController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteBrandRequest deleteBrandRequest) throws BusinessException {
+    public Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.brandService.delete(deleteBrandRequest);
+        return this.brandService.delete(id);
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.turkcell.rentacar.business.abstracts.RentService;
 import com.turkcell.rentacar.business.dtos.rent.GetRentDto;
 import com.turkcell.rentacar.business.dtos.rent.RentListDto;
-import com.turkcell.rentacar.business.requests.rent.DeleteRentRequest;
 import com.turkcell.rentacar.business.requests.rent.EndRentRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -39,12 +38,6 @@ public class RentsController {
         return this.rentService.getAll();
     }
 
-    @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteRentRequest deleteRentRequest) throws BusinessException {
-
-        return this.rentService.delete(deleteRentRequest);
-    }
-
     @GetMapping("/getByCarId")
     DataResult<List<RentListDto>> getByCarId(int id) throws BusinessException {
 
@@ -61,5 +54,11 @@ public class RentsController {
     Result endRent(@RequestBody @Valid EndRentRequest endRentRequest) throws BusinessException {
 
         return this.rentService.endRent(endRentRequest);
+    }
+
+    @DeleteMapping("/delete")
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
+
+        return this.rentService.delete(id);
     }
 }

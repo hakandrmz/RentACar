@@ -3,7 +3,6 @@ package com.turkcell.rentacar.business.abstracts;
 import com.turkcell.rentacar.business.dtos.car.CarListDto;
 import com.turkcell.rentacar.business.dtos.car.GetCarDto;
 import com.turkcell.rentacar.business.requests.car.CreateCarRequest;
-import com.turkcell.rentacar.business.requests.car.DeleteCarRequest;
 import com.turkcell.rentacar.business.requests.car.UpdateCarRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -22,7 +21,7 @@ public interface CarService {
 
     Result update(UpdateCarRequest updateCarRequest) throws BusinessException;
 
-    Result delete(DeleteCarRequest deleteCarRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     DataResult<List<CarListDto>> getAllPaged(int pageNo, int pageSize) throws BusinessException;
 

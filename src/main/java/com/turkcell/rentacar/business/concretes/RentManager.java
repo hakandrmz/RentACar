@@ -9,11 +9,9 @@ import com.turkcell.rentacar.business.dtos.orderedService.OrderedServiceListDto;
 import com.turkcell.rentacar.business.dtos.rent.GetRentDto;
 import com.turkcell.rentacar.business.dtos.rent.RentListDto;
 import com.turkcell.rentacar.business.requests.rent.CreateRentRequest;
-import com.turkcell.rentacar.business.requests.rent.DeleteRentRequest;
 import com.turkcell.rentacar.business.requests.rent.EndRentRequest;
 import com.turkcell.rentacar.business.requests.rent.UpdateRentRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.rent.*;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -22,6 +20,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.RentDao;
 import com.turkcell.rentacar.entities.concretes.Car;
 import com.turkcell.rentacar.entities.concretes.Rent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -60,7 +59,7 @@ public class RentManager implements RentService {
         List<RentListDto> response = rents.stream().map(rent -> this.modelMapperService
                 .forDto().map(rent, RentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<RentListDto>>(response, BusinessMessages.RENTS_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.RENTS_LISTED);
     }
 
     @Override
@@ -114,11 +113,11 @@ public class RentManager implements RentService {
     }
 
     @Override
-    public Result delete(DeleteRentRequest deleteRentRequest) throws BusinessException {
+    public Result delete(int rentId) throws BusinessException {
 
-        checkIfRentIdExists(deleteRentRequest.getRentId());
+        checkIfRentIdExists(rentId);
 
-        this.rentDao.deleteById(deleteRentRequest.getRentId());
+        this.rentDao.deleteById(rentId);
 
         return new SuccessResult(BusinessMessages.RENT_DELETED);
     }
@@ -131,7 +130,7 @@ public class RentManager implements RentService {
 
         List<Rent> rents = this.rentDao.getAllByCarId(id);
 
-        List<RentListDto> response = rents.stream().map(rent -> this.modelMapperService
+        var response = rents.stream().map(rent -> this.modelMapperService
                 .forDto().map(rent, RentListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<RentListDto>>(response, BusinessMessages.RENTS_LISTED_BY_CAR_ID);
@@ -167,7 +166,7 @@ public class RentManager implements RentService {
 
         if (car.isRentStatus()) {
 
-            throw new CarIsCurrentlyRentedException(BusinessMessages.CAR_IS_CURRENTLY_RENTED);
+            throw new BusinessException(BusinessMessages.CAR_IS_CURRENTLY_RENTED);
         }
     }
 
@@ -178,7 +177,7 @@ public class RentManager implements RentService {
 
         if (!car.isRentStatus() || rent.getEndKilometer() != null) {
 
-            throw new CarIsCurrentlyRentedException(BusinessMessages.RENT_ALREADY_ENDED);
+            throw new BusinessException(BusinessMessages.RENT_ALREADY_ENDED);
         }
     }
 
@@ -187,7 +186,7 @@ public class RentManager implements RentService {
 
         if (!this.rentDao.existsById(id)) {
 
-            throw new RentNotFoundException(BusinessMessages.RENT_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.RENT_NOT_FOUND);
         }
     }
 
@@ -228,7 +227,7 @@ public class RentManager implements RentService {
 
             double extraPrice = calculateExtraDaysPrice(rent.getRentId(), LocalDate.now());
 
-            throw new RentReturnDateDelayedException(BusinessMessages.NEED_EXTRA_PAYMENT + extraPrice);
+            throw new BusinessException(BusinessMessages.NEED_EXTRA_PAYMENT + extraPrice);
         }
     }
 
@@ -267,12 +266,12 @@ public class RentManager implements RentService {
         if (key == 0 && (rentDate.isBefore(LocalDate.now()) || returnDate.isBefore(LocalDate.now())
                 || returnDate.isBefore(rentDate))) {
 
-            throw new RentDatesNotCorrectException(BusinessMessages.RENT_DATES_NOT_CORRECT);
+            throw new BusinessException(BusinessMessages.RENT_DATES_NOT_CORRECT);
         }
 
         if (key == 1 && (returnDate.isBefore(rentDate))) {
 
-            throw new RentReturnDateNotCorrectException(BusinessMessages.RETURN_DATE_NOT_CORRECT);
+            throw new BusinessException(BusinessMessages.RETURN_DATE_NOT_CORRECT);
         }
     }
 
@@ -280,8 +279,7 @@ public class RentManager implements RentService {
     public void checkIfEndKilometerIsCorrect(double startKilometer, double endKilometer) throws BusinessException {
 
         if (startKilometer > endKilometer) {
-
-            throw new RentEndKilometerNotCorrectException(BusinessMessages.END_KILOMETER_NOT_CORRECT);
+            throw new BusinessException(BusinessMessages.END_KILOMETER_NOT_CORRECT);
         }
     }
 }

@@ -18,7 +18,6 @@ import com.turkcell.rentacar.business.abstracts.CityService;
 import com.turkcell.rentacar.business.dtos.city.CityListDto;
 import com.turkcell.rentacar.business.dtos.city.GetCityDto;
 import com.turkcell.rentacar.business.requests.city.CreateCityRequest;
-import com.turkcell.rentacar.business.requests.city.DeleteCityRequest;
 import com.turkcell.rentacar.business.requests.city.UpdateCityRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -61,8 +60,8 @@ public class CitiesController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteCityRequest deleteCityRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.cityService.delete(deleteCityRequest);
+        return this.cityService.delete(id);
     }
 }

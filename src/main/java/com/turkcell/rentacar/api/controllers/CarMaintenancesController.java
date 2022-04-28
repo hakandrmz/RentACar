@@ -18,7 +18,6 @@ import com.turkcell.rentacar.business.abstracts.CarMaintenanceService;
 import com.turkcell.rentacar.business.dtos.carMaintenance.CarMaintenanceListDto;
 import com.turkcell.rentacar.business.dtos.carMaintenance.GetCarMaintenanceDto;
 import com.turkcell.rentacar.business.requests.carMaintenance.CreateCarMaintenanceRequest;
-import com.turkcell.rentacar.business.requests.carMaintenance.DeleteCarMaintenanceRequest;
 import com.turkcell.rentacar.business.requests.carMaintenance.UpdateCarMaintenanceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -54,12 +53,6 @@ public class CarMaintenancesController {
         return this.carMaintenanceService.getByCarId(id);
     }
 
-    @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) throws BusinessException {
-
-        return this.carMaintenanceService.delete(deleteCarMaintenanceRequest);
-    }
-
     @PutMapping("/update")
     public Result update(@RequestBody @Valid UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException {
 
@@ -70,5 +63,11 @@ public class CarMaintenancesController {
     DataResult<GetCarMaintenanceDto> getByCarMaintenanceId(Integer id) throws BusinessException {
 
         return this.carMaintenanceService.getByCarMaintenanceId(id);
+    }
+
+    @DeleteMapping("/delete")
+    public Result delete(@RequestBody @Valid int id) throws BusinessException {
+
+        return this.carMaintenanceService.delete(id);
     }
 }

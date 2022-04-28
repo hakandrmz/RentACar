@@ -18,7 +18,6 @@ import com.turkcell.rentacar.business.abstracts.IndividualCustomerService;
 import com.turkcell.rentacar.business.dtos.individualCustomer.GetIndividualCustomerDto;
 import com.turkcell.rentacar.business.dtos.individualCustomer.IndividualCustomerListDto;
 import com.turkcell.rentacar.business.requests.individualCustomer.CreateIndividualCustomerRequest;
-import com.turkcell.rentacar.business.requests.individualCustomer.DeleteIndividualCustomerRequest;
 import com.turkcell.rentacar.business.requests.individualCustomer.UpdateIndividualCustomerRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -49,7 +48,7 @@ public class IndividualCustomersController {
     }
 
     @GetMapping("/getByUserId/{id}")
-    DataResult<GetIndividualCustomerDto> getByUserId(@RequestParam("userId") Integer id) throws BusinessException {
+    DataResult<GetIndividualCustomerDto> getByUserId(@RequestParam("userId") int id) throws BusinessException {
 
         return this.individualCustomerService.getByUserId(id);
     }
@@ -61,8 +60,8 @@ public class IndividualCustomersController {
     }
 
     @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteIndividualCustomerRequest deleteIndividualCustomerRequest) throws BusinessException {
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.individualCustomerService.delete(deleteIndividualCustomerRequest);
+        return this.individualCustomerService.delete(id);
     }
 }

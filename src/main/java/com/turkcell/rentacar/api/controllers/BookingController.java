@@ -13,45 +13,40 @@ import com.turkcell.rentacar.api.models.CreateRentModelForCorporateCustomers;
 import com.turkcell.rentacar.api.models.CreateRentModelForIndividualCustomers;
 import com.turkcell.rentacar.api.models.EndRentWithExtraPaymentModel;
 import com.turkcell.rentacar.api.models.UpdateRentModel;
-import com.turkcell.rentacar.business.abstracts.TransactionalService;
+import com.turkcell.rentacar.business.abstracts.BookingService;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.Result;
 
 @RestController
-@RequestMapping("/api/rentModels")
-public class TransactionalController {
+@RequestMapping("/api/booking")
+public class BookingController {
 
-    private final TransactionalService transactionalService;
+    private final BookingService bookingService;
 
     @Autowired
-    public TransactionalController(TransactionalService transactionalRentService) {
+    public BookingController(BookingService transactionalRentService) {
 
-        this.transactionalService = transactionalRentService;
+        this.bookingService = transactionalRentService;
     }
 
     @PostMapping("/createRentForIndividualCustomers")
     Result createRentForIndividualCustomers(@RequestBody @Valid CreateRentModelForIndividualCustomers createRentModelForIndividualCustomers)
             throws BusinessException {
 
-        return this.transactionalService.createRentForIndividualCustomers(createRentModelForIndividualCustomers);
+        return this.bookingService.createRentForIndividualCustomers(createRentModelForIndividualCustomers);
     }
 
     @PostMapping("/createRentForCorporateCustomers")
     Result createRentForCorporateCustomers(@RequestBody @Valid CreateRentModelForCorporateCustomers createRentModelForCorporateCustomers)
             throws BusinessException {
 
-        return this.transactionalService.createRentForCorporateCustomers(createRentModelForCorporateCustomers);
+        return this.bookingService.createRentForCorporateCustomers(createRentModelForCorporateCustomers);
     }
 
     @PostMapping("/endRentWithExtraPayment")
     Result endRentWithExtraPayment(@RequestBody @Valid EndRentWithExtraPaymentModel endRentWithExtraPaymentModel) throws BusinessException {
 
-        return this.transactionalService.endRentWithExtraPayment(endRentWithExtraPaymentModel);
+        return this.bookingService.endRentWithExtraPayment(endRentWithExtraPaymentModel);
     }
 
-    @PutMapping("/updateRent")
-    Result updateRent(@RequestBody @Valid UpdateRentModel updateRentModel) throws BusinessException {
-
-        return this.transactionalService.updateRent(updateRentModel);
-    }
 }

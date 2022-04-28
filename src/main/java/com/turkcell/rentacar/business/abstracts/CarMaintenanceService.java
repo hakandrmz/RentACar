@@ -6,7 +6,6 @@ import java.util.List;
 import com.turkcell.rentacar.business.dtos.carMaintenance.CarMaintenanceListDto;
 import com.turkcell.rentacar.business.dtos.carMaintenance.GetCarMaintenanceDto;
 import com.turkcell.rentacar.business.requests.carMaintenance.CreateCarMaintenanceRequest;
-import com.turkcell.rentacar.business.requests.carMaintenance.DeleteCarMaintenanceRequest;
 import com.turkcell.rentacar.business.requests.carMaintenance.UpdateCarMaintenanceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -22,7 +21,7 @@ public interface CarMaintenanceService {
 
     Result update(UpdateCarMaintenanceRequest updateCarMaintenanceRequest) throws BusinessException;
 
-    Result delete(DeleteCarMaintenanceRequest deleteCarMaintenanceRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     DataResult<GetCarMaintenanceDto> getByCarMaintenanceId(Integer id) throws BusinessException;
 

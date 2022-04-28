@@ -8,10 +8,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.invoice.GetInvoiceDto;
 import com.turkcell.rentacar.business.dtos.invoice.InvoiceListDto;
 import com.turkcell.rentacar.business.requests.Invoice.CreateInvoiceRequest;
-import com.turkcell.rentacar.business.requests.Invoice.DeleteInvoiceRequest;
 import com.turkcell.rentacar.business.requests.Invoice.UpdateInvoiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.invoice.InvoiceNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -20,6 +18,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.InvoiceDao;
 import com.turkcell.rentacar.entities.concretes.Invoice;
 import com.turkcell.rentacar.entities.concretes.Rent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +29,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class InvoiceManager implements InvoiceService {
 
     private final InvoiceDao invoiceDao;
@@ -38,23 +38,12 @@ public class InvoiceManager implements InvoiceService {
     private final OrderedServiceService orderedServiceService;
     private final CustomerService customerService;
 
-    @Autowired
-    public InvoiceManager(InvoiceDao invoiceDao, ModelMapperService modelMapperService, RentService rentService,
-                          OrderedServiceService orderedServiceService, CustomerService customerService) {
-
-        this.invoiceDao = invoiceDao;
-        this.modelMapperService = modelMapperService;
-        this.rentService = rentService;
-        this.orderedServiceService = orderedServiceService;
-        this.customerService = customerService;
-    }
-
     @Override
     public DataResult<List<InvoiceListDto>> getAll() {
 
         List<Invoice> result = this.invoiceDao.findAll();
 
-        List<InvoiceListDto> response = result.stream()
+        var response = result.stream()
                 .map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
                 .collect(Collectors.toList());
 
@@ -138,11 +127,11 @@ public class InvoiceManager implements InvoiceService {
     }
 
     @Override
-    public Result delete(DeleteInvoiceRequest deleteInvoiceRequest) throws BusinessException {
+    public Result delete(int invoiceId) throws BusinessException {
 
-        checkIfInvoiceIdExists(deleteInvoiceRequest.getInvoiceId());
+        checkIfInvoiceIdExists(invoiceId);
 
-        this.invoiceDao.deleteById(deleteInvoiceRequest.getInvoiceId());
+        this.invoiceDao.deleteById(invoiceId);
 
         return new SuccessResult(BusinessMessages.INVOICE_DELETED);
     }
@@ -191,7 +180,7 @@ public class InvoiceManager implements InvoiceService {
 
         if (!this.invoiceDao.existsById(id)) {
 
-            throw new InvoiceNotFoundException(BusinessMessages.INVOICE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.INVOICE_NOT_FOUND);
         }
     }
 

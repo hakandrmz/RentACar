@@ -4,7 +4,6 @@ import com.turkcell.rentacar.business.abstracts.ColorService;
 import com.turkcell.rentacar.business.dtos.color.ColorListDto;
 import com.turkcell.rentacar.business.dtos.color.GetColorDto;
 import com.turkcell.rentacar.business.requests.color.CreateColorRequest;
-import com.turkcell.rentacar.business.requests.color.DeleteColorRequest;
 import com.turkcell.rentacar.business.requests.color.UpdateColorRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -54,8 +53,8 @@ public class ColorsController {
     }
 
     @DeleteMapping("/delete")
-    public Result delete(@RequestBody @Valid DeleteColorRequest deleteColorRequest) throws BusinessException {
+    public Result delete(@RequestBody @Valid int id) throws BusinessException {
 
-        return this.colorService.delete(deleteColorRequest);
+        return this.colorService.delete(id);
     }
 }

@@ -30,6 +30,6 @@ public class UpdateRentModel {
     private CreatePaymentRequest createPaymentRequest;
 
     @NotNull
-    private EnumSaveCreditCard enumSaveCreditCard;
+    private String cardSaveOption;
 
 }

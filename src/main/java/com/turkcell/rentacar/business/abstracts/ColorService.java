@@ -3,7 +3,6 @@ package com.turkcell.rentacar.business.abstracts;
 import com.turkcell.rentacar.business.dtos.color.ColorListDto;
 import com.turkcell.rentacar.business.dtos.color.GetColorDto;
 import com.turkcell.rentacar.business.requests.color.CreateColorRequest;
-import com.turkcell.rentacar.business.requests.color.DeleteColorRequest;
 import com.turkcell.rentacar.business.requests.color.UpdateColorRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
@@ -21,7 +20,7 @@ public interface ColorService {
 
     Result update(UpdateColorRequest updateColorRequest) throws BusinessException;
 
-    Result delete(DeleteColorRequest deleteColorRequest) throws BusinessException;
+    Result delete(int id) throws BusinessException;
 
     void checkIfColorNameExists(String colorName) throws BusinessException;
 

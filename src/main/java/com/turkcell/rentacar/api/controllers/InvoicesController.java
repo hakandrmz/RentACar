@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.turkcell.rentacar.business.abstracts.InvoiceService;
 import com.turkcell.rentacar.business.dtos.invoice.GetInvoiceDto;
 import com.turkcell.rentacar.business.dtos.invoice.InvoiceListDto;
-import com.turkcell.rentacar.business.requests.Invoice.DeleteInvoiceRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -47,12 +46,6 @@ public class InvoicesController {
         return this.invoiceService.getById(id);
     }
 
-    @DeleteMapping("/delete")
-    Result delete(@RequestBody @Valid DeleteInvoiceRequest deleteInvoiceRequest) throws BusinessException {
-
-        return this.invoiceService.delete(deleteInvoiceRequest);
-    }
-
     @GetMapping("/getByCustomerUserId/{customerUserId}")
     DataResult<List<InvoiceListDto>> getByCustomerUserId(@RequestParam("customerUserId") Integer id) throws BusinessException {
 
@@ -72,5 +65,11 @@ public class InvoicesController {
             @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("endDate") LocalDate endDate) {
 
         return this.invoiceService.findByCreationDateBetween(startDate, endDate);
+    }
+
+    @DeleteMapping("/delete")
+    Result delete(@RequestBody @Valid int id) throws BusinessException {
+
+        return this.invoiceService.delete(id);
     }
 }

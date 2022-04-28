@@ -6,8 +6,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.turkcell.rentacar.business.constants.messages.ValidationMessages;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,27 +17,27 @@ public class UpdateIndividualCustomerRequest {
 
 
     @NotNull
-    @Min(value = 1, message = ValidationMessages.INDIVIDUAL_CUSTOMER_ID_RULE)
+    @Min(value = 1)
     private int userId;
 
     @NotNull
-    @Email(message = ValidationMessages.INDIVIDUAL_CUSTOMER_EMAIL_RULE)
+    @Email
     private String email;
 
     @NotNull
-    @Size(min = 8, max = 20, message = ValidationMessages.INDIVIDUAL_CUSTOMER_PASSWORD_RULE)
+    @Size(min = 8, max = 20)
     private String password;
 
     @NotNull
-    @Size(min = 2, max = 40, message = ValidationMessages.INDIVIDUAL_CUSTOMER_FIRST_NAME_RULE)
+    @Size(min = 2, max = 40)
     private String firstName;
 
     @NotNull
-    @Size(min = 2, max = 40, message = ValidationMessages.INDIVIDUAL_CUSTOMER_LAST_NAME_RULE)
+    @Size(min = 2, max = 40)
     private String lastName;
 
     @NotNull
-    @Pattern(regexp = "[0-9\\d]{11}", message = ValidationMessages.INDIVIDUAL_CUSTOMER_NATIONAL_IDENTITY_RULE)
+    @Pattern(regexp = "[0-9\\d]{11}")
     private String nationalIdentity;
 
 

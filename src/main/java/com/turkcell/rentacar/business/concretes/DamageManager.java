@@ -6,10 +6,8 @@ import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.damage.DamageListDto;
 import com.turkcell.rentacar.business.dtos.damage.GetDamageDto;
 import com.turkcell.rentacar.business.requests.damage.CreateDamageRequest;
-import com.turkcell.rentacar.business.requests.damage.DeleteDamageRequest;
 import com.turkcell.rentacar.business.requests.damage.UpdateDamageRequest;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.core.exceptions.damage.DamageNotFoundException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
@@ -17,6 +15,7 @@ import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.DamageDao;
 import com.turkcell.rentacar.entities.concretes.Damage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,19 +23,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class DamageManager implements DamageService {
 
     private final DamageDao damageDao;
     private final ModelMapperService modelMapperService;
     private final CarService carService;
-
-    @Autowired
-    public DamageManager(DamageDao damageDao, ModelMapperService modelMapperService, CarService carService) {
-
-        this.damageDao = damageDao;
-        this.modelMapperService = modelMapperService;
-        this.carService = carService;
-    }
 
     @Override
     public Result add(CreateDamageRequest createDamageRequest) throws BusinessException {
@@ -92,11 +84,11 @@ public class DamageManager implements DamageService {
     }
 
     @Override
-    public Result delete(DeleteDamageRequest deleteDamageRequest) throws BusinessException {
+    public Result delete(int damageId) throws BusinessException {
 
-        checkIfDamageIdExists(deleteDamageRequest.getDamageId());
+        checkIfDamageIdExists(damageId);
 
-        this.damageDao.deleteById(deleteDamageRequest.getDamageId());
+        this.damageDao.deleteById(damageId);
 
         return new SuccessResult(BusinessMessages.DAMAGE_DELETED);
     }
@@ -119,7 +111,7 @@ public class DamageManager implements DamageService {
 
         if (!this.damageDao.existsById(id)) {
 
-            throw new DamageNotFoundException(BusinessMessages.DAMAGE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.DAMAGE_NOT_FOUND);
         }
     }
 }

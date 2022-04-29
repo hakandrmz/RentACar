@@ -32,7 +32,7 @@ public class CustomerManager implements CustomerService {
         List<CustomerListDto> response = result.stream().map(customer -> this.modelMapperService
                 .forDto().map(customer, CustomerListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.CUSTOMERS_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class CustomerManager implements CustomerService {
 
         GetCustomerDto response = this.modelMapperService.forDto().map(customer, GetCustomerDto.class);
 
-        return new SuccessDataResult<>(response, BusinessMessages.CUSTOMER_FOUND_BY_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class CustomerManager implements CustomerService {
 
         if (!this.customerDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.CUSTOMER_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 }

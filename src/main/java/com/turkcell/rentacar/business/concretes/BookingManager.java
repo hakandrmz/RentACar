@@ -81,7 +81,7 @@ public class BookingManager implements BookingService {
         userWantsToSaveCreditCard(createRentModelForIndividualCustomers.getSaveCardOption(),
                 createRentModelForIndividualCustomers.getCreatePaymentRequest());
 
-        return new SuccessResult(BusinessMessages.RENT_MODEL_SUCCESSFULL + invoice.getTotalPrice());
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED + invoice.getTotalPrice());
     }
 
     @Override
@@ -106,7 +106,7 @@ public class BookingManager implements BookingService {
         userWantsToSaveCreditCard(createRentModelForCorporateCustomers.getSaveCardOption(),
                 createRentModelForCorporateCustomers.getCreatePaymentRequest());
 
-        return new SuccessResult(BusinessMessages.RENT_MODEL_SUCCESSFULL + invoice.getTotalPrice());
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED + invoice.getTotalPrice());
     }
 
     @Override
@@ -136,7 +136,7 @@ public class BookingManager implements BookingService {
         userWantsToSaveCreditCard(endRentWithExtraPaymentModel.getCardSaveOption(),
                 endRentWithExtraPaymentModel.getCreatePaymentRequest());
 
-        return new SuccessResult(BusinessMessages.RENT_ENDED_WITH_PAYMENT + totalPrice);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED + totalPrice);
     }
 
     @Override

@@ -52,7 +52,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
         List<CarMaintenanceListDto> response = result.stream().map(carMaintenance -> this.modelMapperService
                 .forDto().map(carMaintenance, CarMaintenanceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, BusinessMessages.CAR_MAINTENANCES_LISTED);
+        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         this.carService.updateMaintenanceStatus(carMaintenance.getCar().getId(), true);
 
-        return new SuccessResult(BusinessMessages.CAR_MAINTENANCE_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
         List<CarMaintenanceListDto> response = carMaintenanceList.stream().map(carMaintenance -> this.modelMapperService
                 .forDto().map(carMaintenance, CarMaintenanceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, BusinessMessages.CAR_MAINTENANCES_LISTED_BY_CAR_ID);
+        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         GetCarMaintenanceDto response = this.modelMapperService.forDto().map(carMaintenance, GetCarMaintenanceDto.class);
 
-        return new SuccessDataResult<GetCarMaintenanceDto>(response, BusinessMessages.CAR_MAINTENANCE_FOUND_BY_ID);
+        return new SuccessDataResult<GetCarMaintenanceDto>(response, BusinessMessages.NOT_FOUND);
     }
 
     @Override
@@ -112,7 +112,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         this.carService.updateMaintenanceStatus(carMaintenance.getCar().getId(), updateCarMaintenanceRequest.isMaintenanceStatus());
 
-        return new SuccessResult(BusinessMessages.CAR_MAINTENANCE_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         this.carMaintenanceDao.deleteById(carMaintenanceId);
 
-        return new SuccessResult(BusinessMessages.CAR_MAINTENANCE_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -145,7 +145,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         if (!this.carMaintenanceDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.CAR_MAINTENANCE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 }

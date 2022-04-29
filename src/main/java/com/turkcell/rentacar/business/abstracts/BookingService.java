@@ -13,20 +13,11 @@ import com.turkcell.rentacar.entities.concretes.Invoice;
 import com.turkcell.rentacar.entities.concretes.Rent;
 
 public interface BookingService {
-
     Result createRentForIndividualCustomers(CreateRentModelForIndividualCustomers createRentModelForIndividualCustomers) throws BusinessException;
-
     Result createRentForCorporateCustomers(CreateRentModelForCorporateCustomers createRentModelForCorporateCustomers) throws BusinessException;
-
     Result endRentWithExtraPayment(EndRentWithExtraPaymentModel endRentWithExtraPaymentModel) throws BusinessException;
-
     void addOrderedServicesToRent(List<CreateOrderedServiceRequest> createOrderedServiceRequests, int rentId);
-
     void userWantsToSaveCreditCard(String enumSaveCreditCard, CreatePaymentRequest createPaymentRequest) throws BusinessException;
-
     void checkIfExtraPaymentNeeded(double price) throws BusinessException;
-
     void setCreatePaymentRequestFields(CreatePaymentRequest createPaymentRequest, Rent rent, Invoice invoice);
-
-
 }

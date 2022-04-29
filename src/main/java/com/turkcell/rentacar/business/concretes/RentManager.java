@@ -59,7 +59,7 @@ public class RentManager implements RentService {
         List<RentListDto> response = rents.stream().map(rent -> this.modelMapperService
                 .forDto().map(rent, RentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.RENTS_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class RentManager implements RentService {
 
         this.carService.updateRentStatus(rent.getCar().getId(), true);
 
-        return new SuccessDataResult<Rent>(savedRent, BusinessMessages.RENT_ADDED);
+        return new SuccessDataResult<Rent>(savedRent, BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
 
@@ -93,7 +93,7 @@ public class RentManager implements RentService {
 
         GetRentDto response = this.modelMapperService.forDto().map(rent, GetRentDto.class);
 
-        return new SuccessDataResult<GetRentDto>(response, BusinessMessages.RENT_FOUND_BY_ID);
+        return new SuccessDataResult<GetRentDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class RentManager implements RentService {
 
         this.rentDao.save(rent);
 
-        return new SuccessResult(BusinessMessages.RENT_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class RentManager implements RentService {
 
         this.rentDao.deleteById(rentId);
 
-        return new SuccessResult(BusinessMessages.RENT_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
 
@@ -133,7 +133,7 @@ public class RentManager implements RentService {
         List<RentListDto> response = rents.stream().map(rent -> this.modelMapperService
                 .forDto().map(rent, RentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<RentListDto>>(response, BusinessMessages.RENTS_LISTED_BY_CAR_ID);
+        return new SuccessDataResult<List<RentListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
 
@@ -186,7 +186,7 @@ public class RentManager implements RentService {
 
         if (!this.rentDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.RENT_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 

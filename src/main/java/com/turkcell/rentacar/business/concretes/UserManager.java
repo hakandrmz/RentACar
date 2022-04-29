@@ -31,7 +31,7 @@ public class UserManager implements UserService {
         List<UserListDto> response = result.stream().map(user -> this.modelMapperService
                 .forDto().map(user, UserListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<UserListDto>>(response, BusinessMessages.USERS_LISTED);
+        return new SuccessDataResult<List<UserListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class UserManager implements UserService {
 
         GetUserDto response = this.modelMapperService.forDto().map(user, GetUserDto.class);
 
-        return new SuccessDataResult<>(response, BusinessMessages.USER_FOUND_BY_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override

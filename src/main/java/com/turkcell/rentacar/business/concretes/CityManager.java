@@ -36,7 +36,7 @@ public class CityManager implements CityService {
         List<CityListDto> response = result.stream().map(city -> this.modelMapperService
                 .forDto().map(city, CityListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CityListDto>>(response, BusinessMessages.CITIES_LISTED);
+        return new SuccessDataResult<List<CityListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class CityManager implements CityService {
 
         this.cityDao.save(city);
 
-        return new SuccessResult(BusinessMessages.CITY_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class CityManager implements CityService {
 
         GetCityDto response = this.modelMapperService.forDto().map(city, GetCityDto.class);
 
-        return new SuccessDataResult<GetCityDto>(response, BusinessMessages.CITY_FOUND_BY_ID);
+        return new SuccessDataResult<GetCityDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class CityManager implements CityService {
 
         this.cityDao.save(city);
 
-        return new SuccessResult(BusinessMessages.CITY_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class CityManager implements CityService {
 
         this.cityDao.deleteById(cityId);
 
-        return new SuccessResult(BusinessMessages.CITY_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class CityManager implements CityService {
 
         if (this.cityDao.existsCityByCityNameIgnoreCase(cityName)) {
 
-            throw new BusinessException(BusinessMessages.CITY_NAME_EXISTS);
+            throw new BusinessException(BusinessMessages.ALREADY_EXIST);
         }
     }
 
@@ -100,7 +100,7 @@ public class CityManager implements CityService {
 
         if (!this.cityDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.CITY_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.turkcell.rentacar.business.concretes;
 
 import com.turkcell.rentacar.business.abstracts.*;
-import com.turkcell.rentacar.business.adapters.posAdapters.IsBankPosAdapter;
+import com.turkcell.rentacar.business.adapters.posAdapters.INGBankPosAdapter;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.payment.GetPaymentDto;
 import com.turkcell.rentacar.business.dtos.payment.PaymentListDto;
@@ -40,7 +40,7 @@ public class PaymentManager implements PaymentService {
 
         this.paymentDao.save(payment);
 
-        return new SuccessResult(BusinessMessages.PAYMENT_SUCCESSFULL);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class PaymentManager implements PaymentService {
         List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.PAYMENTS_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class PaymentManager implements PaymentService {
 
         GetPaymentDto response = this.modelMapperService.forDto().map(result, GetPaymentDto.class);
 
-        return new SuccessDataResult<>(response, BusinessMessages.PAYMENT_FOUND_BY_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PaymentManager implements PaymentService {
         List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.PAYMENTS_LISTED_BY_CUSTOMER_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class PaymentManager implements PaymentService {
 
         GetPaymentDto response = this.modelMapperService.forDto().map(payment, GetPaymentDto.class);
 
-        return new SuccessDataResult<GetPaymentDto>(response, BusinessMessages.PAYMENT_FOUND_BY_INVOICE_ID);
+        return new SuccessDataResult<GetPaymentDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -101,17 +101,17 @@ public class PaymentManager implements PaymentService {
         List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.PAYMENT_FOUND_BY_RENT_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
     public void makePayment(CreatePosRequest createPosRequest, double paymentAmount) throws BusinessException {
 
-        PosService posService = new IsBankPosAdapter();
+        PosService posService = new INGBankPosAdapter();
 
         if (!posService.pay(createPosRequest, paymentAmount)) {
 
-            throw new BusinessException(BusinessMessages.PAYMENT_UNSUCCESSFULL);
+            throw new BusinessException(BusinessMessages.PAYMENT_UNSUCCESSFULLY);
         }
     }
 

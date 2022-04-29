@@ -15,7 +15,6 @@ import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.CreditCardDao;
 import com.turkcell.rentacar.entities.concretes.CreditCard;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class CreditCardManager implements CreditCardService {
 
         this.creditCardDao.save(creditCard);
 
-        return new SuccessResult(BusinessMessages.CREDIT_CARD_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -49,7 +48,7 @@ public class CreditCardManager implements CreditCardService {
         response = result.stream().map(creditCard -> this.modelMapperService
                 .forDto().map(creditCard, CreditCardListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.CREDIT_CARDS_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class CreditCardManager implements CreditCardService {
 
         GetCreditCardDto getCreditCardDto = this.modelMapperService.forDto().map(creditCard, GetCreditCardDto.class);
 
-        return new SuccessDataResult<>(getCreditCardDto, BusinessMessages.CREDIT_CARD_FOUND_BY_ID);
+        return new SuccessDataResult<>(getCreditCardDto, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -74,15 +73,15 @@ public class CreditCardManager implements CreditCardService {
         List<CreditCardListDto> response = result.stream().map(creditCard -> this.modelMapperService.forDto()
                 .map(creditCard, CreditCardListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<>(response, BusinessMessages.CREDIT_CARDS_LISTED_BY_CUSTOMER_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
     public void checkIfCreditCardIdExists(int creditCardId) throws BusinessException {
 
-        if (!this.creditCardDao.existsById(creditCardId)) {
+        creditCardDao.findById(creditCardId)
+                .orElseThrow(()
+                        -> new BusinessException(BusinessMessages.NOT_FOUND));
 
-            throw new BusinessException(BusinessMessages.CREDIT_CARD_NOT_FOUND);
-        }
     }
 }

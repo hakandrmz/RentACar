@@ -50,7 +50,7 @@ public class OrderedServiceManager implements OrderedServiceService {
         List<OrderedServiceListDto> response = result.stream().map(orderedService -> this.modelMapperService
                 .forDto().map(orderedService, OrderedServiceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<OrderedServiceListDto>>(response, BusinessMessages.ORDERED_SERVICES_LISTED);
+        return new SuccessDataResult<List<OrderedServiceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class OrderedServiceManager implements OrderedServiceService {
 
         this.orderedServiceDao.save(orderedService);
 
-        return new SuccessResult(BusinessMessages.ORDERED_SERVICE_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class OrderedServiceManager implements OrderedServiceService {
 
         GetOrderedServiceDto response = this.modelMapperService.forDto().map(orderedService, GetOrderedServiceDto.class);
 
-        return new SuccessDataResult<GetOrderedServiceDto>(response, BusinessMessages.ORDERED_SERVICE_FOUND_BY_ID);
+        return new SuccessDataResult<GetOrderedServiceDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class OrderedServiceManager implements OrderedServiceService {
         List<OrderedServiceListDto> response = result.stream().map(orderedService -> this.modelMapperService
                 .forDto().map(orderedService, OrderedServiceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<OrderedServiceListDto>>(response, BusinessMessages.ORDERED_SERVICES_LISTED_BY_RENT_ID);
+        return new SuccessDataResult<List<OrderedServiceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class OrderedServiceManager implements OrderedServiceService {
 
         if (!this.orderedServiceDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.ORDERED_SERVICE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 

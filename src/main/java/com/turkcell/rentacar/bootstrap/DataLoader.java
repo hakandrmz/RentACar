@@ -82,6 +82,8 @@ public class DataLoader implements CommandLineRunner {
             damageDao.save(Damage.builder().description("Second damage of car id:1").car(Car.builder().id(1).build()).build());
             damageDao.save(Damage.builder().description("First damage of car id:2").car(Car.builder().id(2).build()).build());
             damageDao.save(Damage.builder().description("Second damage of car id:2").car(Car.builder().id(2).build()).build());
+
+
         }
     }
 }

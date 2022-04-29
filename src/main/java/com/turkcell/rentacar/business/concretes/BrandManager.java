@@ -36,7 +36,7 @@ public class BrandManager implements BrandService {
         List<BrandListDto> response = result.stream().map(brand -> this.modelMapperService
                 .forDto().map(brand, BrandListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<BrandListDto>>(response, BusinessMessages.BRANDS_LISTED);
+        return new SuccessDataResult<List<BrandListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class BrandManager implements BrandService {
 
         this.brandDao.save(brand);
 
-        return new SuccessResult(BusinessMessages.BRAND_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class BrandManager implements BrandService {
 
         GetBrandDto response = this.modelMapperService.forDto().map(foundBrand, GetBrandDto.class);
 
-        return new SuccessDataResult<GetBrandDto>(response, BusinessMessages.BRAND_FOUND_BY_ID);
+        return new SuccessDataResult<GetBrandDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class BrandManager implements BrandService {
 
         this.brandDao.save(brand);
 
-        return new SuccessResult(BusinessMessages.BRAND_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class BrandManager implements BrandService {
 
         this.brandDao.deleteById(brandId);
 
-        return new SuccessResult(BusinessMessages.BRAND_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -91,7 +91,7 @@ public class BrandManager implements BrandService {
 
         if (this.brandDao.existsBrandByBrandNameIgnoreCase(brandName)) {
 
-            throw new BusinessException(BusinessMessages.BRAND_NAME_EXISTS);
+            throw new BusinessException(BusinessMessages.ALREADY_EXIST);
         }
     }
 
@@ -100,7 +100,7 @@ public class BrandManager implements BrandService {
 
         if (!this.brandDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.BRAND_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
 
         }
     }

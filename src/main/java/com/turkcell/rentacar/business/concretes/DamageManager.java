@@ -41,7 +41,7 @@ public class DamageManager implements DamageService {
 
         this.damageDao.save(damage);
 
-        return new SuccessResult(BusinessMessages.DAMAGE_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class DamageManager implements DamageService {
         List<DamageListDto> response = result.stream().map(damage -> this.modelMapperService
                 .forDto().map(damage, DamageListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<DamageListDto>>(response, BusinessMessages.DAMAGES_LISTED);
+        return new SuccessDataResult<List<DamageListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -64,7 +64,7 @@ public class DamageManager implements DamageService {
 
         GetDamageDto response = this.modelMapperService.forDto().map(damage, GetDamageDto.class);
 
-        return new SuccessDataResult<GetDamageDto>(response, BusinessMessages.DAMAGE_FOUND_BY_ID);
+        return new SuccessDataResult<GetDamageDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class DamageManager implements DamageService {
 
         this.damageDao.save(updatedDamage);
 
-        return new SuccessResult(BusinessMessages.DAMAGE_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class DamageManager implements DamageService {
 
         this.damageDao.deleteById(damageId);
 
-        return new SuccessResult(BusinessMessages.DAMAGE_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -103,7 +103,7 @@ public class DamageManager implements DamageService {
         List<DamageListDto> response = result.stream().map(damage -> this.modelMapperService
                 .forDto().map(damage, DamageListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<DamageListDto>>(response, BusinessMessages.DAMAGES_LISTED_BY_CAR_ID);
+        return new SuccessDataResult<List<DamageListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -111,7 +111,7 @@ public class DamageManager implements DamageService {
 
         if (!this.damageDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.DAMAGE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 }

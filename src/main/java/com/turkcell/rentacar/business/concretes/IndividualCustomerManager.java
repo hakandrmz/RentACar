@@ -35,7 +35,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         List<IndividualCustomerListDto> response = result.stream().map(individualCustomer -> this.modelMapperService
                 .forDto().map(individualCustomer, IndividualCustomerListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<IndividualCustomerListDto>>(response, BusinessMessages.INDIVIDUAL_CUSTOMERS_LISTED);
+        return new SuccessDataResult<List<IndividualCustomerListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         this.individualCustomerDao.save(individualCustomer);
 
-        return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         GetIndividualCustomerDto response = this.modelMapperService.forDto().map(individualCustomer, GetIndividualCustomerDto.class);
 
-        return new SuccessDataResult<GetIndividualCustomerDto>(response, BusinessMessages.INDIVIDUAL_CUSTOMER_FOUND_BY_ID);
+        return new SuccessDataResult<GetIndividualCustomerDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         this.individualCustomerDao.save(individualCustomer);
 
-        return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         this.individualCustomerDao.deleteById(individualCustomerId);
 
-        return new SuccessResult(BusinessMessages.INDIVIDUAL_CUSTOMER_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         if (!this.individualCustomerDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.INDIVIDUAL_CUSTOMER_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 
@@ -99,7 +99,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         if (this.individualCustomerDao.existsIndividualCustomerByNationalIdentity(nationalIdentity)) {
 
-            throw new BusinessException(BusinessMessages.NATIONAL_IDENTITY_EXISTS);
+            throw new BusinessException(BusinessMessages.ALREADY_EXIST);
         }
     }
 }

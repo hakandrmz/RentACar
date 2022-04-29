@@ -9,7 +9,7 @@ import com.turkcell.rentacar.business.requests.pos.CreatePosRequest;
 
 @Service
 @Primary
-public class IsBankPosAdapter implements PosService {
+public class INGBankPosAdapter implements PosService {
 
     @Override
     public boolean pay(CreatePosRequest createPosServiceRequest, double paymentAmount) {

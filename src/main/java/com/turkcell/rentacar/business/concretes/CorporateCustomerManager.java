@@ -41,7 +41,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
         List<CorporateCustomerListDto> response = result.stream().map(corporateCustomer -> this.modelMapperService
                 .forDto().map(corporateCustomer, CorporateCustomerListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CorporateCustomerListDto>>(response, BusinessMessages.CORPORATE_CUSTOMERS_LISTED);
+        return new SuccessDataResult<List<CorporateCustomerListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         this.corporateCustomerDao.save(corporateCustomer);
 
-        return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         GetCorporateCustomerDto response = this.modelMapperService.forDto().map(corporateCustomer, GetCorporateCustomerDto.class);
 
-        return new SuccessDataResult<GetCorporateCustomerDto>(response, BusinessMessages.CORPORATE_CUSTOMER_FOUND_BY_ID);
+        return new SuccessDataResult<GetCorporateCustomerDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         this.corporateCustomerDao.save(corporateCustomer);
 
-        return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         this.corporateCustomerDao.deleteById(corporateCustomerId);
 
-        return new SuccessResult(BusinessMessages.CORPORATE_CUSTOMER_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -96,7 +96,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         if (!this.corporateCustomerDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.CORPORATE_CUSTOMER_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 
@@ -105,7 +105,7 @@ public class CorporateCustomerManager implements CorporateCustomerService {
 
         if (this.corporateCustomerDao.existsCorporateCustomerByTaxNumber(taxNumber)) {
 
-            throw new BusinessException(BusinessMessages.TAX_NUMBER_EXISTS);
+            throw new BusinessException(BusinessMessages.ALREADY_EXIST);
         }
     }
 }

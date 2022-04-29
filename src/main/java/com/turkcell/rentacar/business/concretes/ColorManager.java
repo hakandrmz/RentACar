@@ -36,7 +36,7 @@ public class ColorManager implements ColorService {
         List<ColorListDto> response = result.stream().map(color -> this.modelMapperService
                 .forDto().map(color, ColorListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<ColorListDto>>(response, BusinessMessages.COLORS_LISTED);
+        return new SuccessDataResult<List<ColorListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ColorManager implements ColorService {
 
         this.colorDao.save(color);
 
-        return new SuccessResult(BusinessMessages.COLOR_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -60,7 +60,7 @@ public class ColorManager implements ColorService {
 
         GetColorDto response = this.modelMapperService.forDto().map(foundColor, GetColorDto.class);
 
-        return new SuccessDataResult<GetColorDto>(response, BusinessMessages.COLOR_FOUND_BY_ID);
+        return new SuccessDataResult<GetColorDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class ColorManager implements ColorService {
 
         this.colorDao.save(color);
 
-        return new SuccessResult(BusinessMessages.COLOR_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -83,14 +83,14 @@ public class ColorManager implements ColorService {
 
         this.colorDao.deleteById(colorId);
 
-        return new SuccessResult(BusinessMessages.COLOR_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
     public void checkIfColorNameExists(String colorName) throws BusinessException {
 
         if (this.colorDao.existsByColorNameIgnoreCase(colorName)) {
-            throw new BusinessException(BusinessMessages.COLOR_NAME_EXISTS);
+            throw new BusinessException(BusinessMessages.ALREADY_EXIST);
         }
     }
 
@@ -99,7 +99,7 @@ public class ColorManager implements ColorService {
 
         if (!this.colorDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.COLOR_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 }

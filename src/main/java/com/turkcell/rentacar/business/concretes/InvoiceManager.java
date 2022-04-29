@@ -47,7 +47,7 @@ public class InvoiceManager implements InvoiceService {
                 .map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICES_LISTED);
+        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class InvoiceManager implements InvoiceService {
 
         this.invoiceDao.save(invoice);
 
-        return new SuccessDataResult<Invoice>(invoice, BusinessMessages.INVOICE_ADDED);
+        return new SuccessDataResult<Invoice>(invoice, BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class InvoiceManager implements InvoiceService {
 
         this.invoiceDao.save(invoice);
 
-        return new SuccessDataResult<Invoice>(invoice, BusinessMessages.INVOICE_ADDED);
+        return new SuccessDataResult<Invoice>(invoice, BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -97,7 +97,7 @@ public class InvoiceManager implements InvoiceService {
 
         this.invoiceDao.save(invoice);
 
-        return new SuccessDataResult<Invoice>(invoice, BusinessMessages.INVOICE_ADDED);
+        return new SuccessDataResult<Invoice>(invoice, BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class InvoiceManager implements InvoiceService {
 
         GetInvoiceDto response = this.modelMapperService.forDto().map(invoice, GetInvoiceDto.class);
 
-        return new SuccessDataResult<GetInvoiceDto>(response, BusinessMessages.INVOICE_FOUND_BY_ID);
+        return new SuccessDataResult<GetInvoiceDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class InvoiceManager implements InvoiceService {
 
         this.invoiceDao.save(invoice);
 
-        return new SuccessResult(BusinessMessages.INVOICE_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -133,7 +133,7 @@ public class InvoiceManager implements InvoiceService {
 
         this.invoiceDao.deleteById(invoiceId);
 
-        return new SuccessResult(BusinessMessages.INVOICE_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class InvoiceManager implements InvoiceService {
                 .map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICES_LISTED_BY_CUSTOMER_ID);
+        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -160,7 +160,7 @@ public class InvoiceManager implements InvoiceService {
         List<InvoiceListDto> response = result.stream().map(invoice -> this.modelMapperService.forDto()
                 .map(invoice, InvoiceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICES_LISTED_BY_RENT_ID);
+        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class InvoiceManager implements InvoiceService {
                 .map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
                 .collect(Collectors.toList());
 
-        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.INVOICES_LISTED_BY_DATES);
+        return new SuccessDataResult<List<InvoiceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -180,7 +180,7 @@ public class InvoiceManager implements InvoiceService {
 
         if (!this.invoiceDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.INVOICE_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 

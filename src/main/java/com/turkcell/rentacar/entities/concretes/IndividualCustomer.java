@@ -8,7 +8,6 @@ import lombok.*;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "individual_customers")

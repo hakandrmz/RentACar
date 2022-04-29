@@ -50,7 +50,7 @@ public class CarManager implements CarService {
 
         this.carDao.save(car);
 
-        return new SuccessResult(BusinessMessages.CAR_ADDED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_ADDED);
     }
 
 
@@ -62,7 +62,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.CARS_LISTED);
+        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class CarManager implements CarService {
 
         GetCarDto response = this.modelMapperService.forDto().map(car, GetCarDto.class);
 
-        return new SuccessDataResult<GetCarDto>(response, BusinessMessages.CAR_FOUND_BY_ID);
+        return new SuccessDataResult<GetCarDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -95,7 +95,7 @@ public class CarManager implements CarService {
 
         this.carDao.save(updatedCar);
 
-        return new SuccessResult(BusinessMessages.CAR_UPDATED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_UPDATED);
     }
 
     @Override
@@ -105,7 +105,7 @@ public class CarManager implements CarService {
 
         this.carDao.deleteById(carId);
 
-        return new SuccessResult(BusinessMessages.CAR_DELETED);
+        return new SuccessResult(BusinessMessages.SUCCESSFULLY_DELETED);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class CarManager implements CarService {
 
         if (pageNo < 1 || pageSize < 1) {
 
-            throw new BusinessException(BusinessMessages.INVALID_PAGE_PARAM);
+            throw new BusinessException(BusinessMessages.INVALID_PARAMETER);
         }
 
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
@@ -123,7 +123,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.CARS_PAGED);
+        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -136,7 +136,7 @@ public class CarManager implements CarService {
         } else if (param.equalsIgnoreCase("DESC")) {
             sort = Sort.by(Sort.Direction.DESC, "dailyPrice");
         } else {
-            throw new BusinessException(BusinessMessages.INVALID_SORT_PARAM);
+            throw new BusinessException(BusinessMessages.INVALID_PARAMETER);
         }
 
         List<Car> result = this.carDao.findAll(sort);
@@ -144,7 +144,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.CARS_SORTED);
+        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -155,7 +155,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.CARS_LISTED);
+        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -166,7 +166,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.CARS_LISTED);
+        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -183,7 +183,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.CARS_LISTED);
+        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -191,7 +191,7 @@ public class CarManager implements CarService {
 
         if (!this.carDao.existsById(id)) {
 
-            throw new BusinessException(BusinessMessages.CAR_NOT_FOUND);
+            throw new BusinessException(BusinessMessages.NOT_FOUND);
         }
     }
 

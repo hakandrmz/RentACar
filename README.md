@@ -2,7 +2,7 @@
 
 # Araba Kiralama Sistemi Projesi
 
-** # Proje adresi: [hakandurmaz.guru](https://hakandurmazrentacarproject.herokuapp.com/swagger-ui/index.html#/) #  **
+** # Proje adresi: [https://hakandurmazrentacarproject.herokuapp.com/swagger-ui/index.html#/](https://hakandurmazrentacarproject.herokuapp.com/swagger-ui/index.html#/) #  **
 
 ## Gereksinimler
 

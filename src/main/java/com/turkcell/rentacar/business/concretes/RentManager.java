@@ -130,7 +130,7 @@ public class RentManager implements RentService {
 
         List<Rent> rents = this.rentDao.getAllByCarId(id);
 
-        var response = rents.stream().map(rent -> this.modelMapperService
+        List<RentListDto> response = rents.stream().map(rent -> this.modelMapperService
                 .forDto().map(rent, RentListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<RentListDto>>(response, BusinessMessages.RENTS_LISTED_BY_CAR_ID);

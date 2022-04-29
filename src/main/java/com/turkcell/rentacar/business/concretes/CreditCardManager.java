@@ -43,9 +43,10 @@ public class CreditCardManager implements CreditCardService {
     @Override
     public DataResult<List<CreditCardListDto>> getAll() {
 
-        var result = this.creditCardDao.findAll();
+        List<CreditCard> result = this.creditCardDao.findAll();
 
-        var response = result.stream().map(creditCard -> this.modelMapperService
+        List<CreditCardListDto> response;
+        response = result.stream().map(creditCard -> this.modelMapperService
                 .forDto().map(creditCard, CreditCardListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<>(response, BusinessMessages.CREDIT_CARDS_LISTED);
@@ -56,7 +57,7 @@ public class CreditCardManager implements CreditCardService {
 
         checkIfCreditCardIdExists(id);
 
-        var creditCard = this.creditCardDao.getById(id);
+        CreditCard creditCard = this.creditCardDao.getById(id);
 
         GetCreditCardDto getCreditCardDto = this.modelMapperService.forDto().map(creditCard, GetCreditCardDto.class);
 
@@ -68,7 +69,7 @@ public class CreditCardManager implements CreditCardService {
 
         this.customerService.checkIfCustomerIdExists(customerUserId);
 
-        var result = this.creditCardDao.findByCustomerUserId(customerUserId);
+        List<CreditCard> result = this.creditCardDao.findByCustomerUserId(customerUserId);
 
         List<CreditCardListDto> response = result.stream().map(creditCard -> this.modelMapperService.forDto()
                 .map(creditCard, CreditCardListDto.class)).collect(Collectors.toList());

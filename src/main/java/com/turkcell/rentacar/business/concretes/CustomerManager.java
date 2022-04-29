@@ -29,7 +29,7 @@ public class CustomerManager implements CustomerService {
 
         List<Customer> result = this.customerDao.findAll();
 
-        var response = result.stream().map(customer -> this.modelMapperService
+        List<CustomerListDto> response = result.stream().map(customer -> this.modelMapperService
                 .forDto().map(customer, CustomerListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<>(response, BusinessMessages.CUSTOMERS_LISTED);
@@ -42,7 +42,7 @@ public class CustomerManager implements CustomerService {
 
         Customer customer = this.customerDao.getById(id);
 
-        var response = this.modelMapperService.forDto().map(customer, GetCustomerDto.class);
+        GetCustomerDto response = this.modelMapperService.forDto().map(customer, GetCustomerDto.class);
 
         return new SuccessDataResult<>(response, BusinessMessages.CUSTOMER_FOUND_BY_ID);
     }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.turkcell.rentacar.api.models.CreateRentModelForCorporateCustomers;
 import com.turkcell.rentacar.api.models.CreateRentModelForIndividualCustomers;
 import com.turkcell.rentacar.api.models.EndRentWithExtraPaymentModel;
-import com.turkcell.rentacar.api.models.UpdateRentModel;
 import com.turkcell.rentacar.business.abstracts.BookingService;
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.Result;

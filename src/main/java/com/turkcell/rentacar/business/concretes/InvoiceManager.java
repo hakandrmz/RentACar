@@ -43,7 +43,7 @@ public class InvoiceManager implements InvoiceService {
 
         List<Invoice> result = this.invoiceDao.findAll();
 
-        var response = result.stream()
+        List<InvoiceListDto> response = result.stream()
                 .map(invoice -> this.modelMapperService.forDto().map(invoice, InvoiceListDto.class))
                 .collect(Collectors.toList());
 

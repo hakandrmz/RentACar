@@ -16,7 +16,6 @@ import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.dataAccess.abstracts.PaymentDao;
 import com.turkcell.rentacar.entities.concretes.Payment;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,7 +48,7 @@ public class PaymentManager implements PaymentService {
 
         List<Payment> result = this.paymentDao.findAll();
 
-        var response = result.stream().map(payment -> this.modelMapperService
+        List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<>(response, BusinessMessages.PAYMENTS_LISTED);
@@ -62,9 +61,9 @@ public class PaymentManager implements PaymentService {
 
         Payment result = this.paymentDao.getById(paymentId);
 
-        var response = this.modelMapperService.forDto().map(result, GetPaymentDto.class);
+        GetPaymentDto response = this.modelMapperService.forDto().map(result, GetPaymentDto.class);
 
-        return new SuccessDataResult<GetPaymentDto>(response, BusinessMessages.PAYMENT_FOUND_BY_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.PAYMENT_FOUND_BY_ID);
     }
 
     @Override
@@ -74,10 +73,10 @@ public class PaymentManager implements PaymentService {
 
         List<Payment> result = this.paymentDao.findByCustomerUserId(userId);
 
-        var response = result.stream().map(payment -> this.modelMapperService
+        List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<PaymentListDto>>(response, BusinessMessages.PAYMENTS_LISTED_BY_CUSTOMER_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.PAYMENTS_LISTED_BY_CUSTOMER_ID);
     }
 
     @Override
@@ -99,10 +98,10 @@ public class PaymentManager implements PaymentService {
 
         List<Payment> result = this.paymentDao.findByRentRentId(rentId);
 
-        var response = result.stream().map(payment -> this.modelMapperService
+        List<PaymentListDto> response = result.stream().map(payment -> this.modelMapperService
                 .forDto().map(payment, PaymentListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<PaymentListDto>>(response, BusinessMessages.PAYMENT_FOUND_BY_RENT_ID);
+        return new SuccessDataResult<>(response, BusinessMessages.PAYMENT_FOUND_BY_RENT_ID);
     }
 
     @Override

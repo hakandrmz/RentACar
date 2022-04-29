@@ -28,7 +28,7 @@ public class UserManager implements UserService {
 
         List<User> result = this.userDao.findAll();
 
-        var response = result.stream().map(user -> this.modelMapperService
+        List<UserListDto> response = result.stream().map(user -> this.modelMapperService
                 .forDto().map(user, UserListDto.class)).collect(Collectors.toList());
 
         return new SuccessDataResult<List<UserListDto>>(response, BusinessMessages.USERS_LISTED);
@@ -41,7 +41,7 @@ public class UserManager implements UserService {
 
         User user = this.userDao.getById(id);
 
-        var response = this.modelMapperService.forDto().map(user, GetUserDto.class);
+        GetUserDto response = this.modelMapperService.forDto().map(user, GetUserDto.class);
 
         return new SuccessDataResult<>(response, BusinessMessages.USER_FOUND_BY_ID);
     }

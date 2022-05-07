@@ -5,9 +5,64 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5840f1e7-7c42-4326-92d8-8559f6fddc24" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/RentacarApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/RentacarApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/AdditionalServicesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/AdditionalServicesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/BookingController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/BookingController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/BrandsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/BrandsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CarsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CarsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CitiesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CitiesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CorporateCustomersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CorporateCustomersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CreditCardsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CreditCardsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CustomersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/CustomersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/DamagesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/DamagesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/IndividualCustomersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/IndividualCustomersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/InvoicesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/InvoicesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/OrderedServicesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/OrderedServicesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/PaymentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/PaymentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/RentsController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/RentsController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/api/controllers/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/bootstrap/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/bootstrap/DataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/adapters/posAdapters/HSBCPosAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/adapters/posadapters/HSBCPosAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/adapters/posAdapters/INGBankPosAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/adapters/posadapters/INGBankPosAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/AdditionalServiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/AdditionalServiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/BookingManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/BookingManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/BrandManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/BrandManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CarMaintenanceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CarMaintenanceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CarManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CarManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CityManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CityManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/ColorManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/ColorManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CorporateCustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CorporateCustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CreditCardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CreditCardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/CustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/DamageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/DamageManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/IndividualCustomerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/IndividualCustomerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/InvoiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/InvoiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/OrderedServiceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/OrderedServiceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/PaymentManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/PaymentManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/RentManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/RentManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/UserManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/concretes/UserManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/constants/messages/BusinessMessages.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/constants/messages/BusinessMessages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/outServices/HSBCPosManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/outservices/HSBCPosManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/outServices/INGBankPosManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/business/outservices/INGBankPosManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/AdditionalServiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/AdditionalServiceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/BrandDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/BrandDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/CarDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/CarDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/CarMaintenanceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/CarMaintenanceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/CityDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/CityDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/ColorDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/ColorDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/CorporateCustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/CorporateCustomerDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/CreditCardDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/CreditCardDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/CustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/CustomerDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/DamageDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/DamageDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/IndividualCustomerDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/IndividualCustomerDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/InvoiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/InvoiceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/OrderedServiceDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/OrderedServiceDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/PaymentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/PaymentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/RentDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/RentDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataAccess/abstracts/UserDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/dataaccess/abstracts/UserDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/entities/concretes/Rent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/entities/concretes/Rent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/entities/concretes/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/turkcell/rentacar/entities/concretes/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,6 +119,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="25xk29igZOh1HVYlN438wJA7c4D" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -72,6 +130,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/Users/hdurmaz/Desktop/rent-a-car-project/pom.xml",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "spring.configuration.checksum": "1c718e15389c944fa75933d293b1eb13"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="com.turkcell.rentacar.business.requests" />
@@ -83,27 +159,15 @@
       <recent name="com.turkcell.rentacar.business.outServices" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.RentacarApplication">
+  <component name="RunManager" selected="Spring Boot.RentacarApplication">
     <configuration name="RentacarApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.turkcell.rentacar.RentacarApplication" />
-      <module name="rentacar" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.turkcell.rentacar.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -123,11 +187,15 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.RentacarApplication" />
         <item itemvalue="Application.RentacarApplication" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SpringBeansView">
+    <option name="beanDetailsProportion" value="0.3" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="5840f1e7-7c42-4326-92d8-8559f6fddc24" name="Changes" comment="" />
@@ -175,6 +243,11 @@
       <workItem from="1651192100303" duration="167000" />
       <workItem from="1651197090286" duration="1278000" />
       <workItem from="1651199601664" duration="2353000" />
+      <workItem from="1651923120973" duration="319000" />
+      <workItem from="1651923451702" duration="37000" />
+      <workItem from="1651923497248" duration="136000" />
+      <workItem from="1651923661181" duration="43000" />
+      <workItem from="1651923711057" duration="1915000" />
     </task>
     <task id="LOCAL-00001" summary="customer, user, invoice entities added">
       <created>1647427061363</created>

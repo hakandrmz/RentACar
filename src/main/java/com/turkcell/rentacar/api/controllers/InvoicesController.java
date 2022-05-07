@@ -7,12 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.turkcell.rentacar.business.abstracts.InvoiceService;
 import com.turkcell.rentacar.business.dtos.invoice.GetInvoiceDto;
@@ -41,28 +36,28 @@ public class InvoicesController {
     }
 
     @GetMapping("/getById/{invoiceId}")
-    DataResult<GetInvoiceDto> getById(@RequestParam("invoiceId") Integer id) throws BusinessException {
+    DataResult<GetInvoiceDto> getById(@PathVariable("invoiceId") Integer id) throws BusinessException {
 
         return this.invoiceService.getById(id);
     }
 
     @GetMapping("/getByCustomerUserId/{customerUserId}")
-    DataResult<List<InvoiceListDto>> getByCustomerUserId(@RequestParam("customerUserId") Integer id) throws BusinessException {
+    DataResult<List<InvoiceListDto>> getByCustomerUserId(@PathVariable("customerUserId") Integer id) throws BusinessException {
 
         return this.invoiceService.getByCustomerUserId(id);
     }
 
     @GetMapping("/getByRentId/{rentId}")
-    DataResult<List<InvoiceListDto>> getByRentId(@RequestParam("rentId") Integer id) throws BusinessException {
+    DataResult<List<InvoiceListDto>> getByRentId(@PathVariable("rentId") Integer id) throws BusinessException {
 
         return this.invoiceService.getByRentId(id);
     }
 
     @GetMapping(value = "/findByCreationDateBetween/{startDate}/{endDate}")
     DataResult<List<InvoiceListDto>> findByCreationDateBetween(
-            @RequestParam("startDate")
+            @PathVariable("startDate")
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("endDate") LocalDate endDate) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd") @PathVariable("endDate") LocalDate endDate) {
 
         return this.invoiceService.findByCreationDateBetween(startDate, endDate);
     }

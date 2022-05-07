@@ -1,22 +1,23 @@
-package com.turkcell.rentacar.business.adapters.posAdapters;
+package com.turkcell.rentacar.business.adapters.posadapters;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.turkcell.rentacar.business.abstracts.PosService;
-import com.turkcell.rentacar.business.outServices.HSBCPosManager;
+import com.turkcell.rentacar.business.outservices.INGBankPosManager;
 import com.turkcell.rentacar.business.requests.pos.CreatePosRequest;
 
 @Service
-public class HSBCPosAdapter implements PosService {
+@Primary
+public class INGBankPosAdapter implements PosService {
+
     @Override
     public boolean pay(CreatePosRequest createPosServiceRequest, double paymentAmount) {
 
-        HSBCPosManager HSBCPosManager = new HSBCPosManager();
+        INGBankPosManager ingBankPosManager = new INGBankPosManager();
 
-        boolean posResult = HSBCPosManager.makePayment(createPosServiceRequest.getCreditCardNo(),
+        return ingBankPosManager.makePayment(createPosServiceRequest.getCreditCardNo(),
                 createPosServiceRequest.getCreditCardHolder(), createPosServiceRequest.getCvv(),
                 createPosServiceRequest.getExpirationMonth(), createPosServiceRequest.getExpirationYear(), paymentAmount);
-
-        return posResult;
     }
 }

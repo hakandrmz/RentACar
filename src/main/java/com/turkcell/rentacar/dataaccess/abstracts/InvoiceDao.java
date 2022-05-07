@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.dataAccess.abstracts;
+package com.turkcell.rentacar.dataaccess.abstracts;
 
 import java.time.LocalDate;
 import java.util.List;

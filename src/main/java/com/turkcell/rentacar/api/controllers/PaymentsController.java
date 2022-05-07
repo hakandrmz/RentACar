@@ -3,10 +3,7 @@ package com.turkcell.rentacar.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.turkcell.rentacar.business.abstracts.PaymentService;
 import com.turkcell.rentacar.business.dtos.payment.GetPaymentDto;
@@ -33,25 +30,25 @@ public class PaymentsController {
     }
 
     @GetMapping("/getByPaymentId/{paymentId}")
-    DataResult<GetPaymentDto> getByPaymentId(@RequestParam("paymentId") int paymentId) throws BusinessException {
+    DataResult<GetPaymentDto> getByPaymentId(@PathVariable("paymentId") int paymentId) throws BusinessException {
 
         return this.paymentService.getByPaymentId(paymentId);
     }
 
     @GetMapping("/getByCustomerUserId/{customerUserId}")
-    DataResult<List<PaymentListDto>> getByCustomerUserId(@RequestParam("customerUserId") int userId) throws BusinessException {
+    DataResult<List<PaymentListDto>> getByCustomerUserId(@PathVariable("customerUserId") int userId) throws BusinessException {
 
         return this.paymentService.getByCustomerUserId(userId);
     }
 
     @GetMapping("/getByInvoiceId/{invoiceId}")
-    DataResult<GetPaymentDto> getByInvoiceId(@RequestParam("invoiceId") int invoiceId) throws BusinessException {
+    DataResult<GetPaymentDto> getByInvoiceId(@PathVariable("invoiceId") int invoiceId) throws BusinessException {
 
         return this.paymentService.getByInvoiceId(invoiceId);
     }
 
     @GetMapping("/getByRentId/{rentId}")
-    DataResult<List<PaymentListDto>> getByRentId(@RequestParam("rentId") int rentId) throws BusinessException {
+    DataResult<List<PaymentListDto>> getByRentId(@PathVariable("rentId") int rentId) throws BusinessException {
 
         return this.paymentService.getByRentId(rentId);
     }

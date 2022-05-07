@@ -12,7 +12,7 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.IndividualCustomerDao;
+import com.turkcell.rentacar.dataaccess.abstracts.IndividualCustomerDao;
 import com.turkcell.rentacar.entities.concretes.IndividualCustomer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
         List<IndividualCustomerListDto> response = result.stream().map(individualCustomer -> this.modelMapperService
                 .forDto().map(individualCustomer, IndividualCustomerListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<IndividualCustomerListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class IndividualCustomerManager implements IndividualCustomerService {
 
         GetIndividualCustomerDto response = this.modelMapperService.forDto().map(individualCustomer, GetIndividualCustomerDto.class);
 
-        return new SuccessDataResult<GetIndividualCustomerDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override

@@ -12,10 +12,9 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.BrandDao;
+import com.turkcell.rentacar.dataaccess.abstracts.BrandDao;
 import com.turkcell.rentacar.entities.concretes.Brand;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class BrandManager implements BrandService {
         List<BrandListDto> response = result.stream().map(brand -> this.modelMapperService
                 .forDto().map(brand, BrandListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<BrandListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class BrandManager implements BrandService {
 
         GetBrandDto response = this.modelMapperService.forDto().map(foundBrand, GetBrandDto.class);
 
-        return new SuccessDataResult<GetBrandDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override

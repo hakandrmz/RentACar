@@ -15,10 +15,9 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.CarDao;
+import com.turkcell.rentacar.dataaccess.abstracts.CarDao;
 import com.turkcell.rentacar.entities.concretes.Car;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -62,7 +61,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -74,7 +73,7 @@ public class CarManager implements CarService {
 
         GetCarDto response = this.modelMapperService.forDto().map(car, GetCarDto.class);
 
-        return new SuccessDataResult<GetCarDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -123,7 +122,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -144,7 +143,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -155,7 +154,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -166,7 +165,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -183,7 +182,7 @@ public class CarManager implements CarService {
         List<CarListDto> response = result.stream()
                 .map(car -> this.modelMapperService.forDto().map(car, CarListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -208,9 +207,7 @@ public class CarManager implements CarService {
     @Override
     public Car getCarByCarId(int carId) {
 
-        Car car = this.carDao.getById(carId);
-
-        return car;
+        return this.carDao.getById(carId);
     }
 
     @Override

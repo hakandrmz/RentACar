@@ -3,10 +3,7 @@ package com.turkcell.rentacar.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.turkcell.rentacar.business.abstracts.OrderedServiceService;
 import com.turkcell.rentacar.business.dtos.orderedService.GetOrderedServiceDto;
@@ -33,13 +30,13 @@ public class OrderedServicesController {
     }
 
     @GetMapping("/getByOrderedServiceId/{orderedServiceId}")
-    DataResult<GetOrderedServiceDto> getByOrderedServiceId(@RequestParam("orderedServiceId") Integer id) throws BusinessException {
+    DataResult<GetOrderedServiceDto> getByOrderedServiceId(@PathVariable("orderedServiceId") Integer id) throws BusinessException {
 
         return this.orderedServiceService.getByOrderedServiceId(id);
     }
 
     @GetMapping("/getByRentId/{rentId}")
-    DataResult<List<OrderedServiceListDto>> getByRentId(@RequestParam("rentId") Integer id) throws BusinessException {
+    DataResult<List<OrderedServiceListDto>> getByRentId(@PathVariable("rentId") Integer id) throws BusinessException {
 
         return this.orderedServiceService.getByRentId(id);
     }

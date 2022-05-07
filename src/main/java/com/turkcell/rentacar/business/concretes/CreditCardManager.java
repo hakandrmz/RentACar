@@ -12,7 +12,7 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.CreditCardDao;
+import com.turkcell.rentacar.dataaccess.abstracts.CreditCardDao;
 import com.turkcell.rentacar.entities.concretes.CreditCard;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

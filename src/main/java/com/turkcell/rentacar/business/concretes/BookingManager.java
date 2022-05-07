@@ -1,7 +1,8 @@
 package com.turkcell.rentacar.business.concretes;
 
-import com.fasterxml.jackson.databind.ser.Serializers;
-import com.turkcell.rentacar.api.models.*;
+import com.turkcell.rentacar.api.models.CreateRentModelForCorporateCustomers;
+import com.turkcell.rentacar.api.models.CreateRentModelForIndividualCustomers;
+import com.turkcell.rentacar.api.models.EndRentWithExtraPaymentModel;
 import com.turkcell.rentacar.business.abstracts.*;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.requests.Invoice.CreateInvoiceRequest;
@@ -13,7 +14,6 @@ import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
 import com.turkcell.rentacar.entities.concretes.Invoice;
 import com.turkcell.rentacar.entities.concretes.Rent;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,13 +33,12 @@ public class BookingManager implements BookingService {
     private final CityService cityService;
     private final AdditionalServiceService additionalServiceService;
     private final IndividualCustomerService individualCustomerService;
-    private final CorporateCustomerService corporateCustomerService;
 
     @Autowired
     public BookingManager(RentService rentService, OrderedServiceService orderedServiceService,
                           InvoiceService invoiceService, PaymentService paymentService, CreditCardService creditCardService,
                           CarService carService, CityService cityService, AdditionalServiceService additionalServiceService,
-                          IndividualCustomerService individualCustomerService, CorporateCustomerService corporateCustomerService) {
+                          IndividualCustomerService individualCustomerService) {
 
         this.rentService = rentService;
         this.orderedServiceService = orderedServiceService;
@@ -50,7 +49,6 @@ public class BookingManager implements BookingService {
         this.cityService = cityService;
         this.additionalServiceService = additionalServiceService;
         this.individualCustomerService = individualCustomerService;
-        this.corporateCustomerService = corporateCustomerService;
     }
 
     @Override

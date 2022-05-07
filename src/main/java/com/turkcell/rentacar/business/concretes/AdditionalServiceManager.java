@@ -13,10 +13,9 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.AdditionalServiceDao;
+import com.turkcell.rentacar.dataaccess.abstracts.AdditionalServiceDao;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,7 +36,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
         List<AdditionalServiceListDto> response = result.stream().map(additionalService -> this.modelMapperService
                 .forDto().map(additionalService, AdditionalServiceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<AdditionalServiceListDto>>
+        return new SuccessDataResult<>
                 (response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
@@ -64,7 +63,7 @@ public class AdditionalServiceManager implements AdditionalServiceService {
 
         GetAdditionalServiceDto response = this.modelMapperService.forDto().map(additionalService, GetAdditionalServiceDto.class);
 
-        return new SuccessDataResult<GetAdditionalServiceDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override

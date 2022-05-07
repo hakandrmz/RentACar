@@ -14,10 +14,9 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.CarMaintenanceDao;
+import com.turkcell.rentacar.dataaccess.abstracts.CarMaintenanceDao;
 import com.turkcell.rentacar.entities.concretes.Car;
 import com.turkcell.rentacar.entities.concretes.CarMaintenance;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -52,7 +51,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
         List<CarMaintenanceListDto> response = result.stream().map(carMaintenance -> this.modelMapperService
                 .forDto().map(carMaintenance, CarMaintenanceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -83,7 +82,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
         List<CarMaintenanceListDto> response = carMaintenanceList.stream().map(carMaintenance -> this.modelMapperService
                 .forDto().map(carMaintenance, CarMaintenanceListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CarMaintenanceListDto>>(response, BusinessMessages.SUCCESSFULLY_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override
@@ -95,7 +94,7 @@ public class CarMaintenanceManager implements CarMaintenanceService {
 
         GetCarMaintenanceDto response = this.modelMapperService.forDto().map(carMaintenance, GetCarMaintenanceDto.class);
 
-        return new SuccessDataResult<GetCarMaintenanceDto>(response, BusinessMessages.NOT_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.NOT_FOUND);
     }
 
     @Override

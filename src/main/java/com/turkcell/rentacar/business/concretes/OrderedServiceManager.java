@@ -13,7 +13,7 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.OrderedServiceDao;
+import com.turkcell.rentacar.dataaccess.abstracts.OrderedServiceDao;
 import com.turkcell.rentacar.entities.concretes.AdditionalService;
 import com.turkcell.rentacar.entities.concretes.OrderedService;
 import com.turkcell.rentacar.entities.concretes.Rent;

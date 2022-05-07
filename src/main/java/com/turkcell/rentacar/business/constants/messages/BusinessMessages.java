@@ -1,6 +1,10 @@
 package com.turkcell.rentacar.business.constants.messages;
 
 public class BusinessMessages {
+    private BusinessMessages() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final String SUCCESSFULLY_ADDED = "Successfully added.";
     public static final String SUCCESSFULLY_FOUND = "Successfully found.";
     public static final String SUCCESSFULLY_DELETED = "Successfully deleted.";

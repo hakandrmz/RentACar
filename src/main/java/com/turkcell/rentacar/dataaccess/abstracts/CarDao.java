@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.dataAccess.abstracts;
+package com.turkcell.rentacar.dataaccess.abstracts;
 
 import com.turkcell.rentacar.entities.concretes.Car;
 

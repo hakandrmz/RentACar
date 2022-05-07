@@ -12,7 +12,7 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.CorporateCustomerDao;
+import com.turkcell.rentacar.dataaccess.abstracts.CorporateCustomerDao;
 import com.turkcell.rentacar.entities.concretes.CorporateCustomer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

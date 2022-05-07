@@ -5,14 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.turkcell.rentacar.business.abstracts.DamageService;
 import com.turkcell.rentacar.business.dtos.damage.DamageListDto;
@@ -48,7 +41,7 @@ public class DamagesController {
     }
 
     @GetMapping("/getByDamageId/{damageId}")
-    DataResult<GetDamageDto> getById(@RequestParam("damageId") Integer id) throws BusinessException {
+    DataResult<GetDamageDto> getById(@PathVariable("damageId") Integer id) throws BusinessException {
 
         return this.damageService.getById(id);
     }
@@ -60,7 +53,7 @@ public class DamagesController {
     }
 
     @GetMapping("/getByCarId/{carId}")
-    DataResult<List<DamageListDto>> getByCarId(@RequestParam("carId") Integer carId) throws BusinessException {
+    DataResult<List<DamageListDto>> getByCarId(@PathVariable("carId") Integer carId) throws BusinessException {
 
         return this.damageService.getByCarId(carId);
     }

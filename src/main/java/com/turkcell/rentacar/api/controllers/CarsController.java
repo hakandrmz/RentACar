@@ -34,7 +34,7 @@ public class CarsController {
         return this.carService.add(createCarRequest);
     }
 
-    @GetMapping("/getall")
+    @GetMapping("/getAll")
     public DataResult<List<CarListDto>> getAll() {
 
         return this.carService.getAll();
@@ -62,7 +62,7 @@ public class CarsController {
     }
 
     @GetMapping("/getAllSorted/{orderOfSort}")
-    public DataResult<List<CarListDto>> getAllSorted(@RequestParam("orderOfSort") String orderOfSort) throws BusinessException {
+    public DataResult<List<CarListDto>> getAllSorted(@PathVariable("orderOfSort") String orderOfSort) throws BusinessException {
 
         return this.carService.getAllSorted(orderOfSort);
     }

@@ -1,13 +1,11 @@
 package com.turkcell.rentacar.bootstrap;
 
 import com.turkcell.rentacar.core.exceptions.BusinessException;
-import com.turkcell.rentacar.dataAccess.abstracts.*;
+import com.turkcell.rentacar.dataaccess.abstracts.*;
 import com.turkcell.rentacar.entities.concretes.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -38,7 +36,7 @@ public class DataLoader implements CommandLineRunner {
 
             cityDao.save(City.builder().cityName("Bursa").build());
             cityDao.save(City.builder().cityName("Ankara").build());
-            cityDao.save(City.builder().cityName("İstanbul").build());
+            cityDao.save(City.builder().cityName("Istanbul").build());
             cityDao.save(City.builder().cityName("Adana").build());
 
             additionalServiceDao.save(AdditionalService.builder().additionalServiceName("Bebek arabası").dailyPrice(300).build());

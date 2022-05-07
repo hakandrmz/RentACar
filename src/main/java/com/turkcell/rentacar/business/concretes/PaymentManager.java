@@ -1,7 +1,7 @@
 package com.turkcell.rentacar.business.concretes;
 
 import com.turkcell.rentacar.business.abstracts.*;
-import com.turkcell.rentacar.business.adapters.posAdapters.INGBankPosAdapter;
+import com.turkcell.rentacar.business.adapters.posadapters.INGBankPosAdapter;
 import com.turkcell.rentacar.business.constants.messages.BusinessMessages;
 import com.turkcell.rentacar.business.dtos.payment.GetPaymentDto;
 import com.turkcell.rentacar.business.dtos.payment.PaymentListDto;
@@ -13,7 +13,7 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.PaymentDao;
+import com.turkcell.rentacar.dataaccess.abstracts.PaymentDao;
 import com.turkcell.rentacar.entities.concretes.Payment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

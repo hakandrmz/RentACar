@@ -3,10 +3,7 @@ package com.turkcell.rentacar.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.turkcell.rentacar.business.abstracts.CustomerService;
 import com.turkcell.rentacar.business.dtos.customer.CustomerListDto;
@@ -32,7 +29,7 @@ public class CustomersController {
     }
 
     @GetMapping("getByUserId/{userId}")
-    DataResult<GetCustomerDto> getByUserId(@RequestParam("userId") int id) throws BusinessException {
+    DataResult<GetCustomerDto> getByUserId(@PathVariable("userId") int id) throws BusinessException {
 
         return this.customerService.getByUserId(id);
     }

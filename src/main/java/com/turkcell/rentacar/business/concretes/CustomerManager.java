@@ -8,10 +8,9 @@ import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
-import com.turkcell.rentacar.dataAccess.abstracts.CustomerDao;
+import com.turkcell.rentacar.dataaccess.abstracts.CustomerDao;
 import com.turkcell.rentacar.entities.concretes.Customer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

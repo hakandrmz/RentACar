@@ -8,7 +8,7 @@ import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.mapping.ModelMapperService;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
-import com.turkcell.rentacar.dataAccess.abstracts.UserDao;
+import com.turkcell.rentacar.dataaccess.abstracts.UserDao;
 import com.turkcell.rentacar.entities.concretes.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class UserManager implements UserService {
         List<UserListDto> response = result.stream().map(user -> this.modelMapperService
                 .forDto().map(user, UserListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<UserListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override

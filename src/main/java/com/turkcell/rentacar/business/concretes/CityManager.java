@@ -12,10 +12,9 @@ import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
 import com.turkcell.rentacar.core.utilities.results.SuccessDataResult;
 import com.turkcell.rentacar.core.utilities.results.SuccessResult;
-import com.turkcell.rentacar.dataAccess.abstracts.CityDao;
+import com.turkcell.rentacar.dataaccess.abstracts.CityDao;
 import com.turkcell.rentacar.entities.concretes.City;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class CityManager implements CityService {
         List<CityListDto> response = result.stream().map(city -> this.modelMapperService
                 .forDto().map(city, CityListDto.class)).collect(Collectors.toList());
 
-        return new SuccessDataResult<List<CityListDto>>(response, BusinessMessages.SUCCESSFULLY_LISTED);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_LISTED);
     }
 
     @Override
@@ -60,7 +59,7 @@ public class CityManager implements CityService {
 
         GetCityDto response = this.modelMapperService.forDto().map(city, GetCityDto.class);
 
-        return new SuccessDataResult<GetCityDto>(response, BusinessMessages.SUCCESSFULLY_FOUND);
+        return new SuccessDataResult<>(response, BusinessMessages.SUCCESSFULLY_FOUND);
     }
 
     @Override

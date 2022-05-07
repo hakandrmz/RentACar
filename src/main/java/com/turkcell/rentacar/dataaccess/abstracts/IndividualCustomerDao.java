@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.dataAccess.abstracts;
+package com.turkcell.rentacar.dataaccess.abstracts;
 
 import org.springframework.stereotype.Repository;
 

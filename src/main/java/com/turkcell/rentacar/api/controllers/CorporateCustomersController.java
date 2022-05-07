@@ -5,14 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.turkcell.rentacar.business.abstracts.CorporateCustomerService;
 import com.turkcell.rentacar.business.dtos.corporateCustomer.CorporateCustomerListDto;
@@ -27,8 +20,7 @@ import com.turkcell.rentacar.core.utilities.results.Result;
 @RequestMapping("/api/corporateCustomers")
 public class CorporateCustomersController {
 
-    @Autowired
-    private CorporateCustomerService corporateCustomerService;
+    private final CorporateCustomerService corporateCustomerService;
 
     @Autowired
     public CorporateCustomersController(CorporateCustomerService corporateCustomerService) {
@@ -48,8 +40,8 @@ public class CorporateCustomersController {
         return this.corporateCustomerService.add(createCorporateCustomerRequest);
     }
 
-    @GetMapping("/getByUserId/{id}")
-    DataResult<GetCorporateCustomerDto> getByUserId(@RequestParam("userId") Integer id) throws BusinessException {
+    @GetMapping("/getByUserId/{userId}")
+    DataResult<GetCorporateCustomerDto> getByUserId(@PathVariable("userId") Integer id) throws BusinessException {
 
         return this.corporateCustomerService.getByUserId(id);
     }

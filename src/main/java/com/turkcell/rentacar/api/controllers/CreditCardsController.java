@@ -1,18 +1,5 @@
 package com.turkcell.rentacar.api.controllers;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.turkcell.rentacar.business.abstracts.CreditCardService;
 import com.turkcell.rentacar.business.dtos.creditCard.CreditCardListDto;
 import com.turkcell.rentacar.business.dtos.creditCard.GetCreditCardDto;
@@ -20,6 +7,11 @@ import com.turkcell.rentacar.business.requests.creditCard.CreateCreditCardReques
 import com.turkcell.rentacar.core.exceptions.BusinessException;
 import com.turkcell.rentacar.core.utilities.results.DataResult;
 import com.turkcell.rentacar.core.utilities.results.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/creditCards")
@@ -47,13 +39,13 @@ public class CreditCardsController {
     }
 
     @GetMapping("/getById/{id}")
-    DataResult<GetCreditCardDto> getById(@RequestParam("id") Integer id) throws BusinessException {
+    DataResult<GetCreditCardDto> getById(@PathVariable("id") Integer id) throws BusinessException {
 
         return this.creditCardService.getById(id);
     }
 
     @GetMapping("/getByCustomerUserId/{customerUserId}")
-    DataResult<List<CreditCardListDto>> getByCustomerUserId(@RequestParam("customerUserId") int customerUserId) throws BusinessException {
+    DataResult<List<CreditCardListDto>> getByCustomerUserId(@PathVariable("customerUserId") int customerUserId) throws BusinessException {
 
         return this.creditCardService.getByCustomerUserId(customerUserId);
     }

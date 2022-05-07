@@ -1,4 +1,4 @@
-package com.turkcell.rentacar.business.outServices;
+package com.turkcell.rentacar.business.outservices;
 
 import org.springframework.stereotype.Component;
 
